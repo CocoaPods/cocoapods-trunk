@@ -64,6 +64,27 @@ module Pod
           print_response REST.get("#{BASE_URL}/me", 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
         end
       end
+
+      class AddOwner < Trunk
+        self.summary = 'Add an owner to a pod'
+
+        self.arguments = '[Pod] [Email]'
+
+        def initialize(argv)
+          @pod, @email = argv.shift_argument, argv.shift_argument
+          super
+        end
+
+        def validate!
+          super
+          help! 'You need to register a session first.' unless netrc['trunk.cocoapods.org']
+          help! 'Specify the pod name and the new owner’s email address' unless @pod && @email
+        end
+
+        def run
+          print_response REST.put("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+        end
+      end
     end
   end
 end
