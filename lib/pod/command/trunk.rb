@@ -30,7 +30,7 @@ module Pod
           Register a new account or create a new session.
         DESC
 
-        self.arguments = '[Name Surname] [Email]'
+        self.arguments = '[NAME SURNAME] [EMAIL]'
 
         def initialize(argv)
           @name, @email = argv.shift_argument, argv.shift_argument
@@ -68,7 +68,7 @@ module Pod
       class AddOwner < Trunk
         self.summary = 'Add an owner to a pod'
 
-        self.arguments = '[Pod] [Email]'
+        self.arguments = '[POD] [EMAIL]'
 
         def initialize(argv)
           @pod, @email = argv.shift_argument, argv.shift_argument
@@ -83,6 +83,42 @@ module Pod
 
         def run
           print_response REST.put("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+        end
+      end
+
+      class Push < Trunk
+        self.summary = 'Push a spec'
+        self.arguments = '[PATH]'
+
+        def initialize(argv)
+          @path = argv.shift_argument
+          super
+        end
+
+        def validate!
+          super
+          help! 'You need to register a session first.' unless netrc['trunk.cocoapods.org']
+          help! 'Specify the path to the pod spec' unless @path
+        end
+
+        def run
+          spec = Pod::Specification.from_file(@path)
+          response = REST.post("#{BASE_URL}/pods", spec.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+
+          if (400...600).include?(response.status_code)
+            print_response(response)
+            return
+          end
+
+          status_url = response.headers['location'].first
+          puts "Registered resource URL: #{status_url}"
+
+          loop do
+            response = REST.get(status_url, 'Content-Type' => 'text/yaml', 'Accept' => 'text/yaml')
+            print_response(response)
+            break if [200, 404].include?(response.status_code)
+            sleep 2
+          end
         end
       end
     end
