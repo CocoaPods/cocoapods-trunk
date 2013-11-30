@@ -8,8 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Cocoapods::Trunk::VERSION
   spec.authors       = ["Eloy Durán"]
   spec.email         = ["eloy.de.enige@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.summary       = "Interact with trunk.cocoapods.org"
   spec.homepage      = ""
   spec.license       = "MIT"
 
