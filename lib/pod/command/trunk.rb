@@ -1,3 +1,5 @@
+require 'rest'
+
 module Pod
   class Command
     class Trunk < Command
