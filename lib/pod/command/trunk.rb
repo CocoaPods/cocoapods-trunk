@@ -21,7 +21,7 @@ module Pod
       end
 
       def token
-        netrc['trunk.cocoapods.org'].first
+        netrc['trunk.cocoapods.org'].last
       end
 
       class Register < Trunk
@@ -45,7 +45,7 @@ module Pod
         def run
           response = REST.post("#{BASE_URL}/register", { 'email' => @email, 'name' => @name }.to_yaml, 'Content-Type' => 'text/yaml')
           token = YAML.load(response.body)['token']
-          netrc['trunk.cocoapods.org'] = token, 'x'
+          netrc['trunk.cocoapods.org'] = @email, token
           netrc.save
           print_response(response)
           puts 'Saved token to ~/.netrc, please verify session by clicking the link in the verification email that has been sent.'
@@ -57,7 +57,7 @@ module Pod
 
         def validate!
           super
-          help! 'You need to register a session first.' unless netrc['trunk.cocoapods.org']
+          help! 'You need to register a session first.' unless token
         end
 
         def run
@@ -82,7 +82,7 @@ module Pod
         end
 
         def run
-          print_response REST.put("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+          print_response REST.patch("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
         end
       end
 
