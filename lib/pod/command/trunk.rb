@@ -83,7 +83,7 @@ module Pod
         end
 
         def run
-          print_response REST.patch("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_json, 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
+          print_response REST.patch("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_json, 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
         end
       end
 
