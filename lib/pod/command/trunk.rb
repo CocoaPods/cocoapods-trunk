@@ -43,8 +43,8 @@ module Pod
         end
 
         def run
-          response = REST.post("#{BASE_URL}/register", { 'email' => @email, 'name' => @name }.to_yaml, 'Content-Type' => 'text/yaml')
-          token = YAML.load(response.body)['token']
+          response = REST.post("#{BASE_URL}/register", { 'email' => @email, 'name' => @name }.to_json, 'Content-Type' => 'application/json; charset=utf-8')
+          token = JSON.parse(response.body)['token']
           netrc['trunk.cocoapods.org'] = @email, token
           netrc.save
           print_response(response)
@@ -61,7 +61,7 @@ module Pod
         end
 
         def run
-          print_response REST.get("#{BASE_URL}/me", 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+          print_response REST.get("#{BASE_URL}/me", 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
         end
       end
 
@@ -82,7 +82,7 @@ module Pod
         end
 
         def run
-          print_response REST.patch("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+          print_response REST.patch("#{BASE_URL}/pods/#{@pod}/owners", { 'email' => @email }.to_json, 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
         end
       end
 
@@ -103,7 +103,7 @@ module Pod
 
         def run
           spec = Pod::Specification.from_file(@path)
-          response = REST.post("#{BASE_URL}/pods", spec.to_yaml, 'Content-Type' => 'text/yaml', 'Authorization' => "Token #{token}")
+          response = REST.post("#{BASE_URL}/pods", spec.to_json, 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
 
           if (400...600).include?(response.status_code)
             print_response(response)
@@ -114,7 +114,7 @@ module Pod
           puts "Registered resource URL: #{status_url}"
 
           loop do
-            response = REST.get(status_url, 'Content-Type' => 'text/yaml', 'Accept' => 'text/yaml')
+            response = REST.get(status_url, 'Content-Type' => 'application/json; charset=utf-8', 'Accept' => 'application/json; charset=utf-8')
             print_response(response)
             break if [200, 404].include?(response.status_code)
             sleep 2
