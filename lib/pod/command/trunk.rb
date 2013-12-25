@@ -22,7 +22,7 @@ module Pod
       end
 
       def token
-        netrc['trunk.cocoapods.org'].last
+        netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].last
       end
 
       class Register < Trunk
