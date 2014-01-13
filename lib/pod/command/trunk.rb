@@ -79,7 +79,7 @@ module Pod
         def validate!
           super
           help! 'You need to register a session first.' unless netrc['trunk.cocoapods.org']
-          help! 'Specify the pod name and the new owner’s email address' unless @pod && @email
+          help! "Specify the pod name and the new owner's email address" unless @pod && @email
         end
 
         def run
