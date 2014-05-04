@@ -75,7 +75,8 @@ module Pod
         end
 
         def run
-          print_response REST.get("#{BASE_URL}/me", 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
+          response = request(:get, "#{BASE_URL}/sessions", 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
+          print_response(response)
         end
       end
 
