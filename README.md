@@ -18,7 +18,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+With a local install of `trunk.cocoapods.org` up and running:
+
+    $ env TRUNK_SCHEME_AND_HOST=http://localhost:4567 bundle exec pod trunk --help
 
 ## Contributing
 

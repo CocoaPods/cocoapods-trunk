@@ -12,7 +12,8 @@ module Pod
 
       private
 
-      BASE_URL = 'https://trunk.cocoapods.org/api/v1'
+      scheme_and_host = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
+      BASE_URL = "#{scheme_and_host}/api/v1"
 
       def print_response(response)
         puts "[HTTP: #{response.status_code}]"
