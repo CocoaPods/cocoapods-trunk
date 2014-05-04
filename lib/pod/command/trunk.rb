@@ -15,6 +15,16 @@ module Pod
       scheme_and_host = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
       BASE_URL = "#{scheme_and_host}/api/v1"
 
+      def request(action, *args)
+        if verbose?
+          REST.send(action, *args) do |request|
+            request.set_debug_output($stdout)
+          end
+        else
+          REST.send(action, *args)
+        end
+      end
+
       def print_response(response)
         puts "[HTTP: #{response.status_code}]"
         puts response.body
@@ -47,7 +57,7 @@ module Pod
         end
 
         def run
-          response = REST.post("#{BASE_URL}/sessions", { 'email' => @email, 'name' => @name }.to_json, 'Content-Type' => 'application/json; charset=utf-8')
+          response = request(:post, "#{BASE_URL}/sessions", { 'email' => @email, 'name' => @name }.to_json, 'Content-Type' => 'application/json; charset=utf-8')
           print_response(response)
           token = JSON.parse(response.body)['token']
           netrc['trunk.cocoapods.org'] = @email, token
