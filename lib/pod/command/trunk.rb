@@ -47,11 +47,11 @@ module Pod
         end
 
         def run
-          response = REST.post("#{BASE_URL}/register", { 'email' => @email, 'name' => @name }.to_json, 'Content-Type' => 'application/json; charset=utf-8')
+          response = REST.post("#{BASE_URL}/sessions", { 'email' => @email, 'name' => @name }.to_json, 'Content-Type' => 'application/json; charset=utf-8')
+          print_response(response)
           token = JSON.parse(response.body)['token']
           netrc['trunk.cocoapods.org'] = @email, token
           netrc.save
-          print_response(response)
           puts 'Saved token to ~/.netrc, please verify session by clicking the link in the verification email that has been sent.'
         end
       end
