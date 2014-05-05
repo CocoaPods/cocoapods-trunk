@@ -118,7 +118,7 @@ module Pod
 
         def run
           spec = Pod::Specification.from_file(@path)
-          response = REST.post("#{BASE_URL}/pods", spec.to_json, 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
+          response = request(:post, "#{BASE_URL}/pods", spec.to_json, 'Content-Type' => 'application/json; charset=utf-8', 'Authorization' => "Token #{token}")
 
           if (400...600).include?(response.status_code)
             print_response(response)
@@ -128,12 +128,8 @@ module Pod
           status_url = response.headers['location'].first
           puts "Registered resource URL: #{status_url}"
 
-          loop do
-            response = REST.get(status_url, 'Content-Type' => 'application/json; charset=utf-8', 'Accept' => 'application/json; charset=utf-8')
-            print_response(response)
-            break if [200, 404].include?(response.status_code)
-            sleep 2
-          end
+          response = request(:get, status_url, 'Content-Type' => 'application/json; charset=utf-8', 'Accept' => 'application/json; charset=utf-8')
+          print_response(response)
         end
       end
     end
