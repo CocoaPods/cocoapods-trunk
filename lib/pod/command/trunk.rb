@@ -98,9 +98,10 @@ module Pod
           body = { 'email' => @email, 'name' => @name }.to_json
           json = json(request_path(:post, "sessions", body, default_headers))
           save_token(json['token'])
-          UI.notice 'Saved session token to ~/.netrc. Please verify the ' \
-                    'session by clicking the link in the verification email ' \
-                    "that has been sent to #{@email}"
+          # TODO UI.notice inserts an empty line :/
+          puts '[!] Saved session token to ~/.netrc. Please verify the ' \
+               'session by clicking the link in the verification email that ' \
+               "has been sent to #{@email}".green
         end
 
         def save_token(token)
@@ -121,20 +122,44 @@ module Pod
           json = json(request_path(:get, "sessions", auth_headers))
           UI.labeled 'Name', json['name']
           UI.labeled 'Email', json['email']
+          UI.labeled 'Since', formatted_time(json['created_at'])
 
           sessions = json['sessions'].map do |session|
-            if session['verified']
-              "#{formatted_time(session['created_at'])} - #{formatted_time(session['valid_until'])}".green
+            hash = {
+              :created_at => formatted_time(session['created_at']),
+              :valid_until => formatted_time(session['valid_until']),
+            }
+            if Time.parse(session['valid_until']) <= Time.now.utc
+              hash[:color] = :red
+            elsif session['verified']
+              hash[:color] = session['current'] ? :cyan : :green
             else
-              "#{formatted_time(session['created_at'])} (unverified)".yellow
+              hash[:color] = :yellow
+              hash[:valid_until] = 'Unverified'
             end
+            hash
           end
+
+          columns = [:created_at, :valid_until].map do |key|
+            find_max_size(sessions, key)
+          end
+
+          sessions = sessions.map do |session|
+            created_at = session[:created_at].ljust(columns[0])
+            valid_until = session[:valid_until].rjust(columns[1])
+            "#{created_at} - #{valid_until}. IP: TODO. Description: TODO.".send(session[:color])
+          end
+
           UI.labeled 'Sessions', sessions
+        end
+
+        def find_max_size(sessions, key)
+          sessions.map { |s| s[key].size }.max
         end
 
         def formatted_time(time_string)
           require 'active_support/time'
-          @tz_offset ||= Time.zone_offset(ENV['TZ'] || `/bin/date +%Z`.strip)
+          @tz_offset ||= Time.zone_offset(`/bin/date +%Z`.strip)
           @current_year ||= Date.today.year
           time = Time.parse(time_string) + @tz_offset
           formatted = time.to_formatted_s(:long_ordinal)
