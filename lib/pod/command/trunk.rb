@@ -182,7 +182,14 @@ module Pod
 
         self.arguments = 'PATH'
 
+        def self.options
+          [
+            ["--allow-warnings", "Allows push even if there are lint warnings"],
+          ].concat(super)
+        end
+
         def initialize(argv)
+          @allow_warnings = argv.flag?('allow-warnings')
           @path = argv.shift_argument
           super
         end
@@ -198,17 +205,15 @@ module Pod
           unless File.exist?(@path)
             help! 'No podspec found at the specified path.'
           end
-          begin
-            spec # try to read the spec
-          rescue Informative # TODO: this should be a more specific error
-            help! 'Unable to interpret the specified path as a podspec.'
-          end
         end
 
         def run
+          validate_podspec
+
           response = request_path(:post, "pods", spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
+
           UI.labeled 'Data URL', json['data_url']
           messages = json['messages'].map do |entry|
             at, message = entry.to_a.flatten
@@ -221,6 +226,29 @@ module Pod
 
         def spec
           @spec ||= Pod::Specification.from_file(@path)
+        rescue Informative # TODO: this should be a more specific error
+          raise Informative, 'Unable to interpret the specified path as a ' \
+                             'podspec.'
+        end
+
+        # Performs a full lint against the podspecs.
+        #
+        # TODO: Currently copied verbatim from `pod push`.
+        def validate_podspec
+          UI.puts 'Validating podspec'.yellow
+          validator = Validator.new(spec)
+          validator.only_errors = @allow_warnings
+          begin
+            validator.validate
+          rescue Exception
+            # TODO: We should add `CLAide::InformativeError#wraps_exception`
+            # which would include the original error message on `--verbose`.
+            # https://github.com/CocoaPods/CLAide/issues/31
+            raise Informative, "The podspec does not validate."
+          end
+          unless validator.validated?
+            raise Informative, "The podspec does not validate."
+          end
         end
       end
 
