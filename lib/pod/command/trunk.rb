@@ -128,6 +128,8 @@ module Pod
           UI.labeled 'Sessions', sessions
         end
 
+        private
+
         def find_max_size(sessions, key)
           sessions.map { |s| (s[key] || '').size }.max
         end
@@ -136,12 +138,14 @@ module Pod
           require 'active_support/time'
           @tz_offset ||= Time.zone_offset(`/bin/date +%Z`.strip)
           @current_year ||= Date.today.year
+
           time = Time.parse(time_string) + @tz_offset
           formatted = time.to_formatted_s(:long_ordinal)
+          # No need to show the current year, the user will probably know.
           if time.year == @current_year
             formatted.sub!(" #{@current_year}", '')
           end
-          "#{formatted}"
+          formatted
         end
       end
 
