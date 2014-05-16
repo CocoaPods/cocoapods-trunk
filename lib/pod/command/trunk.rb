@@ -135,6 +135,40 @@ module Pod
         def find_max_size(sessions, key)
           sessions.map { |s| (s[key] || '').size }.max
         end
+
+        class CleanSessions < Me
+          self.summary = 'Remove sessions'
+          self.description = <<-DESC
+            By default this will clean-up your sessions by removing expired and
+            unverified sessions.
+
+            To remove all your sessions, except for the one you are currently
+            using, specify the `--all` flag.
+          DESC
+
+          def self.options
+            [
+              ['--all', 'Removes all your sessions, except for the current one'],
+            ].concat(super)
+          end
+
+          def initialize(argv)
+            @remove_all = argv.flag?('all', false)
+            super
+          end
+
+          def validate!
+            super
+            unless token
+              help! 'You need to register a session first.'
+            end
+          end
+
+          def run
+            path = @remove_all ? 'sessions/all' : 'sessions'
+            request_path(:delete, path, auth_headers)
+          end
+        end
       end
 
       class AddOwner < Trunk
