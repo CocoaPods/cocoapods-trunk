@@ -84,7 +84,9 @@ module Pod
 
         def validate!
           super
-          help! 'You need to register a session first.' unless token
+          unless token
+            help! 'You need to register a session first.'
+          end
         end
 
         def run
@@ -161,7 +163,7 @@ module Pod
 
         def validate!
           super
-          unless netrc['trunk.cocoapods.org']
+          unless token
             help! 'You need to register a session first.'
           end
           unless @pod && @email
@@ -186,7 +188,7 @@ module Pod
 
         def validate!
           super
-          unless netrc['trunk.cocoapods.org']
+          unless token
             help! 'You need to register a session first.'
           end
           unless @path
