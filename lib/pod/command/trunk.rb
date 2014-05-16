@@ -48,7 +48,7 @@ module Pod
         def validate!
           super
           unless @email
-            help! 'Specify at least your email address'
+            help! 'Specify at least your email address.'
           end
         end
 
@@ -73,7 +73,7 @@ module Pod
       end
 
       class Me < Trunk
-        self.summary = 'Display information about your session.'
+        self.summary = 'Display information about your sessions'
 
         def validate!
           super
