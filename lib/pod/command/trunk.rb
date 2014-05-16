@@ -10,80 +10,8 @@ module Pod
       self.abstract_command = true
       self.summary = 'Interact with trunk.cocoapods.org'
 
-      private
-
       SCHEME_AND_HOST = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
       BASE_URL = "#{SCHEME_AND_HOST}/api/v1"
-
-      def request_url(action, url, *args)
-        response = create_request(action, url, *args)
-        if (400...600).include?(response.status_code)
-          print_error(response.body)
-        end
-        response
-      end
-
-      def request_path(action, path, *args)
-        request_url(action, "#{BASE_URL}/#{path}", *args)
-      end
-
-      def create_request(*args)
-        if verbose?
-          REST.send(*args) do |request|
-            request.set_debug_output($stdout)
-          end
-        else
-          REST.send(*args)
-        end
-      end
-
-      def print_error(body)
-        begin
-          json = JSON.parse(body)
-        rescue JSON::ParseError
-          json = {}
-        end
-
-        case error = json['error']
-        when Hash
-          lines = error.sort_by(&:first).map do |attr, messages|
-            attr = attr[0,1].upcase << attr[1..-1]
-            messages.sort.map do |message|
-              "- #{attr} #{message}."
-            end
-          end.flatten
-          count = lines.size
-          lines.unshift "The following #{'validation'.pluralize(count)} failed:"
-          error = lines.join("\n")
-        when nil
-          error = "An unexpected error ocurred: #{body}"
-        end
-
-        raise Informative, error
-      end
-
-      def json(response)
-        JSON.parse(response.body)
-      end
-
-      def netrc
-        @@netrc ||= Netrc.read
-      end
-
-      def token
-        netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].last
-      end
-
-      def default_headers
-        {
-          'Content-Type' => 'application/json; charset=utf-8',
-          'Accept' => 'application/json; charset=utf-8'
-        }
-      end
-
-      def auth_headers
-        default_headers.merge('Authorization' => "Token #{token}")
-      end
 
       class Register < Trunk
         self.summary = 'Manage sessions'
@@ -268,6 +196,78 @@ module Pod
 
           request_url(:get, status_url, default_headers)
         end
+      end
+
+      private
+
+      def request_url(action, url, *args)
+        response = create_request(action, url, *args)
+        if (400...600).include?(response.status_code)
+          print_error(response.body)
+        end
+        response
+      end
+
+      def request_path(action, path, *args)
+        request_url(action, "#{BASE_URL}/#{path}", *args)
+      end
+
+      def create_request(*args)
+        if verbose?
+          REST.send(*args) do |request|
+            request.set_debug_output($stdout)
+          end
+        else
+          REST.send(*args)
+        end
+      end
+
+      def print_error(body)
+        begin
+          json = JSON.parse(body)
+        rescue JSON::ParseError
+          json = {}
+        end
+
+        case error = json['error']
+        when Hash
+          lines = error.sort_by(&:first).map do |attr, messages|
+            attr = attr[0,1].upcase << attr[1..-1]
+            messages.sort.map do |message|
+              "- #{attr} #{message}."
+            end
+          end.flatten
+          count = lines.size
+          lines.unshift "The following #{'validation'.pluralize(count)} failed:"
+          error = lines.join("\n")
+        when nil
+          error = "An unexpected error ocurred: #{body}"
+        end
+
+        raise Informative, error
+      end
+
+      def json(response)
+        JSON.parse(response.body)
+      end
+
+      def netrc
+        @@netrc ||= Netrc.read
+      end
+
+      def token
+        netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].last
+      end
+
+      def default_headers
+        {
+          'Content-Type' => 'application/json; charset=utf-8',
+          'Accept' => 'application/json; charset=utf-8'
+        }
+      end
+
+      def auth_headers
+        default_headers.merge('Authorization' => "Token #{token}")
       end
     end
   end
