@@ -153,8 +153,12 @@ module Pod
 
       class AddOwner < Trunk
         self.summary = 'Add an owner to a pod'
+        self.description = <<-DESC
+          An ‘owner’ is a registered user whom is allowed to make changes to a
+          pod, such as pushing new versions and adding other ‘owners’.
+        DESC
 
-        self.arguments = '[POD] [EMAIL]'
+        self.arguments = 'POD OWNER-EMAIL'
 
         def initialize(argv)
           @pod, @email = argv.shift_argument, argv.shift_argument
@@ -167,13 +171,14 @@ module Pod
             help! 'You need to register a session first.'
           end
           unless @pod && @email
-            help! 'Specify the pod name and the new owner’s email address'
+            help! 'Specify the pod name and the new owner’s email address.'
           end
         end
 
         def run
           body = { 'email' => @email }.to_json
-          request_path(:patch, "pods/#{@pod}/owners", body, auth_headers)
+          json = json(request_path(:patch, "pods/#{@pod}/owners", body, auth_headers))
+          UI.labeled 'Owners', json.map { |o| "#{o['name']} <#{o['email']}>" }
         end
       end
 
