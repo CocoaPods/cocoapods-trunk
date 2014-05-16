@@ -16,14 +16,10 @@ module Pod
       BASE_URL = "#{SCHEME_AND_HOST}/api/v1"
 
       def request_url(action, url, *args)
-        #UI.title "Performing #{action.to_s.upcase} request to #{url}" do
-        response = nil
-        #UI.title "Connecting to #{SCHEME_AND_HOST}" do
-          response = create_request(action, url, *args)
-          if (400...600).include?(response.status_code)
-            print_error(response.body)
-          end
-        #end
+        response = create_request(action, url, *args)
+        if (400...600).include?(response.status_code)
+          print_error(response.body)
+        end
         response
       end
 
@@ -47,7 +43,22 @@ module Pod
         rescue JSON::ParseError
           json = {}
         end
-        error = json['error'] || "An unexpected error ocurred: #{body}"
+
+        case error = json['error']
+        when Hash
+          lines = error.sort_by(&:first).map do |attr, messages|
+            attr = attr[0,1].upcase << attr[1..-1]
+            messages.sort.map do |message|
+              "- #{attr} #{message}."
+            end
+          end.flatten
+          count = lines.size
+          lines.unshift "The following #{'validation'.pluralize(count)} failed:"
+          error = lines.join("\n")
+        when nil
+          error = "An unexpected error ocurred: #{body}"
+        end
+
         raise Informative, error
       end
 
@@ -77,25 +88,48 @@ module Pod
       class Register < Trunk
         self.summary = 'Manage sessions'
         self.description = <<-DESC
-          Register a new account or create a new session.
+          Register a new account, or create a new session.
+
+          If this is your first registration, both an email address and your
+          name are required. If you've already registered with trunk, you may
+          omit the name (unless you would like to change it).
+
+          It is recommended that you provide a description of the session, so
+          that it will be easier to identify later on. For instance, when you
+          would like to clean-up your sessions. A common example is to specify
+          the location where the machine, that you are using the session for, is
+          physically located.
         DESC
 
-        self.arguments = '[NAME SURNAME] [EMAIL]'
+        self.arguments = 'EMAIL [NAME]'
+
+        def self.options
+          [
+            ['--description=DESCRIPTION', 'An arbitrary description to ' \
+                                          'easily identify your session ' \
+                                          'later on.']
+          ].concat(super)
+        end
 
         def initialize(argv)
-          @name, @email = argv.shift_argument, argv.shift_argument
+          @session_description = argv.option('description')
+          @email, @name = argv.shift_argument, argv.shift_argument
           super
         end
 
         def validate!
           super
-          unless @name && @email
-            help! 'Specify both your name and email address'
+          unless @email
+            help! 'Specify at least your email address'
           end
         end
 
         def run
-          body = { 'email' => @email, 'name' => @name }.to_json
+          body = {
+            'email' => @email,
+            'name' => @name,
+            'description' => @session_description
+          }.to_json
           json = json(request_path(:post, "sessions", body, default_headers))
           save_token(json['token'])
           # TODO UI.notice inserts an empty line :/
@@ -128,6 +162,8 @@ module Pod
             hash = {
               :created_at => formatted_time(session['created_at']),
               :valid_until => formatted_time(session['valid_until']),
+              :created_from_ip => session['created_from_ip'],
+              :description => session['description']
             }
             if Time.parse(session['valid_until']) <= Time.now.utc
               hash[:color] = :red
@@ -140,21 +176,25 @@ module Pod
             hash
           end
 
-          columns = [:created_at, :valid_until].map do |key|
+          columns = [:created_at, :valid_until, :created_from_ip, :description].map do |key|
             find_max_size(sessions, key)
           end
 
           sessions = sessions.map do |session|
-            created_at = session[:created_at].ljust(columns[0])
-            valid_until = session[:valid_until].rjust(columns[1])
-            "#{created_at} - #{valid_until}. IP: TODO. Description: TODO.".send(session[:color])
+            created_at      = session[:created_at].ljust(columns[0])
+            valid_until     = session[:valid_until].rjust(columns[1])
+            created_from_ip = session[:created_from_ip].ljust(columns[2])
+            description     = session[:description]
+            msg = "#{created_at} - #{valid_until}. IP: #{created_from_ip}"
+            msg << " Description: #{description}" if description
+            msg.send(session[:color])
           end
 
           UI.labeled 'Sessions', sessions
         end
 
         def find_max_size(sessions, key)
-          sessions.map { |s| s[key].size }.max
+          sessions.map { |s| (s[key] || '').size }.max
         end
 
         def formatted_time(time_string)
