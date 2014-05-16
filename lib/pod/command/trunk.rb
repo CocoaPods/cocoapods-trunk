@@ -135,20 +135,6 @@ module Pod
         def find_max_size(sessions, key)
           sessions.map { |s| (s[key] || '').size }.max
         end
-
-        def formatted_time(time_string)
-          require 'active_support/time'
-          @tz_offset ||= Time.zone_offset(`/bin/date +%Z`.strip)
-          @current_year ||= Date.today.year
-
-          time = Time.parse(time_string) + @tz_offset
-          formatted = time.to_formatted_s(:long_ordinal)
-          # No need to show the current year, the user will probably know.
-          if time.year == @current_year
-            formatted.sub!(" #{@current_year}", '')
-          end
-          formatted
-        end
       end
 
       class AddOwner < Trunk
@@ -183,8 +169,18 @@ module Pod
       end
 
       class Push < Trunk
-        self.summary = 'Push a spec'
-        self.arguments = '[PATH]'
+        self.summary = 'Publish a podspec'
+        self.description = <<-DESC
+          By publishing a podspec you make this available to all users of the
+          ‘master’ spec-repo.
+
+          If this is the first time you publish a spec for this pod, you will
+          automatically be registered as the ‘owner’ of this pod. (Note that
+          ‘owner’ in this case implies a person that is allowed to publish new
+          versions and add other ‘owners’, not necessarily the library author.)
+        DESC
+
+        self.arguments = 'PATH'
 
         def initialize(argv)
           @path = argv.shift_argument
@@ -199,20 +195,32 @@ module Pod
           unless @path
             help! 'Specify the path to the podspec file.'
           end
+          unless File.exist?(@path)
+            help! 'No podspec found at the specified path.'
+          end
+          begin
+            spec # try to read the spec
+          rescue Informative # TODO: this should be a more specific error
+            help! 'Unable to interpret the specified path as a podspec.'
+          end
         end
 
         def run
-          spec = Pod::Specification.from_file(@path)
           response = request_path(:post, "pods", spec.to_json, auth_headers)
-
-          if (400...600).include?(response.status_code)
-            return
+          url = response.headers['location'].first
+          json = json(request_url(:get, url, default_headers))
+          UI.labeled 'Data URL', json['data_url']
+          messages = json['messages'].map do |entry|
+            at, message = entry.to_a.flatten
+            "#{formatted_time(at)}: #{message}"
           end
+          UI.labeled 'Log messages', messages
+        end
 
-          status_url = response.headers['location'].first
-          puts "Registered resource URL: #{status_url}"
+        private
 
-          request_url(:get, status_url, default_headers)
+        def spec
+          @spec ||= Pod::Specification.from_file(@path)
         end
       end
 
@@ -286,6 +294,20 @@ module Pod
 
       def auth_headers
         default_headers.merge('Authorization' => "Token #{token}")
+      end
+
+      def formatted_time(time_string)
+        require 'active_support/time'
+        @tz_offset ||= Time.zone_offset(`/bin/date +%Z`.strip)
+        @current_year ||= Date.today.year
+
+        time = Time.parse(time_string) + @tz_offset
+        formatted = time.to_formatted_s(:long_ordinal)
+        # No need to show the current year, the user will probably know.
+        if time.year == @current_year
+          formatted.sub!(" #{@current_year}", '')
+        end
+        formatted
       end
     end
   end
