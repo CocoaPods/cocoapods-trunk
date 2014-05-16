@@ -74,6 +74,13 @@ module Pod
 
       class Me < Trunk
         self.summary = 'Display information about your sessions'
+        self.description = <<-DESC
+          Includes information about your registration, followed by all your
+          sessions.
+
+          These are your current session, other valid sessions, unverified
+          sessions, and expired sessions.
+        DESC
 
         def validate!
           super
