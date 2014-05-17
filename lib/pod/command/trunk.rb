@@ -61,9 +61,8 @@ module Pod
           json = json(request_path(:post, "sessions", body, default_headers))
           save_token(json['token'])
           # TODO UI.notice inserts an empty line :/
-          puts '[!] Saved session token to ~/.netrc. Please verify the ' \
-               'session by clicking the link in the verification email that ' \
-               "has been sent to #{@email}".green
+          puts '[!] Please verify the session by clicking the link in the ' \
+               "verification email that has been sent to #{@email}".yellow
         end
 
         def save_token(token)
