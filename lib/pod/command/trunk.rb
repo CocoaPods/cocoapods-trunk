@@ -213,6 +213,13 @@ module Pod
           By publishing a podspec you make this available to all users of the
           ‘master’ spec-repo.
 
+          Before pushing the podspec to cocoapods.org, this will perform a local
+          lint of the podspec, including a build of the library. However, it
+          remains *your* responsibility to ensure that the published podspec
+          will actually work for your users. Thus it is recommended that you
+          *first* try to use the podspec to integrate the library into your demo
+          and/or real application.
+
           If this is the first time you publish a spec for this pod, you will
           automatically be registered as the ‘owner’ of this pod. (Note that
           ‘owner’ in this case implies a person that is allowed to publish new
