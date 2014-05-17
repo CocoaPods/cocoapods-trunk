@@ -27,6 +27,12 @@ module Pod
           would like to clean-up your sessions. A common example is to specify
           the location where the machine, that you are using the session for, is
           physically located.
+
+          Examples:
+
+              $ pod trunk register eloy@example.com 'Eloy Durán' --description='Personal Laptop'
+              $ pod trunk register eloy@example.com --description='Work Laptop'
+              $ pod trunk register eloy@example.com
         DESC
 
         self.arguments = 'EMAIL [NAME]'
