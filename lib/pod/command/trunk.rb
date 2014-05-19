@@ -248,7 +248,7 @@ module Pod
           unless @path
             help! 'Specify the path to the podspec file.'
           end
-          unless File.exist?(@path)
+          unless File.exist?(@path) && !File.directory?(@path)
             help! 'No podspec found at the specified path.'
           end
         end
