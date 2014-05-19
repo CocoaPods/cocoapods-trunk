@@ -18,9 +18,9 @@ module Pod
         self.description = <<-DESC
           Register a new account, or create a new session.
 
-          If this is your first registration, both an email address and your
-          name are required. If you've already registered with trunk, you may
-          omit the name (unless you would like to change it).
+          If this is your first registration, both an `EMAIL` address and your
+          `NAME` are required. If you've already registered with trunk, you may
+          omit the `NAME` (unless you would like to change it).
 
           It is recommended that you provide a description of the session, so
           that it will be easier to identify later on. For instance, when you
@@ -35,7 +35,10 @@ module Pod
               $ pod trunk register eloy@example.com
         DESC
 
-        self.arguments = 'EMAIL [NAME]'
+        self.arguments = [
+          ['EMAIL', :required],
+          ['NAME',  :optional],
+        ]
 
         def self.options
           [
@@ -183,7 +186,10 @@ module Pod
           pod, such as pushing new versions and adding other ‘owners’.
         DESC
 
-        self.arguments = 'POD OWNER-EMAIL'
+        self.arguments = [
+          ['POD',         :required],
+          ['OWNER-EMAIL', :required],
+        ]
 
         def initialize(argv)
           @pod, @email = argv.shift_argument, argv.shift_argument
@@ -226,7 +232,7 @@ module Pod
           versions and add other ‘owners’, not necessarily the library author.)
         DESC
 
-        self.arguments = 'PATH'
+        self.arguments = [['PATH', :required]]
 
         def self.options
           [
