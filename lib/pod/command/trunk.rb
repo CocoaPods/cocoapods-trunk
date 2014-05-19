@@ -8,7 +8,7 @@ module Pod
   class Command
     class Trunk < Command
       self.abstract_command = true
-      self.summary = 'Interact with trunk.cocoapods.org'
+      self.summary = 'Interact with the CocoaPods API (e.g. publishing new specs)'
 
       SCHEME_AND_HOST = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
       BASE_URL = "#{SCHEME_AND_HOST}/api/v1"
