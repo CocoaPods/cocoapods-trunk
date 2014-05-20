@@ -331,7 +331,7 @@ module Pod
       def print_error(body)
         begin
           json = JSON.parse(body)
-        rescue JSON::ParseError
+        rescue JSON::ParserError
           json = {}
         end
 
