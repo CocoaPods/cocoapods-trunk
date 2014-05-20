@@ -1,6 +1,8 @@
 # Cocoapods::Trunk
 
-TODO: Write a gem description
+[![Build Status](https://travis-ci.org/CocoaPods/cocoapods-trunk.svg)](https://travis-ci.org/CocoaPods/cocoapods-trunk)
+
+CocoaPods plugin for trunk.
 
 ## Installation
 
@@ -29,3 +31,4 @@ With a local install of `trunk.cocoapods.org` up and running:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
