@@ -9,5 +9,6 @@ group :development do
   gem 'mocha-on-bacon'
   gem 'mocha', '~> 0.11.4'
   gem 'prettybacon'
+  gem 'kicker'
 end
 
