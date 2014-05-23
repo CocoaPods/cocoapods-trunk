@@ -103,6 +103,11 @@ module Pod
           UI.labeled 'Email', json['email']
           UI.labeled 'Since', formatted_time(json['created_at'])
 
+          pods = json['pods'] || []
+          pods = pods.map { |pod| pod['name'] }
+          pods = 'None' unless pods.any?
+          UI.labeled 'Pods', pods
+
           sessions = json['sessions'].map do |session|
             hash = {
               :created_at => formatted_time(session['created_at']),
