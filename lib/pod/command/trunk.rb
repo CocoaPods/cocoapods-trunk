@@ -266,7 +266,10 @@ module Pod
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
 
-          UI.labeled 'Data URL', json['data_url']
+          # Using UI.labeled here is dangerous, as it wraps the URL and indents
+          # it, which breaks the URL when you try to copy-paste it.
+          $stdout.puts "  - Data URL: #{json['data_url']}"
+
           messages = json['messages'].map do |entry|
             at, message = entry.to_a.flatten
             "#{formatted_time(at)}: #{message}"
