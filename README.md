@@ -1,6 +1,6 @@
 # Cocoapods::Trunk
 
-[![Build Status](https://travis-ci.org/CocoaPods/cocoapods-trunk.svg)](https://travis-ci.org/CocoaPods/cocoapods-trunk)
+[![Build Status](http://img.shields.io/travis/CocoaPods/cocoapods-trunk/master.svg?style=flat)](https://travis-ci.org/CocoaPods/cocoapods-trunk)
 
 CocoaPods plugin for trunk.
 
