@@ -224,7 +224,8 @@ module Pod
         self.summary = 'Publish a podspec'
         self.description = <<-DESC
           Publish the podspec at `PATH` to make it available to all users of
-          the ‘master’ spec-repo.
+          the ‘master’ spec-repo. If `PATH` is not provided, defaults to the
+          current directory.
 
           Before pushing the podspec to cocoapods.org, this will perform a local
           lint of the podspec, including a build of the library. However, it
@@ -240,7 +241,7 @@ module Pod
         DESC
 
         self.arguments = [
-          CLAide::Argument.new('PATH', true)
+          CLAide::Argument.new('PATH', false)
         ]
 
         def self.options
@@ -251,7 +252,8 @@ module Pod
 
         def initialize(argv)
           @allow_warnings = argv.flag?('allow-warnings')
-          @path = argv.shift_argument
+          @path = argv.shift_argument || '.'
+          find_podspec_file if File.directory?(@path)
           super
         end
 
@@ -261,16 +263,16 @@ module Pod
             help! 'You need to register a session first.'
           end
           unless @path
-            help! 'Specify the path to the podspec file.'
+            help! 'Please specify the path to the podspec file.'
           end
           unless File.exist?(@path) && !File.directory?(@path)
-            help! 'No podspec found at the specified path.'
+            help! "The specified path `#{@path}` does not point to " \
+              'an existing podspec file.'
           end
         end
 
         def run
           validate_podspec
-
           response = request_path(:post, "pods", spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
@@ -287,6 +289,20 @@ module Pod
         end
 
         private
+
+        def find_podspec_file
+          podspecs = Dir[Pathname(@path) + '*.podspec{.json,}']
+          case podspecs.count
+            when 0
+              UI.notice "No podfile found in directory `#{@path}`"
+            when 1
+              @path = podspecs[0]
+              UI.notice "Found podfile `#{@path}`"
+            else
+              UI.notice "Multiple podspec files in directory `#{@path}`. " \
+                'You need to explicitly specify which one to use.'
+          end
+        end
 
         def spec
           @spec ||= Pod::Specification.from_file(@path)
