@@ -99,11 +99,12 @@ module Pod
 
         def run
           json = json(request_path(:get, "sessions", auth_headers))
+          owner = json(request_path(:get, "owners/#{json['email']}"))
           UI.labeled 'Name', json['name']
           UI.labeled 'Email', json['email']
           UI.labeled 'Since', formatted_time(json['created_at'])
 
-          pods = json['pods'] || []
+          pods = owner['pods'] || []
           pods = pods.map { |pod| pod['name'] }
           pods = 'None' unless pods.any?
           UI.labeled 'Pods', pods
