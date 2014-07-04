@@ -8,6 +8,7 @@ group :development do
   gem 'bacon'
   gem 'mocha-on-bacon'
   gem 'mocha', '~> 0.11.4'
+  gem 'psych' # Needed by Mocha
   gem 'prettybacon'
   gem 'kicker'
 end
