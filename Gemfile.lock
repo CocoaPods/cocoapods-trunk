@@ -1,0 +1,87 @@
+PATH
+  remote: .
+  specs:
+    cocoapods-trunk (0.1.3)
+      json_pure (~> 1.8)
+      nap (>= 0.6)
+      netrc
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activesupport (3.2.19)
+      i18n (~> 0.6, >= 0.6.4)
+      multi_json (~> 1.0)
+    bacon (1.2.0)
+    claide (0.6.1)
+    cocoapods (0.33.1)
+      activesupport (>= 3.2.15, < 4)
+      claide (~> 0.6.1)
+      cocoapods-core (= 0.33.1)
+      cocoapods-downloader (~> 0.6.1)
+      cocoapods-plugins (~> 0.2.0)
+      cocoapods-trunk (~> 0.1.1)
+      cocoapods-try (~> 0.3.0)
+      colored (~> 1.2)
+      escape (~> 0.0.4)
+      json_pure (~> 1.8)
+      nap (~> 0.7)
+      open4 (~> 1.3)
+      xcodeproj (~> 0.17.0)
+    cocoapods-core (0.33.1)
+      activesupport (>= 3.2.15)
+      fuzzy_match (~> 2.0.4)
+      json_pure (~> 1.8)
+      nap (~> 0.5)
+    cocoapods-downloader (0.6.1)
+    cocoapods-plugins (0.2.0)
+      nap
+    cocoapods-try (0.3.0)
+    colored (1.2)
+    escape (0.0.4)
+    ffi (1.9.3)
+    fuzzy_match (2.0.4)
+    i18n (0.6.9)
+    json_pure (1.8.1)
+    kicker (3.0.0)
+      listen (~> 1.3.0)
+      notify (~> 0.5.2)
+    listen (1.3.1)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      rb-kqueue (>= 0.2)
+    metaclass (0.0.4)
+    mocha (0.11.4)
+      metaclass (~> 0.0.1)
+    mocha-on-bacon (0.2.1)
+      mocha (>= 0.9.8)
+    multi_json (1.10.1)
+    nap (0.8.0)
+    netrc (0.7.7)
+    notify (0.5.2)
+    open4 (1.3.4)
+    prettybacon (0.0.2)
+      bacon (~> 1.2)
+    rake (10.3.2)
+    rb-fsevent (0.9.4)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rb-kqueue (0.2.3)
+      ffi (>= 0.5.0)
+    xcodeproj (0.17.0)
+      activesupport (~> 3.0)
+      colored (~> 1.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bacon
+  bundler (~> 1.3)
+  cocoapods
+  cocoapods-trunk!
+  kicker
+  mocha (~> 0.11.4)
+  mocha-on-bacon
+  prettybacon
+  rake
