@@ -98,17 +98,18 @@ module Pod
         end
 
         def run
-          json = json(request_path(:get, "sessions", auth_headers))
-          UI.labeled 'Name', json['name']
-          UI.labeled 'Email', json['email']
-          UI.labeled 'Since', formatted_time(json['created_at'])
+          me = json(request_path(:get, "sessions", auth_headers))
+          owner = json(request_path(:get, "owners/#{me['email']}"))
+          UI.labeled 'Name', owner['name']
+          UI.labeled 'Email', owner['email']
+          UI.labeled 'Since', formatted_time(owner['created_at'])
 
-          pods = json['pods'] || []
+          pods = owner['pods'] || []
           pods = pods.map { |pod| pod['name'] }
           pods = 'None' unless pods.any?
           UI.labeled 'Pods', pods
 
-          sessions = json['sessions'].map do |session|
+          sessions = me['sessions'].map do |session|
             hash = {
               :created_at => formatted_time(session['created_at']),
               :valid_until => formatted_time(session['valid_until']),
