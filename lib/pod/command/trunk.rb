@@ -290,13 +290,13 @@ module Pod
         def find_podspec_file
           podspecs = Dir[Pathname(@path) + '*.podspec{.json,}']
           case podspecs.count
-            when 0
-              UI.notice "No podspec found in directory `#{@path}`"
-            when 1
-              UI.notice "Found podspec `#{podspecs[0]}`"
-            else
-              UI.notice "Multiple podspec files in directory `#{@path}`. " \
-                'You need to explicitly specify which one to use.'
+          when 0
+            UI.notice "No podspec found in directory `#{@path}`"
+          when 1
+            UI.notice "Found podspec `#{podspecs[0]}`"
+          else
+            UI.notice "Multiple podspec files in directory `#{@path}`. " \
+              'You need to explicitly specify which one to use.'
           end
           @path = (podspecs.count == 1) ? podspecs[0] : nil
         end
