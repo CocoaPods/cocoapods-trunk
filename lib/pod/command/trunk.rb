@@ -36,8 +36,8 @@ module Pod
         DESC
 
         self.arguments = [
-          ['EMAIL', :required],
-          ['NAME',  :optional],
+          CLAide::Argument.new('EMAIL', true),
+          CLAide::Argument.new('NAME',  false),
         ]
 
         def self.options
@@ -188,13 +188,15 @@ module Pod
       class AddOwner < Trunk
         self.summary = 'Add an owner to a pod'
         self.description = <<-DESC
+          Adds the registered user with specified `OWNER-EMAIL` as an owner
+          of the given `POD`.
           An ‘owner’ is a registered user whom is allowed to make changes to a
           pod, such as pushing new versions and adding other ‘owners’.
         DESC
 
         self.arguments = [
-          ['POD',         :required],
-          ['OWNER-EMAIL', :required],
+          CLAide::Argument.new('POD', true),
+          CLAide::Argument.new('OWNER-EMAIL', true)
         ]
 
         def initialize(argv)
@@ -239,7 +241,9 @@ module Pod
           versions and add other ‘owners’, not necessarily the library author.)
         DESC
 
-        self.arguments = [['PATH', :required]]
+        self.arguments = [
+          CLAide::Argument.new('PATH', false)
+        ]
 
         def self.options
           [
