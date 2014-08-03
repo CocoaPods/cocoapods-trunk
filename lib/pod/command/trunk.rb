@@ -72,6 +72,9 @@ module Pod
           # TODO UI.notice inserts an empty line :/
           puts '[!] Please verify the session by clicking the link in the ' \
                "verification email that has been sent to #{@email}".yellow
+        rescue REST::Error => e
+          raise Informative, 'There was an error registering with trunk: ' \
+                             "#{e.message}"
         end
 
         def save_token(token)
@@ -142,6 +145,10 @@ module Pod
           end
 
           UI.labeled 'Sessions', sessions
+
+        rescue REST::Error => e
+          raise Informative, 'There was an error fetching your info ' \
+                             "from trunk: #{e.message}"
         end
 
         private
@@ -181,6 +188,9 @@ module Pod
           def run
             path = @remove_all ? 'sessions/all' : 'sessions'
             request_path(:delete, path, auth_headers)
+          rescue REST::Error => e
+            raise Informative, 'There was an error cleaning up your ' \
+                               "sessions from trunk: #{e.message}"
           end
         end
       end
@@ -216,6 +226,9 @@ module Pod
           body = { 'email' => @email }.to_json
           json = json(request_path(:patch, "pods/#{@pod}/owners", body, auth_headers))
           UI.labeled 'Owners', json.map { |o| "#{o['name']} <#{o['email']}>" }
+        rescue REST::Error => e
+          raise Informative, "There was an error adding #{@email} to " \
+                             "#{@pod} on trunk: #{e.message}"
         end
       end
 
@@ -283,6 +296,9 @@ module Pod
             "#{formatted_time(at)}: #{message}"
           end
           UI.labeled 'Log messages', messages
+        rescue REST::Error => e
+          raise Informative, "There was an error pushing a new version " \
+                             "to trunk: #{e.message}"
         end
 
         private
