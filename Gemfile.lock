@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: b997f050f65b2823bbf3539308206b1b0e630932
+  revision: d696bf6a34eb837d8e89fc1fc9170cff1a1256e4
   branch: master
   specs:
     cocoapods-core (0.33.1)
@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 1a943d729f2cdd97bfc1e1e0a041456459e9e24d
+  revision: 9109185a4a819b15901859b1e9941f1e56a2b706
   branch: master
   specs:
     cocoapods (0.33.1)
@@ -74,10 +74,10 @@ GEM
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
     metaclass (0.0.4)
-    mocha (0.11.4)
+    mocha (1.1.0)
       metaclass (~> 0.0.1)
-    mocha-on-bacon (0.2.1)
-      mocha (>= 0.9.8)
+    mocha-on-bacon (0.2.2)
+      mocha (>= 0.13.0)
     multi_json (1.10.1)
     nap (0.8.0)
     netrc (0.7.7)
