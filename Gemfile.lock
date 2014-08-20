@@ -1,13 +1,32 @@
+PATH
+  remote: .
+  specs:
+    cocoapods-trunk (0.1.4)
+      json_pure (~> 1.8)
+      nap (>= 0.8)
+      netrc
+
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: e64c76edd9dbc540776772097b78ae27720eccbb
+  revision: c4c75f833db97173fca7380890ed99affad2bbab
   branch: master
   specs:
     claide (0.6.1)
 
 GIT
+  remote: https://github.com/CocoaPods/Core.git
+  revision: b997f050f65b2823bbf3539308206b1b0e630932
+  branch: master
+  specs:
+    cocoapods-core (0.33.1)
+      activesupport (>= 3.2.15)
+      fuzzy_match (~> 2.0.4)
+      json_pure (~> 1.8)
+      nap (~> 0.8.0)
+
+GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 4e08444255c14078e5a5e936a69ad67691501c91
+  revision: 1a943d729f2cdd97bfc1e1e0a041456459e9e24d
   branch: master
   specs:
     cocoapods (0.33.1)
@@ -24,25 +43,6 @@ GIT
       nap (~> 0.8)
       open4 (~> 1.3)
       xcodeproj (~> 0.18.0)
-
-GIT
-  remote: https://github.com/CocoaPods/Core.git
-  revision: 75028fcea7c8e02cff17ada95bb17f123ac949cc
-  branch: master
-  specs:
-    cocoapods-core (0.33.1)
-      activesupport (>= 3.2.15)
-      fuzzy_match (~> 2.0.4)
-      json_pure (~> 1.8)
-      nap (~> 0.8.0)
-
-PATH
-  remote: .
-  specs:
-    cocoapods-trunk (0.1.4)
-      json_pure (~> 1.8)
-      nap (>= 0.8)
-      netrc
 
 GEM
   remote: https://rubygems.org/
@@ -81,7 +81,6 @@ GEM
     open4 (1.3.4)
     prettybacon (0.0.2)
       bacon (~> 1.2)
-    psych (2.0.5)
     rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
@@ -104,8 +103,7 @@ DEPENDENCIES
   cocoapods-core!
   cocoapods-trunk!
   kicker
-  mocha (~> 0.11.4)
+  mocha
   mocha-on-bacon
   prettybacon
-  psych
   rake

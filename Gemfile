@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in cocoapods-trunk.gemspec
 gemspec
 
 group :development do
@@ -9,10 +8,10 @@ group :development do
   gem 'claide',         :git => 'https://github.com/CocoaPods/CLAide.git', :branch => 'master'
 
   gem 'bacon'
-  gem 'mocha-on-bacon'
-  gem 'mocha', '~> 0.11.4'
-  gem 'psych' # Needed by Mocha
-  gem 'prettybacon'
   gem 'kicker'
+  gem 'mocha'
+  gem 'mocha-on-bacon'
+  gem 'prettybacon'
 end
+
 
