@@ -1,4 +1,4 @@
-require "cocoapods/trunk/version"
+require 'cocoapods/trunk/version'
 
 module Cocoapods
   module Trunk

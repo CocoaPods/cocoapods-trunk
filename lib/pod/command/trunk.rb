@@ -44,7 +44,7 @@ module Pod
           [
             ['--description=DESCRIPTION', 'An arbitrary description to ' \
                                           'easily identify your session ' \
-                                          'later on.']
+                                          'later on.'],
           ].concat(super)
         end
 
@@ -65,9 +65,9 @@ module Pod
           body = {
             'email' => @email,
             'name' => @name,
-            'description' => @session_description
+            'description' => @session_description,
           }.to_json
-          json = json(request_path(:post, "sessions", body, default_headers))
+          json = json(request_path(:post, 'sessions', body, default_headers))
           save_token(json['token'])
           # TODO UI.notice inserts an empty line :/
           puts '[!] Please verify the session by clicking the link in the ' \
@@ -101,7 +101,7 @@ module Pod
         end
 
         def run
-          me = json(request_path(:get, "sessions", auth_headers))
+          me = json(request_path(:get, 'sessions', auth_headers))
           owner = json(request_path(:get, "owners/#{me['email']}"))
           UI.labeled 'Name', owner['name']
           UI.labeled 'Email', owner['email']
@@ -117,7 +117,7 @@ module Pod
               :created_at => formatted_time(session['created_at']),
               :valid_until => formatted_time(session['valid_until']),
               :created_from_ip => session['created_from_ip'],
-              :description => session['description']
+              :description => session['description'],
             }
             if Time.parse(session['valid_until']) <= Time.now.utc
               hash[:color] = :red
@@ -206,7 +206,7 @@ module Pod
 
         self.arguments = [
           CLAide::Argument.new('POD', true),
-          CLAide::Argument.new('OWNER-EMAIL', true)
+          CLAide::Argument.new('OWNER-EMAIL', true),
         ]
 
         def initialize(argv)
@@ -255,12 +255,12 @@ module Pod
         DESC
 
         self.arguments = [
-          CLAide::Argument.new('PATH', false)
+          CLAide::Argument.new('PATH', false),
         ]
 
         def self.options
           [
-            ["--allow-warnings", "Allows push even if there are lint warnings"],
+            ['--allow-warnings', 'Allows push even if there are lint warnings'],
           ].concat(super)
         end
 
@@ -287,7 +287,7 @@ module Pod
 
         def run
           validate_podspec
-          response = request_path(:post, "pods", spec.to_json, auth_headers)
+          response = request_path(:post, 'pods', spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
 
@@ -301,7 +301,7 @@ module Pod
           end
           UI.labeled 'Log messages', messages
         rescue REST::Error => e
-          raise Informative, "There was an error pushing a new version " \
+          raise Informative, 'There was an error pushing a new version ' \
                              "to trunk: #{e.message}"
         end
 
@@ -337,14 +337,14 @@ module Pod
           validator.only_errors = @allow_warnings
           begin
             validator.validate
-          rescue Exception
+          rescue
             # TODO: We should add `CLAide::InformativeError#wraps_exception`
             # which would include the original error message on `--verbose`.
             # https://github.com/CocoaPods/CLAide/issues/31
-            raise Informative, "The podspec does not validate."
+            raise Informative, 'The podspec does not validate.'
           end
           unless validator.validated?
-            raise Informative, "The podspec does not validate."
+            raise Informative, 'The podspec does not validate.'
           end
         end
       end
@@ -383,7 +383,7 @@ module Pod
         case error = json['error']
         when Hash
           lines = error.sort_by(&:first).map do |attr, messages|
-            attr = attr[0,1].upcase << attr[1..-1]
+            attr = attr[0, 1].upcase << attr[1..-1]
             messages.sort.map do |message|
               "- #{attr} #{message}."
             end
@@ -413,7 +413,7 @@ module Pod
       def default_headers
         {
           'Content-Type' => 'application/json; charset=utf-8',
-          'Accept' => 'application/json; charset=utf-8'
+          'Accept' => 'application/json; charset=utf-8',
         }
       end
 

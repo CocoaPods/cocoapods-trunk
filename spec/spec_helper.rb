@@ -29,7 +29,6 @@ require 'cocoapods_plugin'
 #-----------------------------------------------------------------------------#
 
 module Pod
-
   # Disable the wrapping so the output is deterministic in the tests.
   #
   UI.disable_wrap = true
@@ -48,7 +47,7 @@ module Pod
         @output << "#{message}\n"
       end
 
-      def warn(message = '', actions = [])
+      def warn(message = '', _actions = [])
         @warnings << "#{message}\n"
       end
 

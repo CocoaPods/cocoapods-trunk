@@ -3,20 +3,20 @@ require 'tmpdir'
 
 module Pod
   describe Command::Trunk::Push do
-    describe "CLAide" do
-      it "registers it self" do
-        Command.parse(%w{ trunk push }).should.be.instance_of Command::Trunk::Push
+    describe 'CLAide' do
+      it 'registers it self' do
+        Command.parse(%w(        trunk push        )).should.be.instance_of Command::Trunk::Push
       end
     end
 
     describe 'PATH' do
-      before {
+      before do
         UI.output = ''
-      }
+      end
       it 'defaults to the current directory' do
         # Disable the podspec finding algorithm so we can check the raw path
         Command::Trunk::Push.any_instance.stubs(:find_podspec_file) { |path| path }
-        command = Command.parse(%w{ trunk push })
+        command = Command.parse(%w(        trunk push        ))
         command.instance_eval { @path }.should == '.'
       end
 
@@ -25,10 +25,10 @@ module Pod
         Dir.mktmpdir do |dir|
           files.each do |filename|
             path = Pathname(dir) + filename
-            File.open(path, 'w') { }
+            File.open(path, 'w') {}
           end
           # Execute `pod trunk push` with this dir as parameter
-          command = Command.parse(%w{ trunk push } + [dir])
+          command = Command.parse(%w(          trunk push          ) + [dir])
           path = command.instance_eval { @path }
           return path ? File.basename(path) : nil
         end
@@ -46,13 +46,13 @@ module Pod
 
       it 'should warn when no podspec found in a given directory' do
         files = %w(foo bar baz)
-        found_podspec_among_files(files).should == nil
+        found_podspec_among_files(files).should.nil?
         UI.output.should.match /No podspec found in directory/
       end
 
       it 'should warn when multiple podspecs found in a given directory' do
         files = %w(foo bar.podspec bar.podspec.json baz)
-        found_podspec_among_files(files).should == nil
+        found_podspec_among_files(files).should.nil?
         UI.output.should.match /Multiple podspec files in directory/
       end
     end
