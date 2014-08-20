@@ -1,3 +1,17 @@
+# Set up coverage analysis
+#-----------------------------------------------------------------------------#
+
+if RUBY_VERSION >= '1.9.3'
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.configure do |config|
+    config.logger.level = Logger::WARN
+  end
+  CodeClimate::TestReporter.start
+end
+
+# Set up
+#-----------------------------------------------------------------------------#
+
 require 'pathname'
 ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 $:.unshift((ROOT + 'lib').to_s)
@@ -11,6 +25,7 @@ require 'cocoapods'
 
 require 'cocoapods_plugin'
 
+# Helpers
 #-----------------------------------------------------------------------------#
 
 module Pod
@@ -43,5 +58,3 @@ module Pod
     end
   end
 end
-
-#-----------------------------------------------------------------------------#
