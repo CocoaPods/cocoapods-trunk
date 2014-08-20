@@ -20,6 +20,8 @@ begin
   require "bundler/gem_tasks"
   task :default => :spec
 
+  #-- Specs ------------------------------------------------------------------#
+
   desc 'Runs all the specs'
   task :spec do
     title 'Running Unit Tests'
@@ -27,9 +29,18 @@ begin
     sh "bundle exec bacon #{files}"
   end
 
+  #-- Kick -------------------------------------------------------------------#
+
   desc 'Automatically run specs for updated files'
   task :kick do
     exec 'bundle exec kicker -c'
+  end
+
+  #-- RuboCop ----------------------------------------------------------------#
+
+  if RUBY_VERSION >= '1.9.3'
+    require 'rubocop/rake_task'
+    RuboCop::RakeTask.new
   end
 
 rescue LoadError
@@ -37,6 +48,9 @@ rescue LoadError
     '[!] Some Rake tasks haven been disabled because the environment' \
     ' couldn’t be loaded. Be sure to run `rake bootstrap` first.' \
     "\e[0m"
+  $stderr.puts e.message
+  $stderr.puts e.backtrace
+  $stderr.puts
 end
 
 #-- Helpers ------------------------------------------------------------------#
