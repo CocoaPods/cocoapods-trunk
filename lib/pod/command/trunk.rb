@@ -56,6 +56,11 @@ module Pod
 
         def validate!
           super
+
+          if token
+            help! 'You already have a session. Logout first to create a new session.'
+          end
+
           unless @email
             help! 'Specify at least your email address.'
           end
