@@ -7,5 +7,11 @@ module Pod
         Command.parse(%w(        trunk register        )).should.be.instance_of Command::Trunk::Register
       end
     end
+
+    it "shouldn't let a user register if they already have a session" do
+      command = Pod::Command.parse(%w(trunk register kyle@example.com))
+      command.stubs(:token).returns('valid token')
+      lambda { command.validate! }.should.raise CLAide::Help
+    end
   end
 end

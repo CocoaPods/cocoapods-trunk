@@ -56,6 +56,11 @@ module Pod
 
         def validate!
           super
+
+          if token
+            help! 'You already have a session. Logout first to create a new session.'
+          end
+
           unless @email
             help! 'Specify at least your email address.'
           end
@@ -79,6 +84,22 @@ module Pod
 
         def save_token(token)
           netrc['trunk.cocoapods.org'] = @email, token
+          netrc.save
+        end
+      end
+
+      class Logout < Trunk
+        self.summary = 'Remove your session'
+
+        def validate!
+          super
+          unless token
+            help! 'You need to register a session first.'
+          end
+        end
+
+        def run
+          netrc.delete('trunk.cocoapods.org')
           netrc.save
         end
       end
