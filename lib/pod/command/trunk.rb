@@ -83,6 +83,22 @@ module Pod
         end
       end
 
+      class Logout < Trunk
+        self.summary = 'Remove your session'
+
+        def validate!
+          super
+          unless token
+            help! 'You need to register a session first.'
+          end
+        end
+
+        def run
+          netrc.delete('trunk.cocoapods.org')
+          netrc.save
+        end
+      end
+
       class Me < Trunk
         self.summary = 'Display information about your sessions'
         self.description = <<-DESC
