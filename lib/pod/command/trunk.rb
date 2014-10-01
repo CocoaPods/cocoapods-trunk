@@ -333,7 +333,7 @@ module Pod
         # TODO: Currently copied verbatim from `pod push`.
         def validate_podspec
           UI.puts 'Validating podspec'.yellow
-          validator = Validator.new(spec)
+          validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.only_errors = @allow_warnings
           begin
             validator.validate

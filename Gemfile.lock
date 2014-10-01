@@ -1,36 +1,36 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: 31e74fae76461e9832e488f77a9e8116703c201b
+  revision: ce2a7890dbfcaecd38347195d5c753cdb893e636
   branch: master
   specs:
     claide (0.7.0)
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 21bcfb15d3e5dfc1540cd9aeff12ea92ad46e2d9
+  revision: ecbae47b874bea6f4524cec8b7354f7657bb2b7d
   branch: master
   specs:
-    cocoapods (0.33.1)
+    cocoapods (0.34.1)
       activesupport (>= 3.2.15, < 4)
       claide (~> 0.7.0)
-      cocoapods-core (= 0.33.1)
-      cocoapods-downloader (~> 0.6.1)
-      cocoapods-plugins (~> 0.3.0)
+      cocoapods-core (= 0.34.1)
+      cocoapods-downloader (~> 0.7.1)
+      cocoapods-plugins (~> 0.3.1)
       cocoapods-trunk (~> 0.2.0)
-      cocoapods-try (~> 0.4.0)
+      cocoapods-try (~> 0.4.1)
       colored (~> 1.2)
       escape (~> 0.0.4)
       json_pure (~> 1.8)
       nap (~> 0.8)
       open4 (~> 1.3)
-      xcodeproj (~> 0.18.0)
+      xcodeproj (~> 0.19.2)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: 2c5be5dbb1157c10e86ff75223a119b74d01ae7f
+  revision: 51bf848629d6c0c23e116cc9a7232f24cdfbd30e
   branch: master
   specs:
-    cocoapods-core (0.33.1)
+    cocoapods-core (0.34.1)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       json_pure (~> 1.8)
@@ -55,10 +55,10 @@ GEM
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
     bacon (1.2.0)
-    cocoapods-downloader (0.6.1)
-    cocoapods-plugins (0.3.0)
+    cocoapods-downloader (0.7.1)
+    cocoapods-plugins (0.3.1)
       nap
-    cocoapods-try (0.4.0)
+    cocoapods-try (0.4.1)
     codeclimate-test-reporter (0.4.0)
       simplecov (>= 0.7.1, < 1.0.0)
     colored (1.2)
@@ -111,7 +111,7 @@ GEM
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     slop (3.6.0)
-    xcodeproj (0.18.0)
+    xcodeproj (0.19.2)
       CFPropertyList (~> 2.2)
       activesupport (~> 3.0)
       colored (~> 1.2)
