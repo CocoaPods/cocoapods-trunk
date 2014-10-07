@@ -6,6 +6,13 @@
   [Samuel Giddins](https://github.com/segiddins)
   [#28](https://github.com/CocoaPods/cocoapods-trunk/issues/28)
 
+##### Bug Fixes
+
+* Fixes an issue where `pod trunk push` doesn't show which validation errors
+  and just stated it failed.
+  [Kyle Fuller](https://github.com/kylef)
+  [#26](https://github.com/CocoaPods/cocoapods-trunk/issues/26)
+
 
 ## 0.2.0
 

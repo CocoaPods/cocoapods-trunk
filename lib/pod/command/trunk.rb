@@ -335,14 +335,7 @@ module Pod
           UI.puts 'Validating podspec'.yellow
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.only_errors = @allow_warnings
-          begin
-            validator.validate
-          rescue
-            # TODO: We should add `CLAide::InformativeError#wraps_exception`
-            # which would include the original error message on `--verbose`.
-            # https://github.com/CocoaPods/CLAide/issues/31
-            raise Informative, 'The podspec does not validate.'
-          end
+          validator.validate
           unless validator.validated?
             raise Informative, 'The podspec does not validate.'
           end
