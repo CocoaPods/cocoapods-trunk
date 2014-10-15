@@ -30,7 +30,11 @@ module Pod
           # Execute `pod trunk push` with this dir as parameter
           command = Command.parse(%w(          trunk push          ) + [dir])
           path = command.instance_eval { @path }
+<<<<<<< Updated upstream
           path && File.basename(path)
+=======
+          return File.basename(path) if path
+>>>>>>> Stashed changes
         end
       end
 

@@ -15,8 +15,8 @@ module Pod
 
       require 'pod/command/trunk/register'
       require 'pod/command/trunk/me'
-      require 'pod/command/trunk/push'
       require 'pod/command/trunk/addowner'
+      require 'pod/command/trunk/push'
 
       private
 

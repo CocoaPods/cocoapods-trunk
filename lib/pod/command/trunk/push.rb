@@ -1,33 +1,34 @@
 module Pod
   class Command
     class Trunk
+
       class Push < Trunk
         self.summary = 'Publish a podspec'
         self.description = <<-DESC
-            Publish the podspec at `PATH` to make it available to all users of
-            the ‘master’ spec-repo. If `PATH` is not provided, defaults to the
-            current directory.
+                Publish the podspec at `PATH` to make it available to all users of
+                the ‘master’ spec-repo. If `PATH` is not provided, defaults to the
+                current directory.
 
-            Before pushing the podspec to cocoapods.org, this will perform a local
-            lint of the podspec, including a build of the library. However, it
-            remains *your* responsibility to ensure that the published podspec
-            will actually work for your users. Thus it is recommended that you
-            *first* try to use the podspec to integrate the library into your demo
-            and/or real application.
+                Before pushing the podspec to cocoapods.org, this will perform a local
+                lint of the podspec, including a build of the library. However, it
+                remains *your* responsibility to ensure that the published podspec
+                will actually work for your users. Thus it is recommended that you
+                *first* try to use the podspec to integrate the library into your demo
+                and/or real application.
 
-            If this is the first time you publish a spec for this pod, you will
-            automatically be registered as the ‘owner’ of this pod. (Note that
-            ‘owner’ in this case implies a person that is allowed to publish new
-            versions and add other ‘owners’, not necessarily the library author.)
+                If this is the first time you publish a spec for this pod, you will
+                automatically be registered as the ‘owner’ of this pod. (Note that
+                ‘owner’ in this case implies a person that is allowed to publish new
+                versions and add other ‘owners’, not necessarily the library author.)
         DESC
 
         self.arguments = [
-          CLAide::Argument.new('PATH', false)
+          CLAide::Argument.new('PATH', false),
         ]
 
         def self.options
           [
-            ["--allow-warnings", "Allows push even if there are lint warnings"],
+            ['--allow-warnings', 'Allows push even if there are lint warnings'],
           ].concat(super)
         end
 
@@ -48,13 +49,13 @@ module Pod
           end
           unless File.exist?(@path) && !File.directory?(@path)
             help! "The specified path `#{@path}` does not point to " \
-                'an existing podspec file.'
+                    'an existing podspec file.'
           end
         end
 
         def run
           validate_podspec
-          response = request_path(:post, "pods", spec.to_json, auth_headers)
+          response = request_path(:post, 'pods', spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
 
@@ -67,6 +68,9 @@ module Pod
             "#{formatted_time(at)}: #{message}"
           end
           UI.labeled 'Log messages', messages
+        rescue REST::Error => e
+          raise Informative, 'There was an error pushing a new version ' \
+                                   "to trunk: #{e.message}"
         end
 
         private
@@ -80,7 +84,7 @@ module Pod
               UI.notice "Found podspec `#{podspecs[0]}`"
             else
               UI.notice "Multiple podspec files in directory `#{@path}`. " \
-                  'You need to explicitly specify which one to use.'
+                    'You need to explicitly specify which one to use.'
           end
           @path = (podspecs.count == 1) ? podspecs[0] : nil
         end
@@ -89,7 +93,7 @@ module Pod
           @spec ||= Pod::Specification.from_file(@path)
         rescue Informative # TODO: this should be a more specific error
           raise Informative, 'Unable to interpret the specified path as a ' \
-                               'podspec.'
+                                   'podspec.'
         end
 
         # Performs a full lint against the podspecs.
@@ -97,21 +101,16 @@ module Pod
         # TODO: Currently copied verbatim from `pod push`.
         def validate_podspec
           UI.puts 'Validating podspec'.yellow
-          validator = Validator.new(spec)
+
+          validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.only_errors = @allow_warnings
-          begin
-            validator.validate
-          rescue Exception
-            # TODO: We should add `CLAide::InformativeError#wraps_exception`
-            # which would include the original error message on `--verbose`.
-            # https://github.com/CocoaPods/CLAide/issues/31
-            raise Informative, "The podspec does not validate."
-          end
+          validator.validate
           unless validator.validated?
-            raise Informative, "The podspec does not validate."
+            raise Informative, 'The podspec does not validate.'
           end
         end
       end
+
     end
   end
 end
