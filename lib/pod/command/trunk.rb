@@ -400,7 +400,7 @@ module Pod
       end
 
       def token
-        netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].last
+        netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].password
       end
 
       def default_headers
