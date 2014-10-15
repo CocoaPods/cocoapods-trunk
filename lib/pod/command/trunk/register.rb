@@ -1,7 +1,6 @@
 module Pod
   class Command
     class Trunk
-
       class Register < Trunk
         self.summary = 'Manage sessions'
         self.description = <<-DESC
@@ -71,7 +70,6 @@ module Pod
           netrc.save
         end
       end
-
     end
   end
 end

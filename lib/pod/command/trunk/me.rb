@@ -1,7 +1,6 @@
 module Pod
   class Command
     class Trunk
-
       class Me < Trunk
         self.summary = 'Display information about your sessions'
         self.description = <<-DESC
@@ -113,7 +112,6 @@ module Pod
           end
         end
       end
-
     end
   end
 end

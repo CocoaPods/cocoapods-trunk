@@ -1,7 +1,6 @@
 module Pod
   class Command
     class Trunk
-
       class AddOwner < Trunk
         self.summary = 'Add an owner to a pod'
         self.description = <<-DESC
@@ -40,7 +39,6 @@ module Pod
                                    "#{@pod} on trunk: #{e.message}"
         end
       end
-
     end
   end
 end

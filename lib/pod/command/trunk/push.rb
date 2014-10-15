@@ -1,7 +1,6 @@
 module Pod
   class Command
     class Trunk
-
       class Push < Trunk
         self.summary = 'Publish a podspec'
         self.description = <<-DESC
@@ -78,13 +77,13 @@ module Pod
         def find_podspec_file
           podspecs = Dir[Pathname(@path) + '*.podspec{.json,}']
           case podspecs.count
-            when 0
-              UI.notice "No podspec found in directory `#{@path}`"
-            when 1
-              UI.notice "Found podspec `#{podspecs[0]}`"
-            else
-              UI.notice "Multiple podspec files in directory `#{@path}`. " \
-                    'You need to explicitly specify which one to use.'
+          when 0
+            UI.notice "No podspec found in directory `#{@path}`"
+          when 1
+            UI.notice "Found podspec `#{podspecs[0]}`"
+          else
+            UI.notice "Multiple podspec files in directory `#{@path}`. " \
+                        'You need to explicitly specify which one to use.'
           end
           @path = (podspecs.count == 1) ? podspecs[0] : nil
         end
@@ -93,7 +92,7 @@ module Pod
           @spec ||= Pod::Specification.from_file(@path)
         rescue Informative # TODO: this should be a more specific error
           raise Informative, 'Unable to interpret the specified path as a ' \
-                                   'podspec.'
+                               'podspec.'
         end
 
         # Performs a full lint against the podspecs.
@@ -110,7 +109,6 @@ module Pod
           end
         end
       end
-
     end
   end
 end
