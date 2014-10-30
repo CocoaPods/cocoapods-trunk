@@ -13,11 +13,7 @@ group :development do
   gem 'mocha-on-bacon'
   gem 'prettybacon'
 
-
-  if RUBY_VERSION >= '1.9.3'
     gem 'codeclimate-test-reporter', :require => nil
     gem 'rubocop'
   end
-end
-
 
