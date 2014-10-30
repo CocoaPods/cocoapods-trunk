@@ -7,50 +7,50 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: a878a8e00c729942b41f703581a57771f8c1cc48
+  revision: b75e65cb726b1a818ff644f1279e66a2b41151bd
   branch: master
   specs:
     cocoapods (0.34.4)
-      activesupport (>= 3.2.15, < 4)
+      activesupport (>= 3.2.15)
       claide (~> 0.7.0)
       cocoapods-core (= 0.34.4)
       cocoapods-downloader (~> 0.7.2)
       cocoapods-plugins (~> 0.3.1)
       cocoapods-trunk (~> 0.3.1)
-      cocoapods-try (~> 0.4.1)
+      cocoapods-try (~> 0.4.2)
       colored (~> 1.2)
       escape (~> 0.0.4)
-      json_pure (~> 1.8)
       molinillo (~> 0.1.0)
       nap (~> 0.8)
       open4 (~> 1.3)
-      xcodeproj (~> 0.19.4)
+      xcodeproj (~> 0.20.1)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: 2a425f9e040d5ad3f94cb0e370fc510f6a16aa32
+  revision: 8b554d8dd184e75bb79dcc86a7056e9fef35e952
   branch: master
   specs:
     cocoapods-core (0.34.4)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
-      json_pure (~> 1.8)
       nap (~> 0.8.0)
 
 PATH
   remote: .
   specs:
     cocoapods-trunk (0.3.1)
-      json_pure (~> 1.8)
       nap (>= 0.8)
       netrc (= 0.7.8)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (3.2.19)
-      i18n (~> 0.6, >= 0.6.4)
-      multi_json (~> 1.0)
+    activesupport (4.1.6)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
     ast (2.0.0)
     astrolabe (1.3.0)
       parser (>= 2.2.0.pre.3, < 3.0)
@@ -58,7 +58,7 @@ GEM
     cocoapods-downloader (0.7.2)
     cocoapods-plugins (0.3.1)
       nap
-    cocoapods-try (0.4.1)
+    cocoapods-try (0.4.2)
     codeclimate-test-reporter (0.4.1)
       simplecov (>= 0.7.1, < 1.0.0)
     colored (1.2)
@@ -67,7 +67,7 @@ GEM
     ffi (1.9.6)
     fuzzy_match (2.0.4)
     i18n (0.6.11)
-    json_pure (1.8.1)
+    json (1.7.7)
     kicker (3.0.0)
       listen (~> 1.3.0)
       notify (~> 0.5.2)
@@ -76,6 +76,7 @@ GEM
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
     metaclass (0.0.4)
+    minitest (5.4.2)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.2)
@@ -86,7 +87,7 @@ GEM
     netrc (0.7.8)
     notify (0.5.2)
     open4 (1.3.4)
-    parser (2.2.0.pre.5)
+    parser (2.2.0.pre.6)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     powerpack (0.0.9)
@@ -112,8 +113,11 @@ GEM
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     slop (3.6.0)
-    xcodeproj (0.19.4)
-      activesupport (~> 3.0)
+    thread_safe (0.3.4)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+    xcodeproj (0.20.1)
+      activesupport (>= 3)
       colored (~> 1.2)
 
 PLATFORMS
@@ -127,6 +131,7 @@ DEPENDENCIES
   cocoapods-core!
   cocoapods-trunk!
   codeclimate-test-reporter
+  json (= 1.7.7)
   kicker
   mocha
   mocha-on-bacon
