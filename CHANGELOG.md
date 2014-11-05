@@ -1,3 +1,11 @@
+## Master
+
+##### Bug Fixes
+
+* Fixes installation issues with the JSON dependency.  
+  [Eloy Durán](https://github.com/alloy)
+  [CocoaPods#2773](https://github.com/CocoaPods/CocoaPods/issues/2773)
+
 ## 0.3.1
 
 ##### Bug Fixes
