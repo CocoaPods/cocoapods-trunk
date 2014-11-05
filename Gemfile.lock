@@ -7,13 +7,13 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: b75e65cb726b1a818ff644f1279e66a2b41151bd
+  revision: a76509f66fa82efcd41dbe076fe764339a68c155
   branch: master
   specs:
-    cocoapods (0.34.4)
+    cocoapods (0.35.0.rc1)
       activesupport (>= 3.2.15)
       claide (~> 0.7.0)
-      cocoapods-core (= 0.34.4)
+      cocoapods-core (= 0.35.0.rc1)
       cocoapods-downloader (~> 0.7.2)
       cocoapods-plugins (~> 0.3.1)
       cocoapods-trunk (~> 0.3.1)
@@ -27,10 +27,10 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: 8b554d8dd184e75bb79dcc86a7056e9fef35e952
+  revision: d436f8cc0aaa2e149aa770e20b74b7c0494b7952
   branch: master
   specs:
-    cocoapods-core (0.34.4)
+    cocoapods-core (0.35.0.rc1)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -45,7 +45,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (4.1.6)
+    activesupport (4.1.7)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -56,7 +56,7 @@ GEM
       parser (>= 2.2.0.pre.3, < 3.0)
     bacon (1.2.0)
     cocoapods-downloader (0.7.2)
-    cocoapods-plugins (0.3.1)
+    cocoapods-plugins (0.3.2)
       nap
     cocoapods-try (0.4.2)
     codeclimate-test-reporter (0.4.1)
@@ -87,7 +87,7 @@ GEM
     netrc (0.7.8)
     notify (0.5.2)
     open4 (1.3.4)
-    parser (2.2.0.pre.6)
+    parser (2.2.0.pre.7)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     powerpack (0.0.9)
@@ -100,13 +100,13 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.3)
       ffi (>= 0.5.0)
-    rubocop (0.26.1)
+    rubocop (0.27.0)
       astrolabe (~> 1.3)
-      parser (>= 2.2.0.pre.4, < 3.0)
+      parser (>= 2.2.0.pre.6, < 3.0)
       powerpack (~> 0.0.6)
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
-    ruby-progressbar (1.6.0)
+    ruby-progressbar (1.7.0)
     simplecov (0.9.1)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
