@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: a76509f66fa82efcd41dbe076fe764339a68c155
+  revision: e7bb85be814527b65a3785ed93d869f75df3e932
   branch: master
   specs:
     cocoapods (0.35.0.rc1)
@@ -16,18 +16,18 @@ GIT
       cocoapods-core (= 0.35.0.rc1)
       cocoapods-downloader (~> 0.7.2)
       cocoapods-plugins (~> 0.3.1)
-      cocoapods-trunk (~> 0.3.1)
+      cocoapods-trunk (~> 0.4.0)
       cocoapods-try (~> 0.4.2)
       colored (~> 1.2)
       escape (~> 0.0.4)
-      molinillo (~> 0.1.0)
+      molinillo (~> 0.1.1)
       nap (~> 0.8)
       open4 (~> 1.3)
       xcodeproj (~> 0.20.1)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: d436f8cc0aaa2e149aa770e20b74b7c0494b7952
+  revision: 4c7709ceb26c1d555a765d8a8ec8198bcb94fc0c
   branch: master
   specs:
     cocoapods-core (0.35.0.rc1)
@@ -38,7 +38,7 @@ GIT
 PATH
   remote: .
   specs:
-    cocoapods-trunk (0.3.2)
+    cocoapods-trunk (0.4.0)
       nap (>= 0.8)
       netrc (= 0.7.8)
 
@@ -81,7 +81,7 @@ GEM
       metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.2)
       mocha (>= 0.13.0)
-    molinillo (0.1.0)
+    molinillo (0.1.1)
     multi_json (1.10.1)
     nap (0.8.0)
     netrc (0.7.8)
