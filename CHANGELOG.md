@@ -1,6 +1,6 @@
 ## Master / To Be Merged
 
-##### Enhencements
+##### Enhancements
 
 * Improved code readability and structure
   [Olivier Halligon](https://github.com/alisoftware)
