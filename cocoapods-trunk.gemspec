@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'trunk/version'
+require 'cocoapods_trunk'
 
 Gem::Specification.new do |spec|
   spec.name          = "cocoapods-trunk"
-  spec.version       = Cocoapods::Trunk::VERSION
+  spec.version       = CocoaPodsTrunk::VERSION
   spec.authors       = ["Eloy Durán"]
   spec.email         = ["eloy.de.enige@gmail.com"]
   spec.summary       = "Interact with trunk.cocoapods.org"

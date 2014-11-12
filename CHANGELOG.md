@@ -1,3 +1,11 @@
+## Master / To Be Merged
+
+##### Enhancements
+
+* Improved code readability and structure
+  [Olivier Halligon](https://github.com/alisoftware)
+  [#21](https://github.com/CocoaPods/CocoaPods/issues/21)
+
 ## 0.4.0
 
 ##### Bug Fixes
