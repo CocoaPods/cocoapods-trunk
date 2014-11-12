@@ -17,6 +17,6 @@ group :development do
   gem 'prettybacon'
 
   gem 'codeclimate-test-reporter', :require => nil
-  gem 'rubocop', '~> 0.26.0'
+  gem 'rubocop'
 end
 
