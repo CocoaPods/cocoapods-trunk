@@ -2,7 +2,8 @@
 
 ##### Enhancements
 
-* Improved code readability and structure
+* Improved code readability and structure by splitting subcommands
+  into individual files.  
   [Olivier Halligon](https://github.com/alisoftware)
   [#21](https://github.com/CocoaPods/CocoaPods/issues/21)
 
