@@ -102,7 +102,7 @@ module Pod
           UI.puts 'Validating podspec'.yellow
 
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
-          validator.only_errors = @allow_warnings
+          validator.allow_warnings = @allow_warnings
           validator.validate
           unless validator.validated?
             raise Informative, 'The podspec does not validate.'
