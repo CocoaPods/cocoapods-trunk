@@ -7,6 +7,13 @@
   [Olivier Halligon](https://github.com/alisoftware)
   [#21](https://github.com/CocoaPods/CocoaPods/issues/21)
 
+##### Bug Fixes
+
+* Updates for changes in CocoaPods regarding `--allow-warnings`.  
+  [Kyle Fuller](https://github.com/kylef)
+  [Cocoapods#2831](https://github.com/CocoaPods/CocoaPods/pull/2831)
+
+
 ## 0.4.0
 
 ##### Bug Fixes
