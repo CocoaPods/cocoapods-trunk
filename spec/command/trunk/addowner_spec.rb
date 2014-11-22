@@ -41,8 +41,8 @@ module Pod
       url = 'https://trunk.cocoapods.org/api/v1/pods/QueryKit/owners'
       WebMock::API.stub_request(:patch, url).
         with(:body => "{\"email\":\"kyle@cocoapods.org\"}",
-             :headers => {'Authorization'=>'Token 527d11fe429f3426cb8dbeba183a0d80'}).
-        to_return(:status => 200, :body => "[]", :headers => {})
+             :headers => { 'Authorization' => 'Token 527d11fe429f3426cb8dbeba183a0d80' }).
+        to_return(:status => 200, :body => '[]', :headers => {})
 
       command = Command.parse(%w( trunk add-owner QueryKit kyle@cocoapods.org ))
       command.stubs(:token).returns('527d11fe429f3426cb8dbeba183a0d80')

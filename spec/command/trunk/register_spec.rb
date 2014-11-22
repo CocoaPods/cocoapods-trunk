@@ -8,7 +8,7 @@ module Pod
       end
     end
 
-    it "should error if email is not supplied" do
+    it 'should error if email is not supplied' do
       Netrc.any_instance.stubs(:[]).returns(nil)
       command = Command.parse(%w( trunk register ))
       exception = lambda { command.validate! }.should.raise CLAide::Help
