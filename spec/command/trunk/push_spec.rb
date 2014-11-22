@@ -9,6 +9,13 @@ module Pod
       end
     end
 
+    it "should error if we don't have a token" do
+      Netrc.any_instance.stubs(:[]).returns(nil)
+      command = Command.parse(%w( trunk push ))
+      exception = lambda { command.validate! }.should.raise CLAide::Help
+      exception.message.should.include 'register a session'
+    end
+
     describe 'PATH' do
       before do
         UI.output = ''
