@@ -14,5 +14,18 @@ module Pod
       exception = lambda { command.validate! }.should.raise CLAide::Help
       exception.message.should.include 'email address'
     end
+
+    it 'should register user' do
+      url = 'https://trunk.cocoapods.org/api/v1/sessions'
+      WebMock::API.stub_request(:post, url).
+        with(:body => WebMock::API.hash_including('email' => 'kyle@cocoapods.org')).
+        to_return(:status => 200, :body => '{"token": "acct"}')
+      Netrc.any_instance.stubs(:[]).returns(nil)
+      Netrc.any_instance.expects(:[]=).with('trunk.cocoapods.org', ['kyle@cocoapods.org', 'acct'])
+      Netrc.any_instance.expects(:save)
+
+      command = Command.parse(%w( trunk register kyle@cocoapods.org ))
+      lambda { command.run }.should.not.raise
+    end
   end
 end
