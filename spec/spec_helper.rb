@@ -22,6 +22,8 @@ require 'bacon'
 require 'mocha-on-bacon'
 require 'pretty_bacon'
 require 'webmock'
+WebMock.disable_net_connect!(:allow => 'codeclimate.com')
+
 require 'cocoapods'
 
 require 'cocoapods_plugin'
