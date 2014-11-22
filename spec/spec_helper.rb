@@ -21,6 +21,7 @@ require 'bundler/setup'
 require 'bacon'
 require 'mocha-on-bacon'
 require 'pretty_bacon'
+require 'webmock'
 require 'cocoapods'
 
 require 'cocoapods_plugin'
@@ -53,6 +54,18 @@ module Pod
 
       def print(message)
         @output << message
+      end
+    end
+  end
+end
+
+module Bacon
+  class Context
+    alias_method :after_webmock, :after
+    def after(&block)
+      after_webmock do
+        block.call
+        WebMock.reset!
       end
     end
   end

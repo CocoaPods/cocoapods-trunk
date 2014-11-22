@@ -15,6 +15,7 @@ group :development do
   gem 'mocha'
   gem 'mocha-on-bacon'
   gem 'prettybacon'
+  gem 'webmock'
 
   gem 'codeclimate-test-reporter', :require => nil
   gem 'rubocop'
