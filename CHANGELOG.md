@@ -1,3 +1,12 @@
+## Master
+
+##### Enhancements
+
+* Added `pod trunk remove-owner` command to remove an owner from a pod.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#35](https://github.com/CocoaPods/cocoapods-trunk/issues/35)
+
+
 ## 0.4.1
 
 ##### Enhancements
