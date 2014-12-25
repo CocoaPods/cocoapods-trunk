@@ -6,6 +6,11 @@
   [Samuel Giddins](https://github.com/segiddins)
   [#35](https://github.com/CocoaPods/cocoapods-trunk/issues/35)
 
+* Added `pod trunk info` command to get information for a pod, including the
+  owners.  
+  [Kyle Fuller](https://github.com/kylef)
+  [#15](https://github.com/CocoaPods/cocoapods-trunk/issues/15)
+
 
 ## 0.4.1
 
