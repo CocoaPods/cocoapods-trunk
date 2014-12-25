@@ -29,7 +29,8 @@ module Pod
       lambda { command.validate! }.should.not.raise CLAide::Help
       command.run
 
-      UI.output.should.include "- Owners:   \n- Kyle Fuller <kyle@example.com>"
+      UI.output.should.include 'Owners'
+      UI.output.should.include 'Kyle Fuller <kyle@example.com>'
     end
   end
 end
