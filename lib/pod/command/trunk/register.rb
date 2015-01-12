@@ -7,7 +7,7 @@ module Pod
               Register a new account, or create a new session.
 
               If this is your first registration, both an `EMAIL` address and your
-              `NAME` are required. If you've already registered with trunk, you may
+              `NAME` are required. If you’ve already registered with trunk, you may
               omit the `NAME` (unless you would like to change it).
 
               It is recommended that you provide a description of the session, so
