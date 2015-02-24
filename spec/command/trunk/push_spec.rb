@@ -82,5 +82,34 @@ module Pod
         UI.output.should.match /Multiple podspec files in directory/
       end
     end
+
+    describe 'validation' do
+      before do
+        Installer.any_instance.stubs(:aggregate_targets).returns([])
+        Installer.any_instance.stubs(:install!)
+
+        Validator.any_instance.stubs(:check_file_patterns)
+        Validator.any_instance.stubs(:validated?).returns(true)
+        Validator.any_instance.stubs(:validate_url)
+        Validator.any_instance.stubs(:validate_screenshots)
+        Validator.any_instance.stubs(:xcodebuild).returns('')
+      end
+
+      it 'validates specs as frameworks by default' do
+        Validator.any_instance.expects(:podfile_from_spec).with(:ios, nil, true).once
+        Validator.any_instance.expects(:podfile_from_spec).with(:osx, nil, true).once
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
+        cmd.send(:validate_podspec)
+      end
+
+      it 'validates specs as libraries if requested' do
+        Validator.any_instance.expects(:podfile_from_spec).with(:ios, nil, false).once
+        Validator.any_instance.expects(:podfile_from_spec).with(:osx, nil, false).once
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
+        cmd.send(:validate_podspec)
+      end
+    end
   end
 end
