@@ -50,20 +50,19 @@ module Pod
         rescue JSON::ParserError
           json = {}
         end
+        error = json['error'] || "An unexpected error ocurred: #{body}"
 
-        case error = json['error'] || json['data']
+        case data = json['data']
         when Hash
-          lines = error.sort_by(&:first).map do |attr, messages|
+          lines = data.sort_by(&:first).map do |attr, messages|
             attr = attr[0, 1].upcase << attr[1..-1]
             messages.sort.map do |message|
-              "- #{attr} #{message}."
+              "- #{attr}: #{message}"
             end
           end.flatten
           count = lines.size
           lines.unshift "The following #{'validation'.pluralize(count)} failed:"
-          error = lines.join("\n")
-        when nil
-          error = "An unexpected error ocurred: #{body}"
+          error +=  "\n" << lines.join("\n")
         end
 
         raise Informative, error

@@ -2,7 +2,8 @@
 
 ##### Bug Fixes
 
-* Added a fallback for the server giving an error with the JSON key "data"
+* Fix the detection of spec validation errors, and present the proper error
+  (and messages) to the user.  
   [Orta Therox](https://github.com/orta)
   [#40](https://github.com/CocoaPods/cocoapods-trunk/issues/40)
 
