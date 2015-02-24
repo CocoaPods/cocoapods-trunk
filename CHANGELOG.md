@@ -1,3 +1,13 @@
+## Master
+
+##### Bug Fixes
+
+* Fix the detection of spec validation errors, and present the proper error
+  (and messages) to the user.  
+  [Orta Therox](https://github.com/orta)
+  [#39](https://github.com/CocoaPods/cocoapods-trunk/issues/39)
+
+
 ## 0.5.0
 
 ##### Enhancements

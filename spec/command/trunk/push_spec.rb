@@ -16,6 +16,25 @@ module Pod
       exception.message.should.include 'register a session'
     end
 
+    it 'should error when the trunk service returns an error' do
+      url = 'https://trunk.cocoapods.org/api/v1/pods'
+      WebMock::API.stub_request(:post, url).to_return(:status => 422, :body => {
+        'error' => 'The Pod Specification did not pass validation.',
+        'data' => {
+          'warnings' => [
+            'A value for `requires_arc` should be specified until the migration to a `true` default.',
+          ],
+        },
+      }.to_json)
+      command = Command.parse(%w(trunk push))
+      command.stubs(:validate_podspec)
+      command.stubs(:spec).returns(Pod::Specification.new)
+      exception = lambda { command.run }.should.raise Informative
+      exception.message.should.include 'following validation failed'
+      exception.message.should.include 'should be specified'
+      exception.message.should.include 'The Pod Specification did not pass validation'
+    end
+
     describe 'PATH' do
       before do
         UI.output = ''
