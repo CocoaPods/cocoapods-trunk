@@ -1,3 +1,11 @@
+## Master
+
+##### Bug Fixes
+
+* Added a fallback for the server giving an error with the JSON key "data"
+  [Orta Therox](https://github.com/orta)
+  [#40](https://github.com/CocoaPods/cocoapods-trunk/issues/40)
+
 ## 0.5.0
 
 ##### Enhancements

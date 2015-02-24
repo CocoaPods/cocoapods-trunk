@@ -51,7 +51,7 @@ module Pod
           json = {}
         end
 
-        case error = json['error']
+        case error = json['error'] || json['data']
         when Hash
           lines = error.sort_by(&:first).map do |attr, messages|
             attr = attr[0, 1].upcase << attr[1..-1]
