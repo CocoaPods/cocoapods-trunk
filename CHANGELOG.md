@@ -5,7 +5,8 @@
 * Fix the detection of spec validation errors, and present the proper error
   (and messages) to the user.  
   [Orta Therox](https://github.com/orta)
-  [#40](https://github.com/CocoaPods/cocoapods-trunk/issues/40)
+  [#39](https://github.com/CocoaPods/cocoapods-trunk/issues/39)
+
 
 ## 0.5.0
 
