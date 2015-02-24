@@ -1,5 +1,12 @@
 ## Master
 
+##### Enhancements
+
+* Lint as a framework automatically. If needed, the `--use-libraries`
+  option allows linting as a static library.  
+  [Boris Bügling](https://github.com/neonichu)
+  [#2912](https://github.com/CocoaPods/CocoaPods/issues/2912)
+
 ##### Bug Fixes
 
 * Fix the detection of spec validation errors, and present the proper error

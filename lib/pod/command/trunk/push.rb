@@ -28,11 +28,13 @@ module Pod
         def self.options
           [
             ['--allow-warnings', 'Allows push even if there are lint warnings'],
+            ['--use-libraries', 'Linter uses static libraries to install the spec'],
           ].concat(super)
         end
 
         def initialize(argv)
           @allow_warnings = argv.flag?('allow-warnings')
+          @use_frameworks = !argv.flag?('use-libraries')
           @path = argv.shift_argument || '.'
           find_podspec_file if File.directory?(@path)
           super
@@ -103,6 +105,7 @@ module Pod
 
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings
+          validator.use_frameworks = @use_frameworks
           validator.validate
           unless validator.validated?
             raise Informative, 'The podspec does not validate.'
