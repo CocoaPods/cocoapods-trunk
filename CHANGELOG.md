@@ -1,3 +1,13 @@
+## Master
+
+##### Enhancements
+
+* Allow specifying a Trunk token via the `COCOAPODS_TRUNK_TOKEN` environment
+  variable.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [CocoaPods#3224](https://github.com/CocoaPods/CocoaPods/issues/3224)
+
+
 ## 0.5.1
 
 ##### Enhancements

@@ -7,5 +7,17 @@ module Pod
         Command.parse(%w(        trunk        )).should.be.instance_of Command::Trunk
       end
     end
+
+    before do
+      @command = Command.parse(%w(trunk))
+    end
+
+    describe 'authorization' do
+      it 'will use the trunk token from ENV if present' do
+        ENV.stubs(:[]).with('COCOAPODS_TRUNK_TOKEN').returns('token')
+
+        @command.send(:token).should == 'token'
+      end
+    end
   end
 end
