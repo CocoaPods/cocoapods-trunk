@@ -85,7 +85,7 @@ module Pod
         {
           'Content-Type' => 'application/json; charset=utf-8',
           'Accept' => 'application/json; charset=utf-8',
-          'CocoaPods-Version' => Pod::VERSION,
+          'User-Agent' => "CocoaPods/#{Pod::VERSION}",
         }
       end
 
