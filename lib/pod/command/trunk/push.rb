@@ -99,9 +99,10 @@ module Pod
 
         # Performs a full lint against the podspecs.
         #
-        # TODO: Currently copied verbatim from `pod push`.
         def validate_podspec
           UI.puts 'Validating podspec'.yellow
+
+          raise Informative, 'The podspec is private.' if spec.private_spec?
 
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings

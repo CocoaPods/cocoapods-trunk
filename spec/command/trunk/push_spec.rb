@@ -110,6 +110,12 @@ module Pod
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
         cmd.send(:validate_podspec)
       end
+
+      it 'should error when the spec is private' do
+        cmd = Command.parse(%w(trunk push spec/fixtures/PrivateBananaLib.podspec))
+        exception = lambda { cmd.send(:validate_podspec) }.should.raise Informative
+        exception.message.should.include 'The podspec is private'
+      end
     end
   end
 end
