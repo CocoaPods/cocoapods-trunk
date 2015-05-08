@@ -3,6 +3,10 @@ require 'tmpdir'
 
 module Pod
   describe Command::Trunk::Push do
+    before do
+      Command::Trunk::Push.any_instance.stubs(:update_master_repo)
+    end
+
     describe 'CLAide' do
       it 'registers it self' do
         Command.parse(%w(        trunk push        )).should.be.instance_of Command::Trunk::Push
