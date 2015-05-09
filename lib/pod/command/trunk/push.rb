@@ -55,10 +55,12 @@ module Pod
         end
 
         def run
+          update_master_repo
           validate_podspec
           response = request_path(:post, 'pods', spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
+          update_master_repo
 
           # Using UI.labeled here is dangerous, as it wraps the URL and indents
           # it, which breaks the URL when you try to copy-paste it.
@@ -110,6 +112,10 @@ module Pod
           unless validator.validated?
             raise Informative, 'The podspec does not validate.'
           end
+        end
+
+        def update_master_repo
+          SourcesManager.update('master')
         end
       end
     end
