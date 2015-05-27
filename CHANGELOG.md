@@ -1,3 +1,13 @@
+## Master
+
+##### Enhancements
+
+* The `master` specs repo is updated before and after pushing a new spec to
+  trunk.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#43](https://github.com/CocoaPods/cocoapods-trunk/issues/43)
+
+
 ## 0.6.0
 
 ##### Enhancements
