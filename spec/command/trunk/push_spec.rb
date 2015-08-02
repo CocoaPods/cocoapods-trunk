@@ -21,7 +21,7 @@ module Pod
     end
 
     it 'should error when the trunk service returns an error' do
-      url = 'https://trunk.cocoapods.org/api/v1/pods'
+      url = 'https://trunk.cocoapods.org/api/v1/pods?allow_warnings=false'
       WebMock::API.stub_request(:post, url).to_return(:status => 422, :body => {
         'error' => 'The Pod Specification did not pass validation.',
         'data' => {

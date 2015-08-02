@@ -33,7 +33,7 @@ module Pod
         end
 
         def initialize(argv)
-          @allow_warnings = argv.flag?('allow-warnings')
+          @allow_warnings = argv.flag?('allow-warnings', false)
           @use_frameworks = !argv.flag?('use-libraries')
           @path = argv.shift_argument || '.'
           find_podspec_file if File.directory?(@path)
@@ -57,14 +57,15 @@ module Pod
         def run
           update_master_repo
           validate_podspec
-          response = request_path(:post, 'pods', spec.to_json, auth_headers)
+          response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
+                                  spec.to_json, auth_headers)
           url = response.headers['location'].first
           json = json(request_url(:get, url, default_headers))
           update_master_repo
 
           # Using UI.labeled here is dangerous, as it wraps the URL and indents
           # it, which breaks the URL when you try to copy-paste it.
-          $stdout.puts "  - Data URL: #{json['data_url']}"
+          UI.puts "  - Data URL: #{json['data_url']}"
 
           messages = json['messages'].map do |entry|
             at, message = entry.to_a.flatten
