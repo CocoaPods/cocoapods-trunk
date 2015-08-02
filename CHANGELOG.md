@@ -1,3 +1,13 @@
+## Master
+
+##### Enhancements
+
+* The `--allow-warnings` flag to `pod trunk push` is now propagated to the trunk
+  server.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [CocoaPods#3855](https://github.com/CocoaPods/CocoaPods/issues/3855)
+
+
 ## 0.6.1
 
 ##### Enhancements
