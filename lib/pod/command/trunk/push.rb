@@ -64,7 +64,7 @@ module Pod
 
           # Using UI.labeled here is dangerous, as it wraps the URL and indents
           # it, which breaks the URL when you try to copy-paste it.
-          $stdout.puts "  - Data URL: #{json['data_url']}"
+          UI.puts "  - Data URL: #{json['data_url']}"
 
           messages = json['messages'].map do |entry|
             at, message = entry.to_a.flatten
