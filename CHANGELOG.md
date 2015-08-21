@@ -8,7 +8,7 @@
   [CocoaPods#3855](https://github.com/CocoaPods/CocoaPods/issues/3855)
 
 
-## 0.6.1
+## 0.6.1 (2015-05-27)
 
 ##### Enhancements
 
@@ -18,7 +18,7 @@
   [#43](https://github.com/CocoaPods/cocoapods-trunk/issues/43)
 
 
-## 0.6.0
+## 0.6.0 (2015-03-11)
 
 ##### Enhancements
 
@@ -28,7 +28,7 @@
   [CocoaPods#3224](https://github.com/CocoaPods/CocoaPods/issues/3224)
 
 
-## 0.5.1
+## 0.5.1 (2015-02-25)
 
 ##### Enhancements
 
@@ -45,7 +45,7 @@
   [#39](https://github.com/CocoaPods/cocoapods-trunk/issues/39)
 
 
-## 0.5.0
+## 0.5.0 (2014-12-25)
 
 ##### Enhancements
 
@@ -59,7 +59,7 @@
   [#15](https://github.com/CocoaPods/cocoapods-trunk/issues/15)
 
 
-## 0.4.1
+## 0.4.1 (2014-11-19)
 
 ##### Enhancements
 
@@ -75,7 +75,7 @@
   [Cocoapods#2831](https://github.com/CocoaPods/CocoaPods/pull/2831)
 
 
-## 0.4.0
+## 0.4.0 (2014-11-06)
 
 ##### Bug Fixes
 
@@ -83,7 +83,7 @@
   [Eloy Durán](https://github.com/alloy)
   [CocoaPods#2773](https://github.com/CocoaPods/CocoaPods/issues/2773)
 
-## 0.3.1
+## 0.3.1 (2014-10-15)
 
 ##### Bug Fixes
 
@@ -92,7 +92,7 @@
   [CocoaPods#2674](https://github.com/CocoaPods/CocoaPods/issues/2674)
 
 
-## 0.3.0
+## 0.3.0 (2014-10-07)
 
 ##### Enhancements
 
@@ -108,7 +108,7 @@
   [#26](https://github.com/CocoaPods/cocoapods-trunk/issues/26)
 
 
-## 0.2.0
+## 0.2.0 (2014-09-11)
 
 ##### Enhancements
 
@@ -119,6 +119,6 @@
   [Olivier Halligon](https://github.com/AliSoftware)
 
 
-## 0.1.0
+## 0.1.0 (2014-05-19)
 
 * Initial release.
