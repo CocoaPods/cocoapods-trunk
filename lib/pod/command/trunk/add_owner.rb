@@ -16,7 +16,8 @@ module Pod
         ]
 
         def initialize(argv)
-          @pod, @email = argv.shift_argument, argv.shift_argument
+          @pod = argv.shift_argument
+          @email = argv.shift_argument
           super
         end
 

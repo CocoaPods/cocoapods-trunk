@@ -9,7 +9,7 @@ module Pod
 
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w(        trunk push        )).should.be.instance_of Command::Trunk::Push
+        Command.parse(%w( trunk push        )).should.be.instance_of Command::Trunk::Push
       end
     end
 
@@ -100,16 +100,24 @@ module Pod
       end
 
       it 'validates specs as frameworks by default' do
-        Validator.any_instance.expects(:podfile_from_spec).with(:ios, nil, true).once
-        Validator.any_instance.expects(:podfile_from_spec).with(:osx, nil, true).once
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:ios, nil, true).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:osx, nil, true).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:watchos, nil, true).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
         cmd.send(:validate_podspec)
       end
 
       it 'validates specs as libraries if requested' do
-        Validator.any_instance.expects(:podfile_from_spec).with(:ios, nil, false).once
-        Validator.any_instance.expects(:podfile_from_spec).with(:osx, nil, false).once
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:ios, nil, false).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:osx, nil, false).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:watchos, nil, false).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
         cmd.send(:validate_podspec)

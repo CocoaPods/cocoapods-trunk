@@ -38,7 +38,8 @@ module Pod
 
         def initialize(argv)
           @session_description = argv.option('description')
-          @email, @name = argv.shift_argument, argv.shift_argument
+          @email = argv.shift_argument
+          @name = argv.shift_argument
           super
         end
 

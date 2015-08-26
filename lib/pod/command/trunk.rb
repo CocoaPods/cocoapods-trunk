@@ -62,7 +62,7 @@ module Pod
           end.flatten
           count = lines.size
           lines.unshift "The following #{'validation'.pluralize(count)} failed:"
-          error +=  "\n" << lines.join("\n")
+          error += "\n" << lines.join("\n")
         end
 
         raise Informative, error
