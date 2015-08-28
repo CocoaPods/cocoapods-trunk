@@ -39,7 +39,7 @@ PATH
   remote: .
   specs:
     cocoapods-trunk (0.6.3)
-      nap (~> 1.0)
+      nap (>= 0.8, < 2.0)
       netrc (= 0.7.8)
 
 GEM

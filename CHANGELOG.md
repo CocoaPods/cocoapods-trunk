@@ -1,3 +1,12 @@
+## Master
+
+##### Bug Fixes
+
+* This release fixes installation compatibility issues when using the RubyGem
+  due to an incompatible dependency on `nap`.  
+  [Samuel Giddins](https://github.com/segiddins)
+
+
 ## 0.6.3 (2015-08-28)
 
 ##### Bug Fixes
