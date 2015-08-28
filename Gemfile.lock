@@ -22,7 +22,7 @@ GIT
       colored (~> 1.2)
       escape (~> 0.0.4)
       molinillo (~> 0.3.1)
-      nap (~> 0.8)
+      nap (~> 1.0)
       xcodeproj (~> 0.26.3)
 
 GIT
@@ -33,13 +33,13 @@ GIT
     cocoapods-core (0.38.2)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
-      nap (~> 0.8.0)
+      nap (~> 1.0.0)
 
 PATH
   remote: .
   specs:
     cocoapods-trunk (0.6.2)
-      nap (>= 0.8)
+      nap (~> 1.0)
       netrc (= 0.7.8)
 
 GEM
@@ -60,7 +60,7 @@ GEM
     cocoapods-plugins (0.4.2)
       nap
     cocoapods-stats (0.5.3)
-      nap (~> 0.8)
+      nap (~> 1.0)
     cocoapods-try (0.4.5)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -88,7 +88,7 @@ GEM
       mocha (>= 0.13.0)
     molinillo (0.3.1)
     multi_json (1.11.2)
-    nap (0.8.0)
+    nap (1.0.0)
     netrc (0.7.8)
     notify (0.5.2)
     parser (2.2.2.6)
@@ -143,7 +143,7 @@ DEPENDENCIES
   mocha
   mocha-on-bacon
   prettybacon
-  rake
+  rake (~> 10.0)
   rubocop
   webmock
 
