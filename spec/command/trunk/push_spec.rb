@@ -105,6 +105,8 @@ module Pod
         Validator.any_instance.expects(:podfile_from_spec).
           with(:osx, nil, true).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
+          with(:tvos, nil, true).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
           with(:watchos, nil, true).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
@@ -116,6 +118,8 @@ module Pod
           with(:ios, nil, false).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
           with(:osx, nil, false).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:tvos, nil, false).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
           with(:watchos, nil, false).once.returns(Podfile.new)
 

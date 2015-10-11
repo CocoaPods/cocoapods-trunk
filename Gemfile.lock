@@ -1,39 +1,40 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: 4e7b02d849c3e82dff7c1cdacf33df45516acaf3
+  revision: b44534d04023fbe82182a8be33d5c728f74c1b9c
   branch: master
   specs:
     claide (0.9.1)
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 0c9f24807f53a93bff0628f799ade47a1a4f7f1c
+  revision: b34c7148a3952195f1eddb684d7eae2a941eb431
   branch: master
   specs:
-    cocoapods (0.38.2)
-      activesupport (>= 3.2.15)
+    cocoapods (0.39.0)
+      activesupport (>= 4.0.2)
       claide (~> 0.9.1)
-      cocoapods-core (= 0.38.2)
-      cocoapods-downloader (~> 0.9.1)
+      cocoapods-core (= 0.39.0)
+      cocoapods-downloader (~> 0.9.3)
       cocoapods-plugins (~> 0.4.2)
-      cocoapods-stats (~> 0.5.3)
-      cocoapods-trunk (~> 0.6.1)
-      cocoapods-try (~> 0.4.5)
+      cocoapods-search (~> 0.1.0)
+      cocoapods-stats (~> 0.6.2)
+      cocoapods-trunk (~> 0.6.4)
+      cocoapods-try (~> 0.5.1)
       colored (~> 1.2)
       escape (~> 0.0.4)
-      molinillo (~> 0.3.1)
+      molinillo (~> 0.4.0)
       nap (~> 1.0)
-      xcodeproj (~> 0.26.3)
+      xcodeproj (~> 0.28.2)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: 32917a36cbf71117d5da1c8f785b65d108c6f815
+  revision: c91e84a264ce9ab5fc500cc8bd8ffad9c9ecd3cf
   branch: master
   specs:
-    cocoapods-core (0.38.2)
-      activesupport (>= 3.2.15)
+    cocoapods-core (0.39.0)
+      activesupport (>= 4.0.2)
       fuzzy_match (~> 2.0.4)
-      nap (~> 1.0.0)
+      nap (~> 1.0)
 
 PATH
   remote: .
@@ -56,12 +57,12 @@ GEM
     astrolabe (1.3.1)
       parser (~> 2.2)
     bacon (1.2.0)
-    cocoapods-downloader (0.9.1)
+    cocoapods-downloader (0.9.3)
     cocoapods-plugins (0.4.2)
       nap
-    cocoapods-stats (0.5.3)
-      nap (~> 1.0)
-    cocoapods-try (0.4.5)
+    cocoapods-search (0.1.0)
+    cocoapods-stats (0.6.2)
+    cocoapods-try (0.5.1)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
     colored (1.2)
@@ -81,12 +82,12 @@ GEM
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
     metaclass (0.0.4)
-    minitest (5.8.0)
+    minitest (5.8.1)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.2)
       mocha (>= 0.13.0)
-    molinillo (0.3.1)
+    molinillo (0.4.0)
     multi_json (1.11.2)
     nap (1.0.0)
     netrc (0.7.8)
@@ -122,7 +123,7 @@ GEM
     webmock (1.21.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-    xcodeproj (0.26.3)
+    xcodeproj (0.28.2)
       activesupport (>= 3)
       claide (~> 0.9.1)
       colored (~> 1.2)
