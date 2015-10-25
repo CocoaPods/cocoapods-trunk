@@ -55,7 +55,7 @@ module Pod
         end
 
         def run
-          update_master_repo
+          update_master_repo unless spec.dependencies.empty?
           validate_podspec
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)

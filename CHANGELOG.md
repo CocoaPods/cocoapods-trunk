@@ -1,3 +1,12 @@
+## Master
+
+##### Enhancements
+
+* `pod trunk push` will no longer update the spec repository before
+  linting your specification if you have no dependencies.  
+  [Kyle Fuller](https://github.com/kylef)
+
+
 ## 0.6.4 (2015-08-28)
 
 ##### Bug Fixes
