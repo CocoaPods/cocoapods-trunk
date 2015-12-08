@@ -13,12 +13,14 @@ module Pod
       SCHEME_AND_HOST = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
       BASE_URL = "#{SCHEME_AND_HOST}/api/v1"
 
-      require 'pod/command/trunk/register'
-      require 'pod/command/trunk/me'
       require 'pod/command/trunk/add_owner'
-      require 'pod/command/trunk/remove_owner'
-      require 'pod/command/trunk/push'
+      require 'pod/command/trunk/delete'
+      require 'pod/command/trunk/deprecate'
       require 'pod/command/trunk/info'
+      require 'pod/command/trunk/me'
+      require 'pod/command/trunk/push'
+      require 'pod/command/trunk/register'
+      require 'pod/command/trunk/remove_owner'
 
       private
 
@@ -66,6 +68,18 @@ module Pod
         end
 
         raise Informative, error
+      end
+
+      def print_messages(data_url, messages)
+        # Using UI.labeled here is dangerous, as it wraps the URL and indents
+        # it, which breaks the URL when you try to copy-paste it.
+        UI.puts "  - Data URL: #{data_url}"
+
+        messages = messages.map do |entry|
+          at, message = entry.to_a.flatten
+          "#{formatted_time(at)}: #{message}"
+        end
+        UI.labeled 'Log messages', messages
       end
 
       def json(response)

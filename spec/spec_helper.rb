@@ -67,6 +67,8 @@ module Bacon
     def after(&block)
       after_webmock do
         block.call
+        UI.ouput = ''
+        UI.warnings = ''
         WebMock.reset!
       end
     end
