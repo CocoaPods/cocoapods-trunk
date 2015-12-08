@@ -74,18 +74,6 @@ module Pod
                                    "to trunk: #{e.message}"
         end
 
-        def print_messages(data_url, messages)
-          # Using UI.labeled here is dangerous, as it wraps the URL and indents
-          # it, which breaks the URL when you try to copy-paste it.
-          UI.puts "  - Data URL: #{data_url}"
-
-          messages = messages.map do |entry|
-            at, message = entry.to_a.flatten
-            "#{formatted_time(at)}: #{message}"
-          end
-          UI.labeled 'Log messages', messages
-        end
-
         def find_podspec_file
           podspecs = Dir[Pathname(@path) + '*.podspec{.json,}']
           case podspecs.count
