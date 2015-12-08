@@ -4,6 +4,10 @@ module Pod
       class Delete < Trunk
         self.summary = 'Deletes a version of a pod.'
         self.description = <<-DESC
+              WARNING: It is generally considered bad behavior to remove
+              versions of a Pod that others are depending on! Please
+              consider using the deprecate command instead.
+
               Deletes the specified pod version from trunk and the master specs
               repo. Once deleted, this version can never be pushed again.
         DESC
