@@ -35,7 +35,7 @@ module Pod
       Command::Trunk::Delete.invoke(%w(Stencil 1.0.0))
 
       UI.output.should.include 'Data URL: https://raw.githubusercontent'
-      UI.output.should.include 'Push for `Stencil 0.96.3` initiated'
+      UI.output.should.include 'Push for `Stencil 1.0.0` initiated'
     end
   end
 end
