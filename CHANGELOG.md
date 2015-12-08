@@ -1,3 +1,13 @@
+## Master
+
+##### Bug Fixes
+
+* If the master repo has not been setup when pushing a spec, run `pod setup`
+  instead of failing.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#48](https://github.com/CocoaPods/cocoapods-trunk/issues/48)
+
+
 ## 0.6.4 (2015-08-28)
 
 ##### Bug Fixes
