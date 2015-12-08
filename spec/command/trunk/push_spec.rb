@@ -127,5 +127,40 @@ module Pod
         cmd.send(:validate_podspec)
       end
     end
+
+    describe 'updating the master repo' do
+      before do
+        @cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
+        @cmd.stubs(:validate_podspec)
+        version_response = {
+          'messages' => [
+            {
+              '2015-12-05 02:00:25 UTC' => "Push for `BananaLib 0.96.3' initiated.",
+            },
+            {
+              '2015-12-05 02:00:26 UTC' => "Push for `BananaLib 0.96.3' has been pushed (1.02409270 s).",
+            },
+          ],
+          'data_url' => 'https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/BananaLib/0.96.3/BananaLib.podspec.json',
+        }
+        @cmd.stubs(:push_to_trunk).returns(version_response)
+        Command::Trunk::Push.any_instance.unstub(:update_master_repo)
+      end
+
+      it 'updates the master repo when it exists' do
+        SourcesManager.stubs(:master_repo_functional?).returns(true)
+        SourcesManager.expects(:update).with('master').twice
+
+        @cmd.run
+      end
+
+      it 'sets up the master repo when it does not exist' do
+        SourcesManager.stubs(:master_repo_functional?).returns(false)
+        SourcesManager.expects(:update).never
+        Command::Setup.any_instance.expects(:run).twice
+
+        @cmd.run
+      end
+    end
   end
 end

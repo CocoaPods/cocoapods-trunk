@@ -57,27 +57,34 @@ module Pod
         def run
           update_master_repo
           validate_podspec
+          json = push_to_trunk
+          update_master_repo
+          print_messages(json['data_url'], json['messages'])
+        end
+
+        private
+
+        def push_to_trunk
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first
-          json = json(request_url(:get, url, default_headers))
-          update_master_repo
-
-          # Using UI.labeled here is dangerous, as it wraps the URL and indents
-          # it, which breaks the URL when you try to copy-paste it.
-          UI.puts "  - Data URL: #{json['data_url']}"
-
-          messages = json['messages'].map do |entry|
-            at, message = entry.to_a.flatten
-            "#{formatted_time(at)}: #{message}"
-          end
-          UI.labeled 'Log messages', messages
+          json(request_url(:get, url, default_headers))
         rescue REST::Error => e
           raise Informative, 'There was an error pushing a new version ' \
                                    "to trunk: #{e.message}"
         end
 
-        private
+        def print_messages(data_url, messages)
+          # Using UI.labeled here is dangerous, as it wraps the URL and indents
+          # it, which breaks the URL when you try to copy-paste it.
+          UI.puts "  - Data URL: #{data_url}"
+
+          messages = messages.map do |entry|
+            at, message = entry.to_a.flatten
+            "#{formatted_time(at)}: #{message}"
+          end
+          UI.labeled 'Log messages', messages
+        end
 
         def find_podspec_file
           podspecs = Dir[Pathname(@path) + '*.podspec{.json,}']
@@ -116,7 +123,11 @@ module Pod
         end
 
         def update_master_repo
-          SourcesManager.update('master')
+          if SourcesManager.master_repo_functional?
+            SourcesManager.update('master')
+          else
+            Setup.invoke
+          end
         end
       end
     end
