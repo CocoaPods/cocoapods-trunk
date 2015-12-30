@@ -1,5 +1,16 @@
 ## Master
 
+##### Enhancements
+
+* The `pod deprecate PODNAME` command has been added to deprecate all versions
+  of a pod.
+  [Samuel Giddins](https://github.com/segiddins)
+  [#31](https://github.com/CocoaPods/cocoapods-trunk/issues/31)
+
+* The `pod delete PODNAME VERSION` command has been added to delete a single
+  version of a pod.
+  [Samuel Giddins](https://github.com/segiddins)
+
 ##### Bug Fixes
 
 * If the master repo has not been setup when pushing a spec, run `pod setup`
