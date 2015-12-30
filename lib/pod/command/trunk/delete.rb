@@ -30,8 +30,27 @@ module Pod
         end
 
         def run
+          return unless confirm_deletion?
           json = delete
           print_messages(json['data_url'], json['messages'])
+        end
+
+        private
+
+        def confirm_deletion?
+          warning_message = 'WARNING: It is generally considered bad behavior ' \
+            "to remove versions of a Pod that others are depending on!\n" \
+            'Please consider using the `deprecate` command instead.'
+          UI.puts(warning_message.yellow)
+          loop do
+            UI.print("Are you sure you want to delete this Pod version?\n> ")
+            answer = UI.gets.strip.downcase
+            UI.puts # ensures a newline is printed after the user input
+            affirmatives = %w(y yes true 1)
+            negatives = %w(n no false 0)
+            return true if affirmatives.include?(answer)
+            return false if negatives.include?(answer)
+          end
         end
 
         def delete

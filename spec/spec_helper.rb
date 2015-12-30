@@ -45,6 +45,11 @@ module Pod
     class << self
       attr_accessor :output
       attr_accessor :warnings
+      attr_accessor :inputs
+
+      def gets
+        inputs.shift
+      end
 
       def puts(message = '')
         @output << "#{message}\n"
@@ -68,6 +73,7 @@ module Bacon
       ::Pod::Config.instance = nil
       ::Pod::UI.output = ''
       ::Pod::UI.warnings = ''
+      ::Pod::UI.inputs = []
       # The following prevents a nasty behaviour where the increments are not
       # balanced when testing informative which might lead to sections not
       # being printed to the output as they are too nested.

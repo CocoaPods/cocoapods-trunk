@@ -19,6 +19,34 @@ module Pod
       lambda { command.validate! }.should.raise CLAide::Help
     end
 
+    it 'confirms deletion' do
+      UI.inputs += %w(garbage true false)
+      command = Command.parse(%w( trunk delete Stencil 1.0.0 ))
+      command.send(:confirm_deletion?).should.be.true
+      command.send(:confirm_deletion?).should.be.false
+
+      # rubocop:disable Metrics/LineLength
+      UI.output.should == <<-OUTPUT.gsub(/^>$/, '> ')
+\e[33mWARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
+Please consider using the `deprecate` command instead.\e[0m
+Are you sure you want to delete this Pod version?
+>
+Are you sure you want to delete this Pod version?
+>
+\e[33mWARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
+Please consider using the `deprecate` command instead.\e[0m
+Are you sure you want to delete this Pod version?
+>
+      OUTPUT
+      # rubocop:enable Metrics/LineLength
+    end
+
+    it 'does not delete if the user does not confirm' do
+      Command::Trunk::Delete.any_instance.expects(:confirm_deletion?).returns(false)
+      Command::Trunk::Delete.any_instance.expects(:delete).never
+      Command::Trunk::Delete.invoke(%w(Stencil 1.0.0))
+    end
+
     it 'should show information for a pod' do
       response = {
         'messages' => [
@@ -32,6 +60,7 @@ module Pod
         'data_url' => 'https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/Stencil/1.0.0/Stencil.podspec.json',
       }
       Command::Trunk::Delete.any_instance.expects(:delete).returns(response)
+      UI.inputs << 'TRUE '
       Command::Trunk::Delete.invoke(%w(Stencil 1.0.0))
 
       UI.output.should.include 'Data URL: https://raw.githubusercontent'
