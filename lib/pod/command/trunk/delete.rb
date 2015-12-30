@@ -37,11 +37,12 @@ module Pod
 
         private
 
+        WARNING_MESSAGE = 'WARNING: It is generally considered bad behavior ' \
+          "to remove versions of a Pod that others are depending on!\n" \
+          'Please consider using the `deprecate` command instead.'.freeze
+
         def confirm_deletion?
-          warning_message = 'WARNING: It is generally considered bad behavior ' \
-            "to remove versions of a Pod that others are depending on!\n" \
-            'Please consider using the `deprecate` command instead.'
-          UI.puts(warning_message.yellow)
+          UI.puts(WARNING_MESSAGE.yellow)
           loop do
             UI.print("Are you sure you want to delete this Pod version?\n> ")
             answer = UI.gets.strip.downcase
