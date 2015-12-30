@@ -1,3 +1,3 @@
 module CocoaPodsTrunk
-  VERSION = '0.6.4'
+  VERSION = '1.0.0.beta.1'.freeze
 end
