@@ -30,7 +30,10 @@ module Pod
         end
 
         def deprecate
-          response = request_path(:patch, "pods/#{@name}/deprecated", auth_headers)
+          body = {
+            :in_favor_of => @in_favor_of,
+          }.to_json
+          response = request_path(:patch, "pods/#{@name}/deprecated", body, auth_headers)
           url = response.headers['location'].first
           json(request_url(:get, url, default_headers))
         rescue REST::Error => e
