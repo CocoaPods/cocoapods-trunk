@@ -50,8 +50,8 @@ module Pod
       UI.output.should == <<-EOS
   - Data URL: https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/Stencil/0.96.3/Stencil.podspec.json
 - Log messages:
-  - December 4th, 2015 20:00: Push for `Stencil 0.96.3` initiated.
-  - December 4th, 2015 20:00: Push for `Stencil 0.96.3` has been pushed (1.02409270 s).
+  - December 5th, 2015 02:00: Push for `Stencil 0.96.3` initiated.
+  - December 5th, 2015 02:00: Push for `Stencil 0.96.3` has been pushed (1.02409270 s).
       EOS
     end
   end
