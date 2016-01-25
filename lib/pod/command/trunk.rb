@@ -109,7 +109,7 @@ module Pod
 
       def formatted_time(time_string)
         require 'active_support/time'
-        @tz_offset ||= Time.zone_offset(`/bin/date +%Z`.strip)
+        @tz_offset ||= Time.zone_offset(time_zone)
         @current_year ||= Date.today.year
 
         time = Time.parse(time_string) + @tz_offset
@@ -119,6 +119,11 @@ module Pod
           formatted.sub!(" #{@current_year}", '')
         end
         formatted
+      end
+
+      def time_zone
+        out, = Executable.execute_command('/bin/date', %w(+%Z), :capture => :out)
+        out.strip
       end
     end
   end

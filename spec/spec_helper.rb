@@ -64,6 +64,12 @@ module Pod
       end
     end
   end
+
+  class Command::Trunk
+    def time_zone
+      'UTC'
+    end
+  end
 end
 
 module Bacon

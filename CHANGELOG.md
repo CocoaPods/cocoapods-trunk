@@ -1,3 +1,12 @@
+## Master
+
+##### Bug Fixes
+
+* Send a body with the `PATCH` request to deprecate a pod.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#52](https://github.com/CocoaPods/cocoapods-trunk/issues/52)
+
+
 ## 1.0.0.beta.1 (2015-12-30)
 
 ##### Enhancements
