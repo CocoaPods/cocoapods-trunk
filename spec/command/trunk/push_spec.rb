@@ -126,6 +126,16 @@ module Pod
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
         cmd.send(:validate_podspec)
       end
+
+      it 'prints the failure reason' do
+        Validator.any_instance.expects(:validated?).returns(false)
+        Validator.any_instance.expects(:validate)
+        Validator.any_instance.expects(:failure_reason).returns('failure_reason')
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
+        e = should.raise(Informative) { cmd.send(:validate_podspec) }
+        e.message.should.include 'The spec did not pass validation, due to failure_reason.'
+      end
     end
 
     describe 'updating the master repo' do

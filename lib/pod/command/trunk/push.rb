@@ -106,7 +106,7 @@ module Pod
           validator.use_frameworks = @use_frameworks
           validator.validate
           unless validator.validated?
-            raise Informative, 'The podspec does not validate.'
+            raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."
           end
         end
 
