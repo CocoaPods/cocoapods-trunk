@@ -11,7 +11,7 @@ module Pod
       self.summary = 'Interact with the CocoaPods API (e.g. publishing new specs)'
 
       SCHEME_AND_HOST = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
-      BASE_URL = "#{SCHEME_AND_HOST}/api/v1"
+      BASE_URL = "#{SCHEME_AND_HOST}/api/v1".freeze
 
       require 'pod/command/trunk/add_owner'
       require 'pod/command/trunk/delete'
@@ -26,7 +26,7 @@ module Pod
 
       def request_url(action, url, *args)
         response = create_request(action, url, *args)
-        if (400...600).include?(response.status_code)
+        if (400...600).cover?(response.status_code)
           print_error(response.body)
         end
         response
