@@ -2,7 +2,9 @@
 
 ##### Enhancements
 
-* None.  
+* The failure reason is printed when validation fails during `pod trunk push`.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [CocoaPods#5073](https://github.com/CocoaPods/CocoaPods/issues/5073)
 
 ##### Bug Fixes
 
