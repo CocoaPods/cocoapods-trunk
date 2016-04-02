@@ -40,7 +40,7 @@ module Pod
     it 'should successfully add an owner' do
       url = 'https://trunk.cocoapods.org/api/v1/pods/QueryKit/owners'
       WebMock::API.stub_request(:patch, url).
-        with(:body => "{\"email\":\"kyle@cocoapods.org\"}",
+        with(:body => '{"email":"kyle@cocoapods.org"}',
              :headers => { 'Authorization' => 'Token 527d11fe429f3426cb8dbeba183a0d80' }).
         to_return(:status => 200, :body => '[]', :headers => {})
 
