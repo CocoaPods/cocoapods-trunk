@@ -1,3 +1,14 @@
+## Master
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* None.  
+
+
 ## 1.0.0.beta.3 (2016-04-14)
 
 ##### Enhancements
