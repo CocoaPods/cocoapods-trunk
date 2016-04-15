@@ -162,15 +162,15 @@ module Pod
       end
 
       it 'updates the master repo when it exists' do
-        SourcesManager.stubs(:master_repo_functional?).returns(true)
-        SourcesManager.expects(:update).with('master').twice
+        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(true)
+        Config.instance.sources_manager.expects(:update).with('master').twice
 
         @cmd.run
       end
 
       it 'sets up the master repo when it does not exist' do
-        SourcesManager.stubs(:master_repo_functional?).returns(false)
-        SourcesManager.expects(:update).never
+        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(false)
+        Config.instance.sources_manager.expects(:update).never
         Command::Setup.any_instance.expects(:run).twice
 
         @cmd.run
