@@ -90,18 +90,22 @@ module Pod
     describe 'validation' do
       before do
         Installer.any_instance.stubs(:aggregate_targets).returns([])
-        Installer.any_instance.stubs(:install!)
 
         Validator.any_instance.stubs(:check_file_patterns)
-        Validator.any_instance.stubs(:validated?).returns(true)
         Validator.any_instance.stubs(:validate_url)
         Validator.any_instance.stubs(:validate_screenshots)
         Validator.any_instance.stubs(:xcodebuild).returns('')
+        Validator.any_instance.stubs(:install_pod)
+        Validator.any_instance.stubs(:build_pod)
+        Validator.any_instance.stubs(:add_app_project_import)
+        %i(prepare resolve_dependencies download_dependencies).each do |m|
+          Installer.any_instance.stubs(m)
+        end
       end
 
       it 'validates specs as frameworks by default' do
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:ios, nil, true).once.returns(Podfile.new)
+          with(:ios, '8.0', true).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
           with(:osx, nil, true).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
@@ -158,15 +162,15 @@ module Pod
       end
 
       it 'updates the master repo when it exists' do
-        SourcesManager.stubs(:master_repo_functional?).returns(true)
-        SourcesManager.expects(:update).with('master').twice
+        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(true)
+        Config.instance.sources_manager.expects(:update).with('master').twice
 
         @cmd.run
       end
 
       it 'sets up the master repo when it does not exist' do
-        SourcesManager.stubs(:master_repo_functional?).returns(false)
-        SourcesManager.expects(:update).never
+        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(false)
+        Config.instance.sources_manager.expects(:update).never
         Command::Setup.any_instance.expects(:run).twice
 
         @cmd.run

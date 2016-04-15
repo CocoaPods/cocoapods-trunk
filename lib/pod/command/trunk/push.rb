@@ -111,8 +111,13 @@ module Pod
         end
 
         def update_master_repo
-          if SourcesManager.master_repo_functional?
-            SourcesManager.update('master')
+          sources_manager = if defined?(Pod::SourcesManager)
+                              Pod::SourcesManager
+                            else
+                              config.sources_manager
+                            end
+          if sources_manager.master_repo_functional?
+            sources_manager.update('master')
           else
             Setup.invoke
           end

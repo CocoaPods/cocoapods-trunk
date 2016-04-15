@@ -59,8 +59,8 @@ module Pod
           json = json(request_path(:post, 'sessions', body, default_headers))
           save_token(json['token'])
           # TODO UI.notice inserts an empty line :/
-          puts '[!] Please verify the session by clicking the link in the ' \
-                   "verification email that has been sent to #{@email}".yellow
+          UI.puts '[!] Please verify the session by clicking the link in the ' \
+                  "verification email that has been sent to #{@email}".yellow
         rescue REST::Error => e
           raise Informative, 'There was an error registering with trunk: ' \
                                  "#{e.message}"

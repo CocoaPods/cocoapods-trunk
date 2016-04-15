@@ -6,7 +6,9 @@
 
 ##### Bug Fixes
 
-* None.  
+* Compatibility With CocoaPods 1.0.0.beta.8.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#61](https://github.com/CocoaPods/cocoapods-trunk/issues/61)
 
 
 ## 1.0.0.beta.3 (2016-04-14)
