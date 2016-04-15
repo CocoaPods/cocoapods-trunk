@@ -1,4 +1,4 @@
-## Master
+## 1.0.0.beta.4 (2016-04-15)
 
 ##### Enhancements
 
