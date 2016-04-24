@@ -90,9 +90,9 @@ module Pod
 
         def spec
           @spec ||= Pod::Specification.from_file(@path)
-        rescue Informative # TODO: this should be a more specific error
-          raise Informative, 'Unable to interpret the specified path as a ' \
-                               'podspec.'
+        rescue Informative => e # TODO: this should be a more specific error
+          raise Informative, 'Unable to interpret the specified path ' \
+                             "#{UI.path(@path)} as a podspec (#{e})."
         end
 
         # Performs a full lint against the podspecs.
