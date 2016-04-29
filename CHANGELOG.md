@@ -2,7 +2,10 @@
 
 ##### Enhancements
 
-* None.  
+* Make the error loading a specification during `pod trunk push` more
+  informative.  
+  [Samuel Giddins](https://github.com/segiddins)
+  [#63](https://github.com/CocoaPods/cocoapods-trunk/issues/63)
 
 ##### Bug Fixes
 
