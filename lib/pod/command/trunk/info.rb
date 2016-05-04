@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class Info < Trunk
         self.summary = 'Returns information about a Pod.'
         self.arguments = [

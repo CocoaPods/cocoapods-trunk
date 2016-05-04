@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 1.0.0.beta.1
+      #
       class Delete < Trunk
         self.summary = 'Deletes a version of a pod.'
         self.description = <<-DESC

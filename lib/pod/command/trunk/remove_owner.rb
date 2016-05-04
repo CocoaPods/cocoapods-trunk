@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class RemoveOwner < Trunk
         self.summary = 'Remove an owner from a pod'
         self.description = <<-DESC

@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class AddOwner < Trunk
         self.summary = 'Add an owner to a pod'
         self.description = <<-DESC
