@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class Push < Trunk
         self.summary = 'Publish a podspec'
         self.description = <<-DESC

@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class Register < Trunk
         self.summary = 'Manage sessions'
         self.description = <<-DESC

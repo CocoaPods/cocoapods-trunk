@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 1.0.0.beta.1
+      #
       class Deprecate < Trunk
         self.summary = 'Deprecates a pod.'
         self.arguments = [

@@ -1,6 +1,8 @@
 module Pod
   class Command
     class Trunk
+      # @CocoaPods 0.33.0
+      #
       class Me < Trunk
         self.summary = 'Display information about your sessions'
         self.description = <<-DESC
