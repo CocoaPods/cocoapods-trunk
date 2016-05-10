@@ -122,7 +122,7 @@ module Pod
       end
 
       def time_zone
-        out, = Executable.execute_command('/bin/date', %w(+%Z), :capture => :out)
+        out, = Executable.capture_command('/bin/date', %w(+%Z), :capture => :out)
         out.strip
       end
     end

@@ -6,7 +6,8 @@
 
 ##### Bug Fixes
 
-* None.  
+* Don't print the invocation of `/bin/date`.  
+  [Samuel Giddins](https://github.com/segiddins)
 
 
 ## 1.0.0.rc.1 (2016-04-30)
