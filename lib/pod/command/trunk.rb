@@ -52,7 +52,7 @@ module Pod
         rescue JSON::ParserError
           json = {}
         end
-        error = json['error'] || "An unexpected error ocurred: #{body}"
+        error = json['error'] || "An unexpected error occurred: #{body}"
 
         case data = json['data']
         when Hash
