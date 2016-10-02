@@ -103,6 +103,13 @@ module Pod
         end
       end
 
+      it 'passes the SWIFT_VERSION to the Validator' do
+        Validator.any_instance.expects(:swift_version=).with('3.0')
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --swift-version=3.0))
+        cmd.send(:validate_podspec)
+      end
+
       it 'validates specs as frameworks by default' do
         Validator.any_instance.expects(:podfile_from_spec).
           with(:ios, '8.0', true).once.returns(Podfile.new)
