@@ -2,7 +2,9 @@
 
 ##### Enhancements
 
-* None.  
+* Pass --swift-version to the Validator during `pod lib lint`
+  [Danielle Tomlinson](https://github.com/dantoml)
+  [#92](https://github.com/CocoaPods/cocoapods-trunk/pull/72)
 
 ##### Bug Fixes
 

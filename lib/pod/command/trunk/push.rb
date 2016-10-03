@@ -31,12 +31,15 @@ module Pod
           [
             ['--allow-warnings', 'Allows push even if there are lint warnings'],
             ['--use-libraries', 'Linter uses static libraries to install the spec'],
+            ['--swift-version=VERSION', 'The SWIFT_VERSION that should be used to lint the spec. ' \
+             'This takes precedence over a .swift-version file.'],
           ].concat(super)
         end
 
         def initialize(argv)
           @allow_warnings = argv.flag?('allow-warnings', false)
           @use_frameworks = !argv.flag?('use-libraries')
+          @swift_version = argv.option('swift-version', nil)
           @path = argv.shift_argument || '.'
           find_podspec_file if File.directory?(@path)
           super
@@ -106,6 +109,7 @@ module Pod
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
+          validator.swift_version  = @swift_version
           validator.validate
           unless validator.validated?
             raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."
