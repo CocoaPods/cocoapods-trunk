@@ -91,7 +91,7 @@ module Pod
             at = messages[0].to_a.flatten[0]
             UI.puts " 📅  #{formatted_time(at)}"
           end
-          UI.puts " 🌎  http://cocoapods.org/pods/#{spec.name}"
+          UI.puts " 🌎  https://cocoapods.org/pods/#{spec.name}"
           UI.puts " 👍  Tell your friends!"
           UI.puts '-' * 80 
 		end
