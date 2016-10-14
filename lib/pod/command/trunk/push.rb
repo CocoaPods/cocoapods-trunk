@@ -64,7 +64,12 @@ module Pod
           validate_podspec
           json = push_to_trunk
           update_master_repo
-          print_messages(json['data_url'], json['messages'], spec(), 'published')
+          
+	      if (400...600).cover?(@push_status)
+            print_messages(json['data_url'], nil, nil)
+          else
+            print_messages(json['data_url'], json['messages'], spec(), 'published')
+          end
         end
 
         private
@@ -72,6 +77,7 @@ module Pod
         def push_to_trunk
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
+          @push_status = response.status_code
           url = response.headers['location'].first
           json(request_url(:get, url, default_headers))
         rescue REST::Error => e
