@@ -64,7 +64,7 @@ module Pod
           validate_podspec
           json = push_to_trunk
           update_master_repo
-          print_messages(json['data_url'], json['messages'])
+          print_messages(json['data_url'], json['messages'], spec(), 'published')
         end
 
         private

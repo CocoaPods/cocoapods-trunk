@@ -28,7 +28,7 @@ module Pod
 
         def run
           json = deprecate
-          print_messages(json['data_url'], json['messages'])
+          print_messages(json['data_url'], json['messages'], nil, nil)
         end
 
         def deprecate
