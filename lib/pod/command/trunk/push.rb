@@ -65,7 +65,7 @@ module Pod
           json = push_to_trunk
           update_master_repo
           
-	      if (400...600).cover?(@push_status)
+          if (400...600).cover?(@push_status)
             print_messages(json['data_url'], nil, nil)
           else
             print_messages(json['data_url'], json['messages'], spec(), 'published')
