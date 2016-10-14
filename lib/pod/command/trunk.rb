@@ -71,7 +71,7 @@ module Pod
       end
 
       def print_messages(data_url, messages, spec = nil, action = nil)
-        if verbose? || spec == nil
+        if verbose? || nil?(spec)
           # Using UI.labeled here is dangerous, as it wraps the URL and indents
           # it, which breaks the URL when you try to copy-paste it.
           UI.puts "  - Data URL: #{data_url}"
@@ -82,21 +82,21 @@ module Pod
           end
           UI.labeled 'Log messages', messages
         else
-          UI.puts 
+          UI.puts
           UI.puts '-' * 80
           UI.puts " 🎉  Congrats"
-          UI.puts ""
-          UI.puts " 🚀  #{spec.name} (#{spec.version.to_s}) successfully #{action}"
+          UI.puts
+          UI.puts " 🚀  #{spec.name} (#{spec.version}) successfully #{action}"
           if messages.count > 0
             at = messages[0].to_a.flatten[0]
             UI.puts " 📅  #{formatted_time(at)}"
           end
           UI.puts " 🌎  https://cocoapods.org/pods/#{spec.name}"
           UI.puts " 👍  Tell your friends!"
-          UI.puts '-' * 80 
+          UI.puts '-' * 80
         end
       end
-      
+
       def json(response)
         JSON.parse(response.body)
       end
