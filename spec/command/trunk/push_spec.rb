@@ -149,6 +149,30 @@ module Pod
       end
     end
 
+    describe 'sending the swift version up to trunk' do
+      it 'passes the value to trunk' do
+        Command::Trunk::Push.any_instance.unstub(:update_master_repo)
+        Pod::Command::Trunk.any_instance.expects(:json).returns({})
+
+        Pod::Command::Trunk.any_instance.expects(:auth_headers).returns({})
+
+        response = mock
+        response.expects(:headers).returns('location' => ['http://theinternet.com'])
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --swift-version=1.1.2))
+
+        example = Pod::Specification.from_file('spec/fixtures/BananaLib.podspec')
+        example.attributes_hash[:pushed_with_swift_version] = '1.1.2'
+
+        cmd.stubs(:validate_podspec)
+        cmd.stubs(:request_url)
+
+        api_route = 'pods?allow_warnings=false'
+        cmd.expects(:request_path).with(:post, api_route, example.to_json, {}).returns(response)
+        cmd.send(:push_to_trunk)
+      end
+    end
+
     describe 'updating the master repo' do
       before do
         @cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))

@@ -70,6 +70,7 @@ module Pod
         private
 
         def push_to_trunk
+          spec.attributes_hash[:pushed_with_swift_version] = @swift_version
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first

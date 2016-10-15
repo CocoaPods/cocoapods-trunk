@@ -2,7 +2,9 @@
 
 ##### Enhancements
 
-* None.  
+* Passes the version from `--swift-version` to CocoaPods Trunk  
+  [Orta](https://github.com/orta)
+  [#92](https://github.com/CocoaPods/cocoapods-trunk/pull/72)
 
 ##### Bug Fixes
 
