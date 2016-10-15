@@ -66,7 +66,7 @@ module Pod
           update_master_repo
 
           if (400...600).cover?(status)
-            print_messages(json['data_url'], nil, nil)
+            print_messages(json['data_url'], json['messages'], nil)
           else
             print_messages(json['data_url'], json['messages'], spec, 'published')
           end
