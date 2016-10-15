@@ -76,11 +76,11 @@ module Pod
           # it, which breaks the URL when you try to copy-paste it.
           UI.puts "  - Data URL: #{data_url}"
 
-          messages = messages.map do |entry|
+          server_logs = messages.map do |entry|
             at, message = entry.to_a.flatten
             "#{formatted_time(at)}: #{message}"
           end
-          UI.labeled 'Log messages', messages
+          UI.labeled 'Log messages', server_logs
         else
           separator = '-' * 80
           UI.puts
@@ -88,7 +88,7 @@ module Pod
           UI.puts " 🎉  Congrats"
           UI.puts
           UI.puts " 🚀  #{spec.name} (#{spec.version}) successfully #{action}"
-          if !messages.empty?
+          unless messages.empty?
             at = messages.first.to_a.flatten.first
             UI.puts " 📅  #{formatted_time(at)}"
           end
