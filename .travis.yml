@@ -13,7 +13,8 @@ addons:
    repo_token: 937468c2cbb0d7c0546b62d0fcbcba8a2a8b82714a64a52ffd0b951e71df626d
 
 before_install:
-  - echo "gem: -n/usr/local/bin" >> ~/.gemrc
+  - export GEM_HOME=$HOME/.gem
+  - export PATH=$GEM_HOME/bin:$PATH
   - sudo gem install bundler
 
 install:
