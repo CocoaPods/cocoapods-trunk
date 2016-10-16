@@ -34,7 +34,7 @@ module Pod
         def run
           return unless confirm_deletion?
           json = delete
-          print_messages(json['data_url'], json['messages'])
+          print_messages(json['data_url'], json['messages'], nil, nil)
         end
 
         private
