@@ -115,6 +115,10 @@ module Pod
           unless validator.validated?
             raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."
           end
+
+          # Let the validator's logic for the swift version
+          # set the value for the trunk JSON uploader
+          @swift_version = validator.swift_version
         end
 
         def update_master_repo
