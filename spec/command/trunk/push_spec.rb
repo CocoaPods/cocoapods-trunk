@@ -3,6 +3,20 @@ require 'tmpdir'
 
 module Pod
   describe Command::Trunk::Push do
+    def success_json
+      {
+        'messages' => [
+          {
+            '2015-12-05 02:00:25 UTC' => "Push for `BananaLib 0.96.3' initiated.",
+          },
+          {
+            '2015-12-05 02:00:26 UTC' => "Push for `BananaLib 0.96.3' has been pushed (1.02409270 s).",
+          },
+        ],
+        'data_url' => 'https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/BananaLib/0.96.3/BananaLib.podspec.json',
+      }
+    end
+
     before do
       Command::Trunk::Push.any_instance.stubs(:update_master_repo)
     end
@@ -153,18 +167,7 @@ module Pod
       before do
         @cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
         @cmd.stubs(:validate_podspec)
-        version_response = {
-          'messages' => [
-            {
-              '2015-12-05 02:00:25 UTC' => "Push for `BananaLib 0.96.3' initiated.",
-            },
-            {
-              '2015-12-05 02:00:26 UTC' => "Push for `BananaLib 0.96.3' has been pushed (1.02409270 s).",
-            },
-          ],
-          'data_url' => 'https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/BananaLib/0.96.3/BananaLib.podspec.json',
-        }
-        @cmd.stubs(:push_to_trunk).returns(version_response)
+        @cmd.stubs(:push_to_trunk).returns([200, success_json])
         Command::Trunk::Push.any_instance.unstub(:update_master_repo)
       end
 
@@ -181,6 +184,40 @@ module Pod
         Command::Setup.any_instance.expects(:run).twice
 
         @cmd.run
+      end
+    end
+
+    describe 'Presenting Responses to the user' do
+      before do
+        Command::Trunk::Push.any_instance.stubs(:update_master_repo)
+        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(true)
+      end
+
+      it 'shows full logs when verbose' do
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --verbose))
+        cmd.stubs(:validate_podspec)
+        cmd.stubs(:push_to_trunk).returns([200, success_json])
+
+        cmd.run
+        UI.output.should.match %r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs}
+      end
+
+      it 'shows full logs when errored' do
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --verbose))
+        cmd.stubs(:validate_podspec)
+        cmd.stubs(:push_to_trunk).returns([400, success_json])
+
+        cmd.run
+        UI.output.should.match %r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs}
+      end
+
+      it 'shows thanks emojis when success' do
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
+        cmd.stubs(:validate_podspec)
+        cmd.stubs(:push_to_trunk).returns([200, success_json])
+        cmd.run
+
+        UI.output.should.match %r{https://cocoapods.org/pods/BananaLib}
       end
     end
   end

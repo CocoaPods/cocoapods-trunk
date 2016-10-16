@@ -62,9 +62,14 @@ module Pod
         def run
           update_master_repo
           validate_podspec
-          json = push_to_trunk
+          status, json = push_to_trunk
           update_master_repo
-          print_messages(json['data_url'], json['messages'])
+
+          if (400...600).cover?(status)
+            print_messages(json['data_url'], json['messages'], nil)
+          else
+            print_messages(json['data_url'], json['messages'], spec, 'published')
+          end
         end
 
         private
@@ -73,7 +78,7 @@ module Pod
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first
-          json(request_url(:get, url, default_headers))
+          return response.status_code, json(request_url(:get, url, default_headers))
         rescue REST::Error => e
           raise Informative, 'There was an error pushing a new version ' \
                                    "to trunk: #{e.message}"

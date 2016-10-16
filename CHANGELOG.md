@@ -2,7 +2,9 @@
 
 ##### Enhancements
 
-* None.  
+* Prettier success message when successfully pushed a new version
+  [Marin](https://github.com/icanzilb)
+  [#76](https://github.com/CocoaPods/cocoapods-trunk/pull/76)
 
 ##### Bug Fixes
 
