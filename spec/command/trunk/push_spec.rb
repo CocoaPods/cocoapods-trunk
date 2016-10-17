@@ -112,6 +112,7 @@ module Pod
         Validator.any_instance.stubs(:install_pod)
         Validator.any_instance.stubs(:build_pod)
         Validator.any_instance.stubs(:add_app_project_import)
+        Validator.any_instance.stubs(:used_swift_version).returns(nil)
         %i(prepare resolve_dependencies download_dependencies).each do |m|
           Installer.any_instance.stubs(m)
         end
@@ -125,7 +126,7 @@ module Pod
       end
 
       it 'passes a swift version back to command, to handle .swift-version files' do
-        Validator.any_instance.stubs(:swift_version).returns('1.2.3')
+        Validator.any_instance.stubs(:used_swift_version).returns('1.2.3')
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
         cmd.send(:validate_podspec)
