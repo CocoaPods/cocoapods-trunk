@@ -124,6 +124,14 @@ module Pod
         cmd.send(:validate_podspec)
       end
 
+      it 'passes a swift version back to command, to handle .swift-version files' do
+        Validator.any_instance.stubs(:swift_version).returns('1.2.3')
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
+        cmd.send(:validate_podspec)
+        cmd.instance_variable_get(:@swift_version).should == '1.2.3'
+      end
+
       it 'validates specs as frameworks by default' do
         Validator.any_instance.expects(:podfile_from_spec).
           with(:ios, '8.0', true).once.returns(Podfile.new)
@@ -164,25 +172,34 @@ module Pod
     end
 
     describe 'sending the swift version up to trunk' do
-      it 'passes the value to trunk' do
+      before do
+        # This won't get called
         Command::Trunk::Push.any_instance.unstub(:update_master_repo)
+        # For faking the networking when sending
         Pod::Command::Trunk.any_instance.expects(:json).returns({})
-
         Pod::Command::Trunk.any_instance.expects(:auth_headers).returns({})
+      end
 
+      it 'passes the value to trunk' do
+        # Fakes for the network response
         response = mock
         response.expects(:headers).returns('location' => ['http://theinternet.com'])
+        response.expects(:status_code).returns(200)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --swift-version=1.1.2))
 
-        example = Pod::Specification.from_file('spec/fixtures/BananaLib.podspec')
-        example.attributes_hash[:pushed_with_swift_version] = '1.1.2'
+        # Using a blank podspec - JSON should include `"pushed_with_swift_version":"1.1.2"`
+        cmd.stubs(:spec).returns(Pod::Specification.new)
+
+        json = <<-JSON
+{"name":null,"pushed_with_swift_version":"1.1.2","platforms":{"osx":null,"ios":null,"tvos":null,"watchos":null}}
+        JSON
 
         cmd.stubs(:validate_podspec)
         cmd.stubs(:request_url)
 
         api_route = 'pods?allow_warnings=false'
-        cmd.expects(:request_path).with(:post, api_route, example.to_json, {}).returns(response)
+        cmd.expects(:request_path).with(:post, api_route, json, {}).returns(response)
         cmd.send(:push_to_trunk)
       end
     end
