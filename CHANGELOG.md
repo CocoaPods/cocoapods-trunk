@@ -2,6 +2,10 @@
 
 ##### Enhancements
 
+* Passes the version of Swift used for dpeloyment to the CocoaPods Specs repo  
+  [Orta](https://github.com/orta)
+  [#92](https://github.com/CocoaPods/cocoapods-trunk/pull/72)
+
 * Prettier success message when successfully pushed a new version
   [Marin](https://github.com/icanzilb)
   [#76](https://github.com/CocoaPods/cocoapods-trunk/pull/76)
