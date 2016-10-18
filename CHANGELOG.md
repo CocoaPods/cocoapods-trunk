@@ -2,7 +2,7 @@
 
 ##### Enhancements
 
-* Passes the version of Swift used for dpeloyment to the CocoaPods Specs repo  
+* Passes the pod's version of Swift used for deployment to the CocoaPods Specs repo  
   [Orta](https://github.com/orta)
   [#92](https://github.com/CocoaPods/cocoapods-trunk/pull/72)
 
