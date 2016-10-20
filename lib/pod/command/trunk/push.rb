@@ -75,7 +75,7 @@ module Pod
         private
 
         def push_to_trunk
-          spec.attributes_hash[:pushed_with_swift_version] = @swift_version
+          spec.attributes_hash[:pushed_with_swift_version] = @swift_version if @swift_version
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first
@@ -123,7 +123,7 @@ module Pod
 
           # Let the validator's logic for the swift version
           # set the value for the trunk JSON uploader
-          @swift_version = validator.used_swift_version
+          @swift_version = validator.respond_to?(:used_swift_version) && validator.used_swift_version
         end
 
         def update_master_repo
