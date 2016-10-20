@@ -6,8 +6,8 @@
 
 ##### Bug Fixes
 
-* None.  
-
+* Support submitting from multiple versions of CocoaPods.  
+  [Samuel Giddins](https://github.com/segiddins)
 
 ## 1.1.0 (2016-10-19)
 
