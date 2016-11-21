@@ -115,7 +115,7 @@ module Pod
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
-          validator.swift_version  = @swift_version
+          validator.swift_version  = @swift_version if Validator.method_defined?(:swift_version=)
           validator.validate
           unless validator.validated?
             raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."

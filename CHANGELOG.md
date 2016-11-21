@@ -6,7 +6,9 @@
 
 ##### Bug Fixes
 
-* None.  
+* Checks that `Pod::Validator` has `swift_version=` for CocoaPods <= 1.1.0 support.  
+  [Danielle Tomlinson](https://github.com/dantoml)
+  [#6209](https://github.com/CocoaPods/CocoaPods/issues/6209)
 
 
 ## 1.1.1 (2016-10-20)
