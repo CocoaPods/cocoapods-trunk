@@ -1,4 +1,4 @@
-# Cocoapods::Trunk
+# CocoaPods::Trunk
 
 [![Build Status](https://img.shields.io/travis/CocoaPods/cocoapods-trunk/master.svg?style=flat)](https://travis-ci.org/CocoaPods/cocoapods-trunk)
 [![Coverage](https://img.shields.io/codeclimate/coverage/github/CocoaPods/cocoapods-trunk.svg?style=flat)](https://codeclimate.com/github/CocoaPods/cocoapods-trunk)
