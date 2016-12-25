@@ -103,7 +103,7 @@ module Pod
       end
 
       def netrc
-        @@netrc ||= Netrc.read
+        @@netrc ||= Netrc.read(netrc_path)
       end
 
       def token
@@ -140,6 +140,17 @@ module Pod
       def time_zone
         out, = Executable.capture_command('/bin/date', %w(+%Z), :capture => :out)
         out.strip
+      end
+
+      def netrc_path
+        base_path = ENV['NETRC'] || Dir.home
+        gpg_path = File.join(base_path, '.netrc.gpg')
+        plain_path = File.join(base_path, '.netrc')
+        if File.exist?(gpg_path)
+          gpg_path
+        else
+          plain_path
+        end
       end
     end
   end
