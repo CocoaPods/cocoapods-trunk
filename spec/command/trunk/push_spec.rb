@@ -170,6 +170,12 @@ module Pod
         e = should.raise(Informative) { cmd.send(:validate_podspec) }
         e.message.should.include 'The spec did not pass validation, due to failure_reason.'
       end
+
+      it 'passes skip import validation' do
+        Validator.any_instance.expects(:skip_import_validation=).with(true)
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --skip-import-validation))
+        cmd.send(:validate_podspec)
+      end
     end
 
     describe 'sending the swift version up to trunk' do

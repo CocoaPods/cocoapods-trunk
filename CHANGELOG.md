@@ -6,7 +6,9 @@
 
 ##### Bug Fixes
 
-* None.  
+* Add `--skip-import-validation` to skip linking a pod during lint.  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#86](https://github.com/CocoaPods/cocoapods-trunk/pull/86)
 
 
 ## 1.1.2 (2016-12-17)
