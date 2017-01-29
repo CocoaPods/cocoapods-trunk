@@ -33,6 +33,7 @@ module Pod
             ['--use-libraries', 'Linter uses static libraries to install the spec'],
             ['--swift-version=VERSION', 'The SWIFT_VERSION that should be used to lint the spec. ' \
              'This takes precedence over a .swift-version file.'],
+            ['--skip-import-validation', 'Lint skips validating that the pod can be imported'],
           ].concat(super)
         end
 
@@ -40,6 +41,7 @@ module Pod
           @allow_warnings = argv.flag?('allow-warnings', false)
           @use_frameworks = !argv.flag?('use-libraries')
           @swift_version = argv.option('swift-version', nil)
+          @skip_import_validation = argv.flag?('skip-import-validation', false)
           @path = argv.shift_argument || '.'
           find_podspec_file if File.directory?(@path)
           super
@@ -116,6 +118,7 @@ module Pod
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
           validator.swift_version  = @swift_version if Validator.method_defined?(:swift_version=)
+          validator.skip_import_validation = @skip_import_validation
           validator.validate
           unless validator.validated?
             raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."
