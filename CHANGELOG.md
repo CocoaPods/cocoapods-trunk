@@ -6,6 +6,10 @@
 
 ##### Bug Fixes
 
+* Properly display `pod trunk deprecate` command line options  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#6486](https://github.com/CocoaPods/CocoaPods/issues/6486)
+
 * Add `--skip-import-validation` to skip linking a pod during lint.  
   [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
   [#86](https://github.com/CocoaPods/cocoapods-trunk/pull/86)

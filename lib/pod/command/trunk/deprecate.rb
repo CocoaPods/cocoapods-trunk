@@ -9,7 +9,7 @@ module Pod
           CLAide::Argument.new('NAME', true),
         ]
 
-        def options
+        def self.options
           [
             ['--in-favor-of=OTHER_NAME', 'The pod to deprecate this pod in favor of.'],
           ].concat(super)
