@@ -18,6 +18,7 @@ module Pod
       require 'pod/command/trunk/deprecate'
       require 'pod/command/trunk/info'
       require 'pod/command/trunk/me'
+      require 'pod/command/trunk/me_rename'
       require 'pod/command/trunk/push'
       require 'pod/command/trunk/register'
       require 'pod/command/trunk/remove_owner'
