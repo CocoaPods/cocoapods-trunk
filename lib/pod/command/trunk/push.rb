@@ -34,6 +34,7 @@ module Pod
             ['--swift-version=VERSION', 'The SWIFT_VERSION that should be used to lint the spec. ' \
              'This takes precedence over a .swift-version file.'],
             ['--skip-import-validation', 'Lint skips validating that the pod can be imported'],
+            ['--skip-tests', 'Lint skips building and running tests during validation'],
           ].concat(super)
         end
 
@@ -42,6 +43,7 @@ module Pod
           @use_frameworks = !argv.flag?('use-libraries')
           @swift_version = argv.option('swift-version', nil)
           @skip_import_validation = argv.flag?('skip-import-validation', false)
+          @skip_tests = argv.flag?('skip-tests', false)
           @path = argv.shift_argument || '.'
           find_podspec_file if File.directory?(@path)
           super
@@ -119,6 +121,7 @@ module Pod
           validator.use_frameworks = @use_frameworks
           validator.swift_version  = @swift_version if Validator.method_defined?(:swift_version=)
           validator.skip_import_validation = @skip_import_validation
+          validator.skip_tests = @skip_tests
           validator.validate
           unless validator.validated?
             raise Informative, "The spec did not pass validation, due to #{validator.failure_reason}."

@@ -2,7 +2,9 @@
 
 ##### Enhancements
 
-* None.  
+* Add skip test option to trunk push  
+  [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
+  [#93](https://github.com/CocoaPods/cocoapods-trunk/pull/93)
 
 ##### Bug Fixes
 
