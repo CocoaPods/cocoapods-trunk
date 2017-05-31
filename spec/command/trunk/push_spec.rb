@@ -126,6 +126,7 @@ module Pod
       end
 
       it 'passes a swift version back to command, to handle .swift-version files' do
+        Validator.any_instance.stubs(:dot_swift_version).returns('1.2.3')
         Validator.any_instance.stubs(:used_swift_version).returns('1.2.3')
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
@@ -135,13 +136,13 @@ module Pod
 
       it 'validates specs as frameworks by default' do
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:ios, '8.0', true).once.returns(Podfile.new)
+          with(:ios, '8.0', true, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:osx, nil, true).once.returns(Podfile.new)
+          with(:osx, nil, true, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:tvos, nil, true).once.returns(Podfile.new)
+          with(:tvos, nil, true, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:watchos, nil, true).once.returns(Podfile.new)
+          with(:watchos, nil, true, []).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
         cmd.send(:validate_podspec)
@@ -149,13 +150,13 @@ module Pod
 
       it 'validates specs as libraries if requested' do
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:ios, nil, false).once.returns(Podfile.new)
+          with(:ios, nil, false, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:osx, nil, false).once.returns(Podfile.new)
+          with(:osx, nil, false, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:tvos, nil, false).once.returns(Podfile.new)
+          with(:tvos, nil, false, []).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
-          with(:watchos, nil, false).once.returns(Podfile.new)
+          with(:watchos, nil, false, []).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
         cmd.send(:validate_podspec)
@@ -174,6 +175,12 @@ module Pod
       it 'passes skip import validation' do
         Validator.any_instance.expects(:skip_import_validation=).with(true)
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --skip-import-validation))
+        cmd.send(:validate_podspec)
+      end
+
+      it 'passes skip test' do
+        Validator.any_instance.expects(:skip_tests=).with(true)
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --skip-tests))
         cmd.send(:validate_podspec)
       end
     end
