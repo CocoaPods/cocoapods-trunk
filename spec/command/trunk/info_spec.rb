@@ -16,7 +16,7 @@ module Pod
 
     it 'should show information for a pod' do
       url = 'https://trunk.cocoapods.org/api/v1/pods/Stencil'
-      WebMock::API.stub_request(:get, url).to_return(:body => {
+      stub_request(:get, url).to_return(:body => {
         'owners' => [
           {
             'name' => 'Kyle Fuller',
