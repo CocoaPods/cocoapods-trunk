@@ -5,6 +5,14 @@
 * Add skip test option to trunk push  
   [Dimitris Koutsogiorgas](https://github.com/dnkoutso)
   [#93](https://github.com/CocoaPods/cocoapods-trunk/pull/93)
+  
+* Loosen netrc requirement
+  [jasl](https://github.com/jasl)
+  [#93](https://github.com/CocoaPods/cocoapods-trunk/pull/95)
+  
+* Update development dependencies to support MRI 2.3+
+  [jasl](https://github.com/jasl)
+  [#93](https://github.com/CocoaPods/cocoapods-trunk/pull/95)
 
 ##### Bug Fixes
 
