@@ -108,7 +108,7 @@ module Pod
 
       def token
         ENV['COCOAPODS_TRUNK_TOKEN'] ||
-          (netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].password)
+          (netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].last)
       end
 
       def default_headers

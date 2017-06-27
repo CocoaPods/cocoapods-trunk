@@ -52,7 +52,7 @@ PATH
   specs:
     cocoapods-trunk (1.2.0)
       nap (>= 0.8, < 2.0)
-      netrc (= 0.7.8)
+      netrc (~> 0.11)
 
 GEM
   remote: https://rubygems.org/
@@ -104,7 +104,7 @@ GEM
     multi_json (1.11.2)
     nanaimo (0.2.3)
     nap (1.1.0)
-    netrc (0.7.8)
+    netrc (0.11.0)
     notify (0.5.2)
     parser (2.3.0.7)
       ast (~> 2.2)
@@ -168,4 +168,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.0
+   1.15.1
