@@ -38,11 +38,11 @@ module Pod
 
     it 'should send the proper network request' do
       redirect = 'http://redirected.com'
-      WebMock::API.stub_request(:patch, 'https://trunk.cocoapods.org/api/v1/pods/Stencil/deprecated').
-        with(:body => WebMock::API.hash_including('in_favor_of' => 'Stamp')).
+      stub_request(:patch, 'https://trunk.cocoapods.org/api/v1/pods/Stencil/deprecated').
+        with(:body => hash_including('in_favor_of' => 'Stamp')).
         to_return(:status => 201, :headers => { :location => redirect })
 
-      WebMock::API.stub_request(:get, redirect).
+      stub_request(:get, redirect).
         to_return(:status => 200, :body => @push_response.to_json)
 
       Command::Trunk::Deprecate.invoke(%w(Stencil --in-favor-of=Stamp))
