@@ -129,7 +129,7 @@ module Pod
         Validator.any_instance.stubs(:dot_swift_version).returns('1.2.3')
         Validator.any_instance.stubs(:used_swift_version).returns('1.2.3')
 
-        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --allow-warnings))
         cmd.send(:validate_podspec)
         cmd.instance_variable_get(:@swift_version).should == '1.2.3'
       end
