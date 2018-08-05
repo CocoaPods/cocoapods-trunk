@@ -183,6 +183,13 @@ module Pod
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --skip-tests))
         cmd.send(:validate_podspec)
       end
+
+      it 'passes use modular headers' do
+        Validator.any_instance.expects(:use_modular_headers=)
+
+        cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-modular-headers))
+        cmd.send(:validate_podspec)
+      end
     end
 
     describe 'sending the swift version up to trunk' do

@@ -31,6 +31,7 @@ module Pod
           [
             ['--allow-warnings', 'Allows push even if there are lint warnings'],
             ['--use-libraries', 'Linter uses static libraries to install the spec'],
+            ['--use-modular-headers', 'Lint uses modular headers during installation'],
             ['--swift-version=VERSION', 'The SWIFT_VERSION that should be used to lint the spec. ' \
              'This takes precedence over a .swift-version file.'],
             ['--skip-import-validation', 'Lint skips validating that the pod can be imported'],
@@ -41,6 +42,7 @@ module Pod
         def initialize(argv)
           @allow_warnings = argv.flag?('allow-warnings', false)
           @use_frameworks = !argv.flag?('use-libraries')
+          @use_modular_headers = argv.flag?('use-modular-headers')
           @swift_version = argv.option('swift-version', nil)
           @skip_import_validation = argv.flag?('skip-import-validation', false)
           @skip_tests = argv.flag?('skip-tests', false)
@@ -119,7 +121,10 @@ module Pod
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
-          validator.swift_version  = @swift_version if Validator.method_defined?(:swift_version=)
+          if Validator.method_defined?(:use_modular_headers=)
+            validator.use_modular_headers = @use_modular_headers
+          end
+          validator.swift_version = @swift_version if Validator.method_defined?(:swift_version=)
           validator.skip_import_validation = @skip_import_validation
           validator.skip_tests = @skip_tests
           validator.validate
