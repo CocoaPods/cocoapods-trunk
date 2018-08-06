@@ -121,10 +121,12 @@ module Pod
           validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
-          if Validator.method_defined?(:use_modular_headers=)
+          if validator.respond_to?(:use_modular_headers=)
             validator.use_modular_headers = @use_modular_headers
           end
-          validator.swift_version = @swift_version if Validator.method_defined?(:swift_version=)
+          if validator.respond_to?(:swift_version=)
+            validator.swift_version = @swift_version
+          end
           validator.skip_import_validation = @skip_import_validation
           validator.skip_tests = @skip_tests
           validator.validate
