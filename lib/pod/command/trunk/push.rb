@@ -54,7 +54,7 @@ module Pod
         def validate!
           super
           unless token
-            help! 'You need to register a session first.'
+            help! 'You need to run `pod trunk register` to register a session first.'
           end
           unless @path
             help! 'Please specify the path to the podspec file.'
