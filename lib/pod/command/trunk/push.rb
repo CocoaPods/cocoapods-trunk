@@ -33,7 +33,7 @@ module Pod
             ['--use-libraries', 'Linter uses static libraries to install the spec'],
             ['--use-modular-headers', 'Lint uses modular headers during installation'],
             ['--swift-version=VERSION', 'The SWIFT_VERSION that should be used to lint the spec. ' \
-             'This takes precedence over a .swift-version file.'],
+             'This takes precedence over a .swift-version file or swift_versions DSL.'],
             ['--skip-import-validation', 'Lint skips validating that the pod can be imported'],
             ['--skip-tests', 'Lint skips building and running tests during validation'],
           ].concat(super)
@@ -81,7 +81,6 @@ module Pod
         private
 
         def push_to_trunk
-          spec.attributes_hash[:pushed_with_swift_version] = @swift_version if @swift_version
           response = request_path(:post, "pods?allow_warnings=#{@allow_warnings}",
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first
