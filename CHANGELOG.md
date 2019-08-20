@@ -6,8 +6,11 @@
 
 ##### Bug Fixes
 
-* None.  
-
+* Update to get the master spec repo from `Source::Manager` for validation - effectively 
+  use the new CDN `TrunkSource` for podspec validation and not a hard-coded URL  
+  [Igor Makarov](https://github.com/igor-makarov)
+  [#132](https://github.com/CocoaPods/cocoapods-trunk/pull/132)
+  [CocoaPods#9112](https://github.com/CocoaPods/CocoaPods/issues/9112)
 
 ## 1.3.1 (2018-08-16)
 

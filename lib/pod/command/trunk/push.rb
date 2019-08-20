@@ -7,7 +7,7 @@ module Pod
         self.summary = 'Publish a podspec'
         self.description = <<-DESC
                 Publish the podspec at `PATH` to make it available to all users of
-                the ‘master’ spec-repo. If `PATH` is not provided, defaults to the
+                the ‘trunk’ spec-repo. If `PATH` is not provided, defaults to the
                 current directory.
 
                 Before pushing the podspec to cocoapods.org, this will perform a local
@@ -118,7 +118,7 @@ module Pod
         def validate_podspec
           UI.puts 'Validating podspec'.yellow
 
-          validator = Validator.new(spec, %w(https://github.com/CocoaPods/Specs.git))
+          validator = Validator.new(spec, [master_repo_url])
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
           if validator.respond_to?(:use_modular_headers=)
@@ -140,15 +140,26 @@ module Pod
         end
 
         def update_master_repo
-          sources_manager = if defined?(Pod::SourcesManager)
-                              Pod::SourcesManager
-                            else
-                              config.sources_manager
-                            end
           if sources_manager.master_repo_functional?
-            sources_manager.update('master')
+            sources_manager.update(master_repo_name)
           else
             Setup.invoke
+          end
+        end
+
+        def master_repo_name
+          sources_manager.master.first.name
+        end
+
+        def master_repo_url
+          sources_manager.master.first.url
+        end
+
+        def sources_manager
+          if defined?(Pod::SourcesManager)
+            Pod::SourcesManager
+          else
+            config.sources_manager
           end
         end
       end
