@@ -25,7 +25,7 @@ require 'webmock'
 
 include WebMock::API
 WebMock.enable!
-WebMock.disable_net_connect!(:allow => 'codeclimate.com')
+WebMock.disable_net_connect!(:allow => ['codeclimate.com', 'cdn.cocoapods.org'])
 
 require 'cocoapods'
 
