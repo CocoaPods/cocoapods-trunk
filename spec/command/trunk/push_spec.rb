@@ -116,6 +116,8 @@ module Pod
         %i(prepare resolve_dependencies download_dependencies).each do |m|
           Installer.any_instance.stubs(m)
         end
+        Command::Trunk::Push.any_instance.stubs(:master_repo_url).
+          returns(Pod::TrunkSource::TRUNK_REPO_URL)
       end
 
       it 'passes the SWIFT_VERSION to the Validator' do
@@ -231,11 +233,13 @@ module Pod
         @cmd.stubs(:validate_podspec)
         @cmd.stubs(:push_to_trunk).returns([200, success_json])
         Command::Trunk::Push.any_instance.unstub(:update_master_repo)
+        Command::Trunk::Push.any_instance.stubs(:master_repo_name).
+          returns(Pod::TrunkSource::TRUNK_REPO_NAME)
       end
 
       it 'updates the master repo when it exists' do
         Config.instance.sources_manager.stubs(:master_repo_functional?).returns(true)
-        Config.instance.sources_manager.expects(:update).with('master').twice
+        Config.instance.sources_manager.expects(:update).with(Pod::TrunkSource::TRUNK_REPO_NAME).twice
 
         @cmd.run
       end
