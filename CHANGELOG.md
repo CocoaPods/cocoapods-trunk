@@ -6,6 +6,17 @@
 
 ##### Bug Fixes
 
+* None.  
+
+
+## 1.4.0 (2019-08-21)
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
 * Update to get the master spec repo from `Source::Manager` for validation - effectively 
   use the new CDN `TrunkSource` for podspec validation and not a hard-coded URL  
   [Igor Makarov](https://github.com/igor-makarov)
