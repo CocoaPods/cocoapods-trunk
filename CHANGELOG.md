@@ -1,4 +1,4 @@
-## Master
+## 1.4.0 (2019-08-21)
 
 ##### Enhancements
 
