@@ -140,11 +140,12 @@ module Pod
         end
 
         def update_master_repo
-          if sources_manager.master_repo_functional?
-            sources_manager.update(master_repo_name)
-          else
-            Setup.invoke
-          end
+          # more robust Trunk setup logic:
+          # - if Trunk exists, updates it
+          # - if Trunk doesn't exist, add it and update it
+          #
+          trunk = sources_manager.find_or_create_source_with_url(Pod::TrunkSource::TRUNK_REPO_URL)
+          sources_manager.update(trunk.name)
         end
 
         def master_repo_name
