@@ -239,16 +239,24 @@ module Pod
       end
 
       it 'updates the master repo when it exists' do
-        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(true)
+        Config.instance.sources_manager.stubs(:source_with_url).
+          at_most(2).
+          returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME)).
+          returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME))
+
         Config.instance.sources_manager.expects(:update).with(Pod::TrunkSource::TRUNK_REPO_NAME).twice
+        Command::Repo::AddCDN.any_instance.expects(:run).never
 
         @cmd.run
       end
 
       it 'sets up the master repo when it does not exist' do
-        Config.instance.sources_manager.stubs(:master_repo_functional?).returns(false)
-        Config.instance.sources_manager.expects(:update).never
-        Command::Setup.any_instance.expects(:run).twice
+        Config.instance.sources_manager.stubs(:source_with_url).
+          at_most(3).
+          returns(nil).
+          returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME))
+        Config.instance.sources_manager.expects(:update).with(Pod::TrunkSource::TRUNK_REPO_NAME).twice
+        Command::Repo::AddCDN.any_instance.expects(:run)
 
         @cmd.run
       end

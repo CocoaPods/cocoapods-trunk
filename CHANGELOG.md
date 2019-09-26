@@ -9,6 +9,19 @@
 * None.  
 
 
+## 1.4.1 (2019-09-26)
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* Use a more robust `Trunk` init when pushing.  
+  [Igor Makarov](https://github.com/igor-makarov)
+  [#135](https://github.com/CocoaPods/cocoapods-trunk/pull/135)
+
+
 ## 1.4.0 (2019-08-21)
 
 ##### Enhancements
