@@ -36,6 +36,7 @@ module Pod
              'This takes precedence over a .swift-version file.'],
             ['--skip-import-validation', 'Lint skips validating that the pod can be imported'],
             ['--skip-tests', 'Lint skips building and running tests during validation'],
+            ['--synchronous', 'If validation depends on other recently pushed pods, synchronize'],
           ].concat(super)
         end
 
@@ -47,6 +48,7 @@ module Pod
           @skip_import_validation = argv.flag?('skip-import-validation', false)
           @skip_tests = argv.flag?('skip-tests', false)
           @path = argv.shift_argument || '.'
+          @synchronous = argv.flag?('synchronous', false)
           find_podspec_file if File.directory?(@path)
           super
         end
@@ -79,6 +81,8 @@ module Pod
         end
 
         private
+
+        MASTER_GIT_REPO_URL = 'https://github.com/CocoaPods/Specs.git'.freeze
 
         def push_to_trunk
           spec.attributes_hash[:pushed_with_swift_version] = @swift_version if @swift_version
@@ -118,7 +122,7 @@ module Pod
         def validate_podspec
           UI.puts 'Validating podspec'.yellow
 
-          validator = Validator.new(spec, [master_repo_url])
+          validator = Validator.new(spec, [repo_url])
           validator.allow_warnings = @allow_warnings
           validator.use_frameworks = @use_frameworks
           if validator.respond_to?(:use_modular_headers=)
@@ -139,21 +143,17 @@ module Pod
           @swift_version = validator.respond_to?(:used_swift_version) && validator.used_swift_version
         end
 
+        def repo_url
+          @synchronous ? MASTER_GIT_REPO_URL : Pod::TrunkSource::TRUNK_REPO_URL
+        end
+
         def update_master_repo
           # more robust Trunk setup logic:
           # - if Trunk exists, updates it
           # - if Trunk doesn't exist, add it and update it
           #
-          trunk = sources_manager.find_or_create_source_with_url(Pod::TrunkSource::TRUNK_REPO_URL)
-          sources_manager.update(trunk.name)
-        end
-
-        def master_repo_name
-          sources_manager.master.first.name
-        end
-
-        def master_repo_url
-          sources_manager.master.first.url
+          repo = sources_manager.find_or_create_source_with_url(repo_url)
+          sources_manager.update(repo.name)
         end
 
         def sources_manager

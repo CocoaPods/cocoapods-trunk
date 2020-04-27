@@ -2,7 +2,10 @@
 
 ##### Enhancements
 
-* None.  
+* Add --synchronous option to `pod trunk push`.  
+  [Paul Beusterien](https://github.com/paulb777)
+  [#147](https://github.com/CocoaPods/cocoapods-trunk/pull/147)
+  [CocoaPods#9497](https://github.com/CocoaPods/CocoaPods/issues/9497)
 
 ##### Bug Fixes
 
