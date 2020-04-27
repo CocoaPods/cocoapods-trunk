@@ -241,7 +241,6 @@ module Pod
       it 'updates the master repo when it exists' do
         Config.instance.sources_manager.stubs(:source_with_url).
           at_most(2).
-          returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME)).
           returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME))
 
         Config.instance.sources_manager.expects(:update).with(Pod::TrunkSource::TRUNK_REPO_NAME).twice
@@ -257,6 +256,40 @@ module Pod
           returns(Pod::TrunkSource.new(Pod::TrunkSource::TRUNK_REPO_NAME))
         Config.instance.sources_manager.expects(:update).with(Pod::TrunkSource::TRUNK_REPO_NAME).twice
         Command::Repo::AddCDN.any_instance.expects(:run)
+
+        @cmd.run
+      end
+    end
+
+    describe 'synchronous updating the git repo' do
+      before do
+        @cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --synchronous))
+        @cmd.stubs(:validate_podspec)
+        @cmd.stubs(:push_to_trunk).returns([200, success_json])
+        Command::Trunk::Push.any_instance.unstub(:update_master_repo)
+        Command::Trunk::Push.any_instance.stubs(:master_repo_name).returns('master')
+      end
+
+      it 'updates the git repo when it exists' do
+        Config.instance.sources_manager.stubs(:source_with_url).
+          at_most(2).
+          returns(Pod::TrunkSource.new('master'))
+
+        Config.instance.sources_manager.expects(:update).with('master').twice
+        Command::Repo::AddCDN.any_instance.expects(:run).never
+
+        @cmd.run
+      end
+
+      it 'sets up the git repo when it does not exist' do
+        Config.instance.sources_manager.stubs(:source_with_url).
+          at_most(3).
+          returns(nil).
+          returns(Pod::TrunkSource.new('master'))
+        Config.instance.sources_manager.stubs(:cdn_url?).returns(false)
+        Config.instance.sources_manager.stubs(:create_source_with_url).once.
+          returns(Pod::TrunkSource.new('master'))
+        Config.instance.sources_manager.expects(:update).with('master').twice
 
         @cmd.run
       end
