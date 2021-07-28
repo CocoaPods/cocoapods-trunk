@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nap', '>= 0.8', '< 2.0'
   spec.add_dependency 'netrc', '~> 0.11'
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake", '~> 10.0'
+  spec.add_development_dependency "rake", '~> 13.0'
 
   spec.required_ruby_version = '>= 2.0.0'
 end
