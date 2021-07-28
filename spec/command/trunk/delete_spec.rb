@@ -26,14 +26,14 @@ module Pod
       command.send(:confirm_deletion?).should.be.false
 
       UI.output.should == <<-OUTPUT.gsub(/^>$/, '> ')
-\e[33mWARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
-Please consider using the `deprecate` command instead.\e[0m
+WARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
+Please consider using the `deprecate` command instead.
 Are you sure you want to delete this Pod version?
 >
 Are you sure you want to delete this Pod version?
 >
-\e[33mWARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
-Please consider using the `deprecate` command instead.\e[0m
+WARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
+Please consider using the `deprecate` command instead.
 Are you sure you want to delete this Pod version?
 >
       OUTPUT
