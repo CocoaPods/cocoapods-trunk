@@ -1,3 +1,14 @@
+## Master
+
+##### Enhancements
+
+* None.  
+
+##### Bug Fixes
+
+* None.  
+
+
 ## 1.6.0 (2021-09-01)
 
 ##### Enhancements
