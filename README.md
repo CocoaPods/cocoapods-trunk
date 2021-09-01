@@ -1,8 +1,7 @@
 # CocoaPods::Trunk
 
-[![Build Status](https://img.shields.io/travis/CocoaPods/cocoapods-trunk/master.svg?style=flat)](https://travis-ci.org/CocoaPods/cocoapods-trunk)
-[![Coverage](https://img.shields.io/codeclimate/coverage/github/CocoaPods/cocoapods-trunk.svg?style=flat)](https://codeclimate.com/github/CocoaPods/cocoapods-trunk)
-[![Code Climate](https://img.shields.io/codeclimate/github/CocoaPods/cocoapods-trunk.svg?style=flat)](https://codeclimate.com/github/CocoaPods/cocoapods-trunk)
+[![Build Status](https://img.shields.io/github/workflow/status/CocoaPods/cocoapods-trunk/Specs)](https://github.com/CocoaPods/cocoapods-trunk/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/157b8b7f7b73976f3edf/maintainability)](https://codeclimate.com/github/CocoaPods/cocoapods-trunk/maintainability)
 
 CocoaPods plugin for trunk.
 
