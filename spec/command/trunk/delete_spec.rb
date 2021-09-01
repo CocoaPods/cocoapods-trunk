@@ -20,6 +20,7 @@ module Pod
     end
 
     it 'confirms deletion' do
+      Colored2.disable!
       UI.inputs += %w(garbage true false)
       command = Command.parse(%w( trunk delete Stencil 1.0.0 ))
       command.send(:confirm_deletion?).should.be.true
