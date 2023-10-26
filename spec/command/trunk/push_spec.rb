@@ -146,6 +146,8 @@ module Pod
           with(:tvos, nil, true, [], nil, nil).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
           with(:watchos, nil, true, [], nil, nil).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:visionos, nil, true, [], nil, nil).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec))
         cmd.send(:validate_podspec)
@@ -160,6 +162,8 @@ module Pod
           with(:tvos, nil, false, [], nil, nil).once.returns(Podfile.new)
         Validator.any_instance.expects(:podfile_from_spec).
           with(:watchos, nil, false, [], nil, nil).once.returns(Podfile.new)
+        Validator.any_instance.expects(:podfile_from_spec).
+          with(:visionos, nil, false, [], nil, nil).once.returns(Podfile.new)
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
         cmd.send(:validate_podspec)
@@ -216,7 +220,7 @@ module Pod
         cmd.stubs(:spec).returns(Pod::Specification.new)
 
         json = <<-JSON
-{"name":null,"pushed_with_swift_version":"1.1.2","platforms":{"osx":null,"ios":null,"tvos":null,"watchos":null}}
+{"name":null,"pushed_with_swift_version":"1.1.2","platforms":{"osx":null,"ios":null,"tvos":null,"visionos":null,"watchos":null}}
         JSON
 
         cmd.stubs(:validate_podspec)
