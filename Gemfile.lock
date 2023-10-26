@@ -1,24 +1,24 @@
 GIT
   remote: https://github.com/CocoaPods/CLAide.git
-  revision: a5d1a29b08ca88f90f47104805bc4fad2efc93c9
+  revision: 97b765ec88aa4f347d19d416afc732a880e67826
   branch: master
   specs:
-    claide (1.0.3)
+    claide (1.1.0)
 
 GIT
   remote: https://github.com/CocoaPods/CocoaPods.git
-  revision: 035518e56945778e9916d8118ea5e61ecb96beb0
+  revision: 202ce5dc17ab926d9d81d97068ad3f824d2d4d1c
   branch: master
   specs:
-    cocoapods (1.11.0)
+    cocoapods (1.14.1)
       addressable (~> 2.8)
       claide (>= 1.0.2, < 2.0)
-      cocoapods-core (= 1.11.0)
+      cocoapods-core (= 1.14.1)
       cocoapods-deintegrate (>= 1.0.3, < 2.0)
-      cocoapods-downloader (>= 1.4.0, < 2.0)
+      cocoapods-downloader (>= 2.0)
       cocoapods-plugins (>= 1.0.0, < 2.0)
       cocoapods-search (>= 1.0.0, < 2.0)
-      cocoapods-trunk (= 1.6.0)
+      cocoapods-trunk (>= 1.6.0, < 2.0)
       cocoapods-try (>= 1.1.0, < 2.0)
       colored2 (~> 3.1)
       escape (~> 0.0.4)
@@ -26,16 +26,16 @@ GIT
       gh_inspector (~> 1.0)
       molinillo (~> 0.8.0)
       nap (~> 1.0)
-      ruby-macho (>= 1.0, < 3.0)
-      xcodeproj (>= 1.21.0, < 2.0)
+      ruby-macho (>= 2.3.0, < 3.0)
+      xcodeproj (>= 1.23.0, < 2.0)
 
 GIT
   remote: https://github.com/CocoaPods/Core.git
-  revision: a8e38de9907968d6e627b1465f053c55fc778118
+  revision: 6d8282c3d34394d53b09defbed34149c20fdf493
   branch: master
   specs:
-    cocoapods-core (1.11.0)
-      activesupport (>= 5.0, < 7)
+    cocoapods-core (1.14.1)
+      activesupport (>= 5.0, < 8)
       addressable (~> 2.8)
       algoliasearch (~> 1.0)
       concurrent-ruby (~> 1.1)
@@ -62,44 +62,51 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (3.0.3)
-    activesupport (6.1.4.1)
+    CFPropertyList (3.0.6)
+      rexml
+    activesupport (7.1.1)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
     algoliasearch (1.27.5)
       httpclient (~> 2.8, >= 2.8.3)
       json (>= 1.5.1)
-    ast (2.2.0)
+    ast (2.4.2)
     atomos (0.1.3)
     bacon (1.2.0)
+    base64 (0.1.1)
+    bigdecimal (3.1.4)
     cocoapods-deintegrate (1.0.5)
-    cocoapods-downloader (1.6.3)
+    cocoapods-downloader (2.0)
     cocoapods-plugins (1.0.0)
       nap
     cocoapods-search (1.0.1)
     cocoapods-try (1.2.0)
-    codeclimate-test-reporter (0.4.7)
-      simplecov (>= 0.7.1, < 1.0.0)
     colored2 (3.1.2)
-    concurrent-ruby (1.1.9)
-    crack (0.4.3)
-      safe_yaml (~> 1.0.0)
-    docile (1.1.5)
+    concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
+    crack (0.4.5)
+      rexml
+    drb (2.1.1)
+      ruby2_keywords
     escape (0.0.4)
-    ethon (0.14.0)
+    ethon (0.16.0)
       ffi (>= 1.15.0)
-    ffi (1.15.3)
+    ffi (1.16.3)
     fourflusher (2.3.1)
     fuzzy_match (2.0.4)
     gh_inspector (1.1.3)
-    hashdiff (0.3.4)
+    hashdiff (1.0.1)
     httpclient (2.8.3)
-    i18n (1.8.10)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     kicker (3.0.0)
       listen (~> 1.3.0)
@@ -109,82 +116,78 @@ GEM
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
     metaclass (0.0.4)
-    minitest (5.14.4)
+    minitest (5.20.0)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
-    mocha-on-bacon (0.2.2)
+    mocha-on-bacon (0.2.3)
       mocha (>= 0.13.0)
     molinillo (0.8.0)
-    multi_json (1.11.2)
+    mutex_m (0.1.2)
     nanaimo (0.3.0)
     nap (1.1.0)
     netrc (0.11.0)
     notify (0.5.2)
-    parser (2.3.0.7)
-      ast (~> 2.2)
-    powerpack (0.1.1)
+    parallel (1.23.0)
+    parser (2.7.2.0)
+      ast (~> 2.4.1)
+    powerpack (0.1.3)
     prettybacon (0.0.2)
       bacon (~> 1.2)
-    public_suffix (4.0.6)
-    rainbow (2.1.0)
-    rake (10.4.2)
-    rb-fsevent (0.9.5)
-    rb-inotify (0.9.5)
+    public_suffix (4.0.7)
+    rainbow (2.2.2)
+      rake
+    rake (10.5.0)
+    rb-fsevent (0.11.2)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
+    rb-kqueue (0.2.8)
       ffi (>= 0.5.0)
-    rb-kqueue (0.2.4)
-      ffi (>= 0.5.0)
-    rexml (3.2.5)
-    rubocop (0.39.0)
-      parser (>= 2.3.0.7, < 3.0)
+    rexml (3.2.6)
+    rubocop (0.50.0)
+      parallel (~> 1.10)
+      parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
-      rainbow (>= 1.99.1, < 3.0)
+      rainbow (>= 2.2.2, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-macho (2.5.1)
-    ruby-progressbar (1.7.5)
-    safe_yaml (1.0.4)
-    simplecov (0.9.2)
-      docile (~> 1.1.0)
-      multi_json (~> 1.0)
-      simplecov-html (~> 0.9.0)
-    simplecov-html (0.9.0)
+    ruby-progressbar (1.13.0)
+    ruby2_keywords (0.0.5)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.8.0)
-    webmock (3.5.1)
-      addressable (>= 2.3.6)
+    webmock (3.19.1)
+      addressable (>= 2.8.0)
       crack (>= 0.3.2)
-      hashdiff
-    xcodeproj (1.21.0)
+      hashdiff (>= 0.4.0, < 2.0.0)
+    xcodeproj (1.23.0)
       CFPropertyList (>= 2.3.3, < 4.0)
       atomos (~> 0.1.3)
       claide (>= 1.0.2, < 2.0)
       colored2 (~> 3.1)
       nanaimo (~> 0.3.0)
       rexml (~> 3.2.4)
-    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bacon
-  bundler (~> 1.3)
+  bundler (~> 2.0)
   claide!
   cocoapods!
   cocoapods-core!
   cocoapods-trunk!
-  codeclimate-test-reporter
   json!
   kicker
-  mocha
+  mocha (= 1.1.0)
   mocha-on-bacon
   prettybacon
   rake (~> 10.0)
-  rubocop
+  rubocop (= 0.50.0)
   webmock
 
 BUNDLED WITH
-   1.17.3
+   2.4.13

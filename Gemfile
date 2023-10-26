@@ -14,12 +14,12 @@ group :development do
 
   gem 'bacon'
   gem 'kicker'
-  gem 'mocha'
+  gem 'mocha', '1.1.0'
   gem 'mocha-on-bacon'
   gem 'prettybacon'
   gem 'webmock'
 
-  gem 'codeclimate-test-reporter', :require => nil
-  gem 'rubocop'
+  # gem 'codeclimate-test-reporter', :require => nil
+  gem 'rubocop', '0.50.0'
 end
 
