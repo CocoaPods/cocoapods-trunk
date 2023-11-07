@@ -2,7 +2,11 @@
 
 ##### Enhancements
 
-* None.  
+* Adds a `pod trunk me rename NAME` command so that you can change the display name on CocoaPods.org  
+  [Orta Therox](https://github.com/orta)  
+  [Ash Furrow](https://github.com/ashfurrow)  
+  [Ryan C. Payne](https://github.com/paynerc)  
+  [trunk.cocoapods.org#155](https://github.com/CocoaPods/trunk.cocoapods.org/issues/155)
 
 ##### Bug Fixes
 
