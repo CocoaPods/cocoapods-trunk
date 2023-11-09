@@ -103,12 +103,17 @@ module Pod
       end
 
       def netrc
-        @@netrc ||= Netrc.read
+        begin
+          @@netrc ||= Netrc.read
+        rescue Errno::ENOENT => e
+          UI.warn 'CocoaPods could not access your ~/.netrc file, '\
+                  'please ensure you have read access to it.'
+        end
       end
 
       def token
-        ENV['COCOAPODS_TRUNK_TOKEN'] ||
-          (netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].password)
+          ENV['COCOAPODS_TRUNK_TOKEN'] ||
+            (netrc['trunk.cocoapods.org'] && netrc['trunk.cocoapods.org'].password)
       end
 
       def default_headers
