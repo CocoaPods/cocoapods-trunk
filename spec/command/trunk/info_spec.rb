@@ -32,5 +32,14 @@ module Pod
       UI.output.should.include 'Owners'
       UI.output.should.include 'Kyle Fuller <kyle@example.com>'
     end
+
+    it 'reports network errors as an informative error' do
+      stub_request(:get, "#{Command::Trunk::BASE_URL}/pods/Stencil").
+        to_raise(OpenSSL::SSL::SSLError.new('certificate verify failed'))
+
+      command = Command.parse(%w( trunk info Stencil ))
+      exception = lambda { command.run }.should.raise Informative
+      exception.message.should.include 'certificate verify failed'
+    end
   end
 end

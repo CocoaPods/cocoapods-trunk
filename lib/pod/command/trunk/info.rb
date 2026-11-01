@@ -28,6 +28,9 @@ module Pod
             UI.labeled 'Versions', versions.map { |v| "#{v['name']} (#{v['created_at']})" }
             UI.labeled 'Owners', owners.map { |o| "#{o['name']} <#{o['email']}>" }
           end
+        rescue *NETWORK_ERRORS => e
+          raise Informative, 'There was an error fetching pod info ' \
+                                   "from trunk: #{e.message}"
         end
       end
     end

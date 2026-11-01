@@ -38,7 +38,7 @@ module Pod
           response = request_path(:patch, "pods/#{@name}/deprecated", body, auth_headers)
           url = response.headers['location'].first
           json(request_url(:get, url, default_headers))
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, 'There was an error deprecating the pod ' \
                                    "via trunk: #{e.message}"
         end

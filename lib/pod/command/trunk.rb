@@ -1,7 +1,9 @@
 # encoding: UTF-8
 
 require 'json'
-require 'rest'
+require 'net/http'
+require 'openssl'
+require 'zlib'
 require 'netrc'
 
 module Pod
@@ -12,6 +14,16 @@ module Pod
 
       SCHEME_AND_HOST = ENV['TRUNK_SCHEME_AND_HOST'] || 'https://trunk.cocoapods.org'
       BASE_URL = "#{SCHEME_AND_HOST}/api/v1".freeze
+
+      Response = Struct.new(:status_code, :headers, :body)
+
+      # Errors that can be raised while talking to trunk over the network.
+      # This covers the classes nap grouped under `REST::Error`.
+      NETWORK_ERRORS = [
+        SocketError, SystemCallError, EOFError, Timeout::Error,
+        OpenSSL::SSL::SSLError, Net::HTTPBadResponse,
+        Net::HTTPHeaderSyntaxError, Net::ProtocolError, Zlib::GzipFile::Error
+      ].freeze
 
       require 'pod/command/trunk/add_owner'
       require 'pod/command/trunk/delete'
@@ -36,14 +48,24 @@ module Pod
         request_url(action, "#{BASE_URL}/#{path}", *args)
       end
 
-      def create_request(*args)
-        if verbose?
-          REST.send(*args) do |request|
-            request.set_debug_output($stdout)
-          end
-        else
-          REST.send(*args)
-        end
+      # Uses Net::HTTP's default certificate verification (VERIFY_PEER against
+      # the system trust store). The proxy is looked up from the request URI so
+      # https_proxy and no_proxy apply; Net::HTTP's own :ENV lookup only reads
+      # http_proxy.
+      def create_request(verb, url, *args)
+        headers = args.pop || {}
+        body = args.first
+        uri = URI.parse(url)
+        request = Net::HTTP.const_get(verb.to_s.capitalize).new(uri.request_uri, headers)
+        request.body = body
+        proxy = uri.find_proxy
+        http = Net::HTTP.new(uri.host, uri.port,
+                             proxy && proxy.host, proxy && proxy.port,
+                             proxy && proxy.user, proxy && proxy.password)
+        http.use_ssl = uri.scheme == 'https'
+        http.set_debug_output($stdout) if verbose?
+        response = http.start { |h| h.request(request) }
+        Response.new(response.code.to_i, response.to_hash, response.body)
       end
 
       def print_error(body)
