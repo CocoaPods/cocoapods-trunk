@@ -2,7 +2,12 @@
 
 ##### Enhancements
 
-* None.  
+* Replace the `nap` dependency with `Net::HTTP` from the standard library, as
+  nap's README now recommends. Requests use Net::HTTP's default certificate
+  verification against the system trust store, and `no_proxy` is honoured.
+  If your network intercepts TLS, add its CA to the trust store your Ruby's
+  OpenSSL uses (for example with `SSL_CERT_FILE`).  
+  [Matthew Mongeau](https://github.com/halogenandtoast)
 
 ##### Bug Fixes
 
