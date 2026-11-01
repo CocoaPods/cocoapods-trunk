@@ -60,7 +60,7 @@ module Pod
           response = request_path(:delete, "pods/#{@name}/#{@version}", auth_headers)
           url = response.headers['location'].first
           json(request_url(:get, url, default_headers))
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, 'There was an error deleting the pod version ' \
                                    "from trunk: #{e.message}"
         end

@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'nap', '>= 0.8', '< 2.0'
   spec.add_dependency 'netrc', '~> 0.11'
   spec.add_development_dependency "bundler", "~> 2.0"
   spec.add_development_dependency "rake", '~> 10.0'
