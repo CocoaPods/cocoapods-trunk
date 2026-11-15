@@ -63,7 +63,7 @@ module Pod
           # TODO UI.notice inserts an empty line :/
           UI.puts '[!] Please verify the session by clicking the link in the ' \
                   "verification email that has been sent to #{@email}".yellow
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, 'There was an error registering with trunk: ' \
                                  "#{e.message}"
         end

@@ -37,7 +37,7 @@ module Pod
           body = { 'email' => @email }.to_json
           json = json(request_path(:patch, "pods/#{@pod}/owners", body, auth_headers))
           UI.labeled 'Owners', json.map { |o| "#{o['name']} <#{o['email']}>" }
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, "There was an error adding #{@email} to " \
                                    "#{@pod} on trunk: #{e.message}"
         end

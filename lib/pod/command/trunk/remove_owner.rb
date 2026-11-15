@@ -36,7 +36,7 @@ module Pod
         def run
           json = json(request_path(:delete, "pods/#{@pod}/owners/#{@email}", auth_headers))
           UI.labeled 'Owners', json.map { |o| "#{o['name']} <#{o['email']}>" }
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, "There was an error removing #{@email} from " \
                                    "#{@pod} on trunk: #{e.message}"
         end

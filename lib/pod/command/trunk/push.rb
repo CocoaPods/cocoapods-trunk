@@ -90,7 +90,7 @@ module Pod
                                   spec.to_json, auth_headers)
           url = response.headers['location'].first
           return response.status_code, json(request_url(:get, url, default_headers))
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, 'There was an error pushing a new version ' \
                                    "to trunk: #{e.message}"
         end

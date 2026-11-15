@@ -66,7 +66,7 @@ module Pod
 
           UI.labeled 'Sessions', sessions
 
-        rescue REST::Error => e
+        rescue *NETWORK_ERRORS => e
           raise Informative, 'There was an error fetching your info ' \
                                    "from trunk: #{e.message}"
         end
@@ -108,7 +108,7 @@ module Pod
           def run
             path = @remove_all ? 'sessions/all' : 'sessions'
             request_path(:delete, path, auth_headers)
-          rescue REST::Error => e
+          rescue *NETWORK_ERRORS => e
             raise Informative, 'There was an error cleaning up your ' \
                                      "sessions from trunk: #{e.message}"
           end
