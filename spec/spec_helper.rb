@@ -18,9 +18,8 @@ $:.unshift((ROOT + 'lib').to_s)
 $:.unshift((ROOT + 'spec').to_s)
 
 require 'bundler/setup'
-require 'bacon'
-require 'mocha-on-bacon'
-require 'pretty_bacon'
+require 'rspec'
+require 'mocha/api'
 require 'webmock'
 
 include WebMock::API
@@ -75,23 +74,21 @@ module Pod
   end
 end
 
-module Bacon
-  class Context
-    old_run_requirement = instance_method(:run_requirement)
-    define_method(:run_requirement) do |description, spec|
-      ::Pod::Config.instance = nil
-      ::Pod::UI.output = ''
-      ::Pod::UI.warnings = ''
-      ::Pod::UI.inputs = []
-      # The following prevents a nasty behaviour where the increments are not
-      # balanced when testing informative which might lead to sections not
-      # being printed to the output as they are too nested.
-      ::Pod::UI.indentation_level = 0
-      ::Pod::UI.title_level = 0
+RSpec.configure do |config|
+  config.mock_with :mocha
+  config.expect_with(:rspec) { |c| c.syntax = :expect }
 
-      WebMock.reset!
+  config.before do
+    ::Pod::Config.instance = nil
+    ::Pod::UI.output = ''
+    ::Pod::UI.warnings = ''
+    ::Pod::UI.inputs = []
+    # The following prevents a nasty behaviour where the increments are not
+    # balanced when testing informative which might lead to sections not
+    # being printed to the output as they are too nested.
+    ::Pod::UI.indentation_level = 0
+    ::Pod::UI.title_level = 0
 
-      old_run_requirement.bind(self).call(description, spec)
-    end
+    WebMock.reset!
   end
 end

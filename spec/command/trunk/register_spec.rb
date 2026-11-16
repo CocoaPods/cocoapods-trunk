@@ -4,15 +4,14 @@ module Pod
   describe Command::Trunk::Register do
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk register )).should.be.instance_of Command::Trunk::Register
+        expect(Command.parse(%w( trunk register ))).to be_an_instance_of(Command::Trunk::Register)
       end
     end
 
     it 'should error if email is not supplied' do
       Netrc.any_instance.stubs(:[]).returns(nil)
       command = Command.parse(%w( trunk register ))
-      exception = lambda { command.validate! }.should.raise CLAide::Help
-      exception.message.should.include 'email address'
+      expect { command.validate! }.to raise_error(CLAide::Help, a_string_including('email address'))
     end
 
     it 'should register user' do
@@ -25,7 +24,7 @@ module Pod
       Netrc.any_instance.expects(:save)
 
       command = Command.parse(%w( trunk register kyle@cocoapods.org ))
-      lambda { command.run }.should.not.raise
+      expect { command.run }.not_to raise_error
     end
   end
 end
