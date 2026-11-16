@@ -4,7 +4,7 @@ module Pod
   describe Command::Trunk do
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk        )).should.be.instance_of Command::Trunk
+        expect(Command.parse(%w( trunk        ))).to be_an_instance_of(Command::Trunk)
       end
     end
 
@@ -16,7 +16,7 @@ module Pod
       it 'will use the trunk token from ENV if present' do
         ENV.stubs(:[]).with('COCOAPODS_TRUNK_TOKEN').returns('token')
 
-        @command.send(:token).should == 'token'
+        expect(@command.send(:token)).to eq('token')
       end
     end
 
@@ -48,10 +48,9 @@ module Pod
         WebMock.disable!
         begin
           url = "https://127.0.0.1:#{tcp_server.addr[1]}/"
-          exception = should.raise(OpenSSL::SSL::SSLError) do
+          expect do
             @command.send(:create_request, :get, url, {})
-          end
-          exception.message.should.include 'certificate verify failed'
+          end.to raise_error(OpenSSL::SSL::SSLError, a_string_including('certificate verify failed'))
         ensure
           WebMock.enable!
           thread.kill
@@ -68,9 +67,9 @@ module Pod
           raises(SocketError)
 
         begin
-          should.raise(SocketError) do
+          expect do
             @command.send(:create_request, :get, 'https://trunk.cocoapods.org/api/v1/pods/Foo', {})
-          end
+          end.to raise_error(SocketError)
         ensure
           proxy_env.each { |k, v| v ? ENV[k] = v : ENV.delete(k) }
         end
@@ -82,8 +81,8 @@ module Pod
         Command::Trunk.any_instance.stubs(:token).returns('token')
 
         command = Command.parse(%w(trunk me clean-sessions))
-        exception = lambda { command.run }.should.raise(Informative)
-        exception.message.should.include 'certificate verify failed'
+        expect { command.run }.
+          to raise_error(Informative, a_string_including('certificate verify failed'))
       end
     end
   end

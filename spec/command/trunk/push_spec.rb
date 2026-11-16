@@ -23,15 +23,14 @@ module Pod
 
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk push        )).should.be.instance_of Command::Trunk::Push
+        expect(Command.parse(%w( trunk push        ))).to be_an_instance_of(Command::Trunk::Push)
       end
     end
 
     it "should error if we don't have a token" do
       Netrc.any_instance.stubs(:[]).returns(nil)
       command = Command.parse(%w( trunk push ))
-      exception = lambda { command.validate! }.should.raise CLAide::Help
-      exception.message.should.include 'register a session'
+      expect { command.validate! }.to raise_error(CLAide::Help, a_string_including('register a session'))
     end
 
     it 'should error when the trunk service returns an error' do
@@ -47,10 +46,11 @@ module Pod
       command = Command.parse(%w(trunk push))
       command.stubs(:validate_podspec)
       command.stubs(:spec).returns(Pod::Specification.new)
-      exception = lambda { command.run }.should.raise Informative
-      exception.message.should.include 'following validation failed'
-      exception.message.should.include 'should be specified'
-      exception.message.should.include 'The Pod Specification did not pass validation'
+      expect { command.run }.to raise_error(Informative) do |exception|
+        expect(exception.message).to include('following validation failed')
+        expect(exception.message).to include('should be specified')
+        expect(exception.message).to include('The Pod Specification did not pass validation')
+      end
     end
 
     describe 'PATH' do
@@ -61,7 +61,7 @@ module Pod
         # Disable the podspec finding algorithm so we can check the raw path
         Command::Trunk::Push.any_instance.stubs(:find_podspec_file) { |path| path }
         command = Command.parse(%w(        trunk push        ))
-        command.instance_eval { @path }.should == '.'
+        expect(command.instance_eval { @path }).to eq('.')
       end
 
       def found_podspec_among_files(files)
@@ -80,24 +80,24 @@ module Pod
 
       it 'should find the only JSON podspec in a given directory' do
         files = %w(foo bar.podspec.json baz)
-        found_podspec_among_files(files).should == files[1]
+        expect(found_podspec_among_files(files)).to eq(files[1])
       end
 
       it 'should find the only Ruby podspec in a given directory' do
         files = %w(foo bar.podspec baz)
-        found_podspec_among_files(files).should == files[1]
+        expect(found_podspec_among_files(files)).to eq(files[1])
       end
 
       it 'should warn when no podspec found in a given directory' do
         files = %w(foo bar baz)
-        found_podspec_among_files(files).should.nil?
-        UI.output.should.match /No podspec found in directory/
+        expect(found_podspec_among_files(files)).to be_nil
+        expect(UI.output).to match(/No podspec found in directory/)
       end
 
       it 'should warn when multiple podspecs found in a given directory' do
         files = %w(foo bar.podspec bar.podspec.json baz)
-        found_podspec_among_files(files).should.nil?
-        UI.output.should.match /Multiple podspec files in directory/
+        expect(found_podspec_among_files(files)).to be_nil
+        expect(UI.output).to match(/Multiple podspec files in directory/)
       end
     end
 
@@ -134,7 +134,7 @@ module Pod
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --allow-warnings))
         cmd.send(:validate_podspec)
-        cmd.instance_variable_get(:@swift_version).should == '1.2.3'
+        expect(cmd.instance_variable_get(:@swift_version)).to eq('1.2.3')
       end
 
       it 'validates specs as frameworks by default' do
@@ -175,8 +175,8 @@ module Pod
         Validator.any_instance.expects(:failure_reason).returns('failure_reason')
 
         cmd = Command.parse(%w(trunk push spec/fixtures/BananaLib.podspec --use-libraries))
-        e = should.raise(Informative) { cmd.send(:validate_podspec) }
-        e.message.should.include 'The spec did not pass validation, due to failure_reason.'
+        message = 'The spec did not pass validation, due to failure_reason.'
+        expect { cmd.send(:validate_podspec) }.to raise_error(Informative, a_string_including(message))
       end
 
       it 'passes skip import validation' do
@@ -311,7 +311,7 @@ module Pod
         cmd.stubs(:push_to_trunk).returns([200, success_json])
 
         cmd.run
-        UI.output.should.match %r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs}
+        expect(UI.output).to match(%r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs})
       end
 
       it 'shows full logs when errored' do
@@ -320,7 +320,7 @@ module Pod
         cmd.stubs(:push_to_trunk).returns([400, success_json])
 
         cmd.run
-        UI.output.should.match %r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs}
+        expect(UI.output).to match(%r{- Data URL: https://raw.githubusercontent.com/CocoaPods/Specs})
       end
 
       it 'shows thanks emojis when success' do
@@ -329,7 +329,7 @@ module Pod
         cmd.stubs(:push_to_trunk).returns([200, success_json])
         cmd.run
 
-        UI.output.should.match %r{https://cocoapods.org/pods/BananaLib}
+        expect(UI.output).to match(%r{https://cocoapods.org/pods/BananaLib})
       end
     end
   end

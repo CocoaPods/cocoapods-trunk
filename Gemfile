@@ -7,11 +7,9 @@ group :development do
   gem 'cocoapods-core', :git => "https://github.com/CocoaPods/Core.git", :branch => 'master'
   gem 'claide',         :git => 'https://github.com/CocoaPods/CLAide.git', :branch => 'master'
 
-  gem 'bacon'
   gem 'kicker'
-  gem 'mocha', '1.1.0'
-  gem 'mocha-on-bacon'
-  gem 'prettybacon'
+  gem 'mocha', '~> 3.1'
+  gem 'rspec', '~> 3.13'
   gem 'webmock'
 
   gem 'json', '< 3.0'

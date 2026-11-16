@@ -5,28 +5,28 @@ module Pod
   describe Command::Trunk::Delete do
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk delete )).should.be.instance_of Command::Trunk::Delete
+        expect(Command.parse(%w( trunk delete ))).to be_an_instance_of(Command::Trunk::Delete)
       end
     end
 
     it 'should error without a pod name' do
       command = Command.parse(%w( trunk delete ))
-      lambda { command.validate! }.should.raise CLAide::Help
+      expect { command.validate! }.to raise_error(CLAide::Help)
     end
 
     it 'should error without a version' do
       command = Command.parse(%w( trunk delete Stencil ))
-      lambda { command.validate! }.should.raise CLAide::Help
+      expect { command.validate! }.to raise_error(CLAide::Help)
     end
 
     it 'confirms deletion' do
       Colored2.disable!
       UI.inputs += %w(garbage true false)
       command = Command.parse(%w( trunk delete Stencil 1.0.0 ))
-      command.send(:confirm_deletion?).should.be.true
-      command.send(:confirm_deletion?).should.be.false
+      expect(command.send(:confirm_deletion?)).to be(true)
+      expect(command.send(:confirm_deletion?)).to be(false)
 
-      UI.output.should == <<-OUTPUT.gsub(/^>$/, '> ')
+      expect(UI.output).to eq(<<-OUTPUT.gsub(/^>$/, '> '))
 WARNING: It is generally considered bad behavior to remove versions of a Pod that others are depending on!
 Please consider using the `deprecate` command instead.
 Are you sure you want to delete this Pod version?
@@ -62,8 +62,8 @@ Are you sure you want to delete this Pod version?
       UI.inputs << 'TRUE '
       Command::Trunk::Delete.invoke(%w(Stencil 1.0.0))
 
-      UI.output.should.include 'Data URL: https://raw.githubusercontent'
-      UI.output.should.include 'Push for `Stencil 1.0.0` initiated'
+      expect(UI.output).to include('Data URL: https://raw.githubusercontent')
+      expect(UI.output).to include('Push for `Stencil 1.0.0` initiated')
     end
   end
 end

@@ -5,13 +5,13 @@ module Pod
   describe Command::Trunk::Info do
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk info )).should.be.instance_of Command::Trunk::Info
+        expect(Command.parse(%w( trunk info ))).to be_an_instance_of(Command::Trunk::Info)
       end
     end
 
     it 'should error without a pod name' do
       command = Command.parse(%w( trunk info ))
-      lambda { command.validate! }.should.raise CLAide::Help
+      expect { command.validate! }.to raise_error(CLAide::Help)
     end
 
     it 'should show information for a pod' do
@@ -26,11 +26,11 @@ module Pod
       }.to_json)
 
       command = Command.parse(%w( trunk info Stencil ))
-      lambda { command.validate! }.should.not.raise CLAide::Help
+      expect { command.validate! }.not_to raise_error
       command.run
 
-      UI.output.should.include 'Owners'
-      UI.output.should.include 'Kyle Fuller <kyle@example.com>'
+      expect(UI.output).to include('Owners')
+      expect(UI.output).to include('Kyle Fuller <kyle@example.com>')
     end
 
     it 'reports network errors as an informative error' do
@@ -38,8 +38,7 @@ module Pod
         to_raise(OpenSSL::SSL::SSLError.new('certificate verify failed'))
 
       command = Command.parse(%w( trunk info Stencil ))
-      exception = lambda { command.run }.should.raise Informative
-      exception.message.should.include 'certificate verify failed'
+      expect { command.run }.to raise_error(Informative, a_string_including('certificate verify failed'))
     end
   end
 end

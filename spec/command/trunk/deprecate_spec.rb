@@ -5,13 +5,13 @@ module Pod
   describe Command::Trunk::Deprecate do
     describe 'CLAide' do
       it 'registers it self' do
-        Command.parse(%w( trunk deprecate )).should.be.instance_of Command::Trunk::Deprecate
+        expect(Command.parse(%w( trunk deprecate ))).to be_an_instance_of(Command::Trunk::Deprecate)
       end
     end
 
     it 'should error without a pod name' do
       command = Command.parse(%w( trunk deprecate ))
-      lambda { command.validate! }.should.raise CLAide::Help
+      expect { command.validate! }.to raise_error(CLAide::Help)
     end
 
     before do
@@ -32,8 +32,8 @@ module Pod
       Command::Trunk::Deprecate.any_instance.expects(:deprecate).returns(@push_response)
       Command::Trunk::Deprecate.invoke(%w(Stencil))
 
-      UI.output.should.include 'Data URL: https://raw.githubusercontent'
-      UI.output.should.include 'Push for `Stencil 0.96.3` initiated'
+      expect(UI.output).to include('Data URL: https://raw.githubusercontent')
+      expect(UI.output).to include('Push for `Stencil 0.96.3` initiated')
     end
 
     it 'should send the proper network request' do
@@ -47,7 +47,7 @@ module Pod
 
       Command::Trunk::Deprecate.invoke(%w(Stencil --in-favor-of=Stamp))
 
-      UI.output.should == <<-EOS
+      expect(UI.output).to eq(<<-EOS)
   - Data URL: https://raw.githubusercontent.com/CocoaPods/Specs/ce4efe9f986d297008e8c61010a4b0d5881c50d0/Specs/Stencil/0.96.3/Stencil.podspec.json
 - Log messages:
   - December 5th, 2015 02:00: Push for `Stencil 0.96.3` initiated.
